@@ -1,24 +1,12 @@
 package tp;
 
 public abstract class Tripulante {
-    private String identidad, cargo, planeta;
-    private int antiguedad;
+    protected  String identidad, cargo, planeta;
+    protected int antiguedad;
+    protected double porcentadicional;
     
-    public Tripulante(String id,String cargo,String planeta,int antiguedad) {
-        if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("El ID del tripulante no puede ser nulo ni vacío.");
-        }
-        if (cargo == null || planeta == null) {
-            throw new IllegalArgumentException("El cargo y planeta son obligatorios.");
-        }
-        if (antiguedad < 0) {
-            throw new IllegalArgumentException("La antigüedad no puede ser negativa.");
-        }
-
-        this.identidad=id;
-        this.cargo=cargo;
-        this.planeta=planeta;
-        this.antiguedad=antiguedad;
+    public Tripulante() {
+       super();
     }
 
     public String getIdentidad() {
@@ -41,4 +29,10 @@ public abstract class Tripulante {
         return (this.identidad+": Cargo:"+this.cargo+" |Planeta:"+this.planeta+" |Antiguedad:"+this.antiguedad);
         
     }
+
+    //voy con metodo para decorator, el resultado deberá informar el total y mantener identificable el aporte de cada concepto.
+    public abstract double liquidaciondehaberes();
+    public abstract  String descripcionhaberes();
+    
 }
+
