@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Nave {
     private int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
+    private boolean mantenimineto;
     ArrayList<Tripulante> tripulantes;
     MotorState motorWarp;
     Asistente asistente;
@@ -15,6 +16,7 @@ public abstract class Nave {
         this.maxDesgaste = 100;
         this.tripulantes = new ArrayList<Tripulante>();
         //motor disponible Disponible(this)
+        this.mantenimineto = false;
         this.bitacora=new Bitacora();
         this.combustible = comb;
         this.energia = ener;

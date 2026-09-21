@@ -2,6 +2,6 @@ package tp;
 
 public class Carguero extends Nave {
     public Carguero() {
-        super();
+        super(60, 80 ,0);
     }
 }
