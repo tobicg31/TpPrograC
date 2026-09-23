@@ -1,31 +1,22 @@
 package tp;
 
 public class Alferez extends Tripulante {
-    public Alferez(String id,String cargo,String planeta,int antiguedad) {
-         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("El ID no puede ser nulo ni vacío.");
-        }
-        if (cargo == null || planeta == null) {
-            throw new IllegalArgumentException("Cargo y planeta son obligatorios.");
-        }
-        if (antiguedad < 0) {
-            throw new IllegalArgumentException("La antigüedad no puede ser negativa.");
-        }
-        this.identidad=id;
-        this.cargo="Alferez";
-        this.planeta=planeta;
-        this.antiguedad=antiguedad;
-        this.porcentadicional=0.5/100;
+    public Alferez(String id,String cargo,int antiguedad,double porcent) {
+        super(id,"Alferez",antiguedad,0.5/100);
     }
     
     @Override
-    public double liquidaciondehaberes(){
+    public double liquidacionporcargo(){
         return 200;
 
     }
     @Override
     public String descripcionhaberes(){
-        return ("Correspondiente al cargo:"+this.liquidaciondehaberes());
+        return ("Correspondiente al cargo Alferez:"+this.liquidacionporcargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
 
+    }
+    @Override
+    public double liquidaciondehaberes(){
+        return this.liquidacionporcargo()+this.getliquidacionporantiguedad();
     }
 }

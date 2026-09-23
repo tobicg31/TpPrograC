@@ -1,12 +1,15 @@
 package tp;
 
-public abstract class Tripulante {
-    protected  String identidad, cargo, planeta;
+public abstract class Tripulante implements Liquidable {
+    protected  String identidad, cargo;
     protected int antiguedad;
     protected double porcentadicional;
     
-    public Tripulante() {
-       super();
+    public Tripulante(String id,String cargo,int antiguedad,double porcent) {
+        this.identidad=id;
+        this.cargo=cargo;
+        this.antiguedad=antiguedad;
+        this.porcentadicional=porcent;
     }
 
     public String getIdentidad() {
@@ -16,23 +19,13 @@ public abstract class Tripulante {
     public String getCargo() {
         return cargo;
     }
-
-    public String getPlaneta() {
-        return planeta;
-    }
-
     public int getAntiguedad() {
         return antiguedad;
     }
 
-    public String tooString(){
-        return (this.identidad+": Cargo:"+this.cargo+" |Planeta:"+this.planeta+" |Antiguedad:"+this.antiguedad);
-        
+    protected double getliquidacionporantiguedad(){ /*Para que lo hereden tranquilamente todos sus hijos */
+        return (this.porcentadicional*this.liquidaciondehaberes())*this.antiguedad;
     }
-
-    //voy con metodo para decorator, el resultado deberá informar el total y mantener identificable el aporte de cada concepto.
-    public abstract double liquidaciondehaberes();
-    public abstract  String descripcionhaberes();
-    
+    public abstract double liquidacionporcargo();
 }
 

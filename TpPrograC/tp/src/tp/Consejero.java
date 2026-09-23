@@ -1,42 +1,34 @@
 package tp;
 
 public class Consejero extends Tripulante {
+    private int cantidadconsejos=0;
    // private int cantidadconsejos; ???
-    public Consejero(String id,String cargo,String planeta,int antiguedad) {
-         if (id == null || id.isBlank()) {
-            throw new IllegalArgumentException("El ID no puede ser nulo ni vacío.");
-        }
-        if (cargo == null || planeta == null) {
-            throw new IllegalArgumentException("Cargo y planeta son obligatorios.");
-        }
-        if (antiguedad < 0) {
-            throw new IllegalArgumentException("La antigüedad no puede ser negativa.");
-        }
-        this.identidad=id;
-        this.cargo="Consejero";
-        this.planeta=planeta;
-        this.antiguedad=antiguedad;
-        this.porcentadicional=5/100;
+    public Consejero(String id,String cargo,int antiguedad,double porcent) {
+        super(id,"Consejero",antiguedad,5/100);
     }
-       // cantidadconsejos=0;
-    
-
-   /*} public void nuevoconsejo() {
-        this.cantidadconsejos++;
-    }
-
-    public int getcantidadconsejos() {
-        return cantidadconsejos;
-    }
-    */
+  
    @Override
-    public double liquidaciondehaberes(){
+    public double liquidacionporcargo(){
         return 600;
     }
     @Override
     public String descripcionhaberes(){
-        return ("Correspondiente al cargo:"+this.liquidaciondehaberes());
+        return ("Correspondiente al cargo Consejero:"+this.liquidacionporcargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad()+" |Por ser Consejero:"+this.getliquidacionporcantconsejos());
 
     }
+    @Override
+    public double liquidaciondehaberes(){
+        return this.liquidacionporcargo()+this.getliquidacionporantiguedad()+this.getliquidacionporcantconsejos();
+    }
 
+    public int getCantidadconsejos() {
+        return cantidadconsejos;
+    }
+
+    public void addCantidadconsejos(int cantidadconsejos) {
+        this.cantidadconsejos+= cantidadconsejos;
+    }
+    public double getliquidacionporcantconsejos(){
+        return 2*this.cantidadconsejos;
+    }
 }
