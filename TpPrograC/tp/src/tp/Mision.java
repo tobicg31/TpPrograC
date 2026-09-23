@@ -12,7 +12,10 @@ public abstract class Mision { //preguntar que hace bien cada mision y el paso a
             System.out.println("Nave preparada!");
     }
 
-    public abstract void ejecutar(Nave n);
+    public void ejecutar(Nave n){
+        n.setCombustible( n.getCombustible() - 4);
+        n.setDesgaste(n.getDesgaste() + 4);        
+    }
 
     public abstract void evaluar(Nave n);
 
