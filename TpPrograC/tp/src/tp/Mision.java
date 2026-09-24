@@ -6,12 +6,7 @@ public abstract class Mision { //preguntar que hace bien cada mision y el paso a
     public void preparar(Nave n)throws NaveSinRecursosException{
         System.out.println("preparo la nave...");
         if (!((n.getCombustible() - 4 > 0) && (n.getDesgaste() + 4 < 100))){
-<<<<<<< HEAD
-            throw new ErrorMision("Fallo de recursos"); 
-            //revisar motor tambien, con su excepcion
-=======
             throw new NaveSinRecursosException("Fallo de recursos");
->>>>>>> 9a26559e7da3b0442642d85376e3d50ce20e6982
         }
         else
             System.out.println("Nave preparada!");
