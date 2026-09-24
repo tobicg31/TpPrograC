@@ -25,14 +25,12 @@ public abstract class Mision { //preguntar que hace bien cada mision y el paso a
     public void ejecutarMision(Nave n) {
         try{
             preparar(n);
-        }
-        catch(ErrorMision e){
-            System.out.println("Error: "+ e.getMessage());
-        }
-        finally{
             ejecutar(n);
             evaluar(n);
             cerrar(n);
+        }
+        catch(ErrorMision e){
+            System.out.println("Error: "+ e.getMessage());
         }
     }
 }
