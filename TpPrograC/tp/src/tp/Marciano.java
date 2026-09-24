@@ -7,15 +7,15 @@ public class Marciano extends DecoratorLiquidacion{
 
     @Override
     public String descripcionHaberes() {
-        return super.getLiquidable().descripcionHaberes()+" |Por origen Marciano:"+this.getliquidacionpororigen()+" |Total:"+this.liquidacionDeHaberes();
+        return super.getLiquidable().descripcionHaberes()+" |Por origen Marciano:"+this.getLiquidacionPorOrigen()+" |Total:"+this.liquidacionDeHaberes();
     }
 
     @Override
     public double liquidacionDeHaberes() {
-        return super.getLiquidable().liquidacionDeHaberes()+getliquidacionpororigen();
+        return super.getLiquidable().liquidacionDeHaberes()+getLiquidacionPorOrigen();
     }
 
-    private double getliquidacionpororigen() {
+    private double getLiquidacionPorOrigen() {
         return 18;
     }
 

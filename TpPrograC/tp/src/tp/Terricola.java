@@ -8,15 +8,15 @@ public class Terricola extends DecoratorLiquidacion {
 
     @Override
     public String descripcionHaberes() {
-        return super.getLiquidable().descripcionHaberes()+" |Por origen Terricola:"+this.getliquidacionpororigen()+" |Total:"+this.liquidacionDeHaberes();
+        return super.getLiquidable().descripcionHaberes()+" |Por origen Terricola:"+this.getLiquidacionPorOrigen()+" |Total:"+this.liquidacionDeHaberes();
     }
 
     @Override
     public double liquidacionDeHaberes() {
-        return super.getLiquidable().liquidacionDeHaberes()+getliquidacionpororigen();
+        return super.getLiquidable().liquidacionDeHaberes()+getLiquidacionPorOrigen();
     }
 
-    private double getliquidacionpororigen() {
+    private double getLiquidacionPorOrigen() {
         return 20;
     }
 
