@@ -4,7 +4,7 @@ package tp;
 
 public abstract class DecoratorLiquidacion implements Liquidable {
     private Liquidable liquidable;
-//reescribo tripulante.descripcionhaberes y lo transformo en abstracto
+//reescribo tripulante.descripcionHaberes y lo transformo en abstracto
     public Liquidable getLiquidable() {
         return liquidable;
     }

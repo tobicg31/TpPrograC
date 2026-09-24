@@ -1,22 +1,22 @@
 package tp;
 
 public class Teniente extends Tripulante {
-    public Teniente(String id,String cargo,int antiguedad,double porcent) {
-        super(id,"Teniente",antiguedad,3/100);
+    public Teniente(String id,String cargo,int antiguedad,double porcent, String planeta) {
+        super(id,"Teniente",antiguedad,0.03, planeta);
     }
     
 
     @Override
-    public double liquidacionporcargo(){
+    public double liquidacionPorCargo(){
         return 400;
     }
     @Override
-    public String descripcionhaberes(){
-        return ("Correspondiente al cargo Teniente:"+this.liquidacionporcargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
+    public String descripcionHaberes(){
+        return ("Correspondiente al cargo Teniente:"+this.liquidacionPorCargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
 
     }
     @Override
-    public double liquidaciondehaberes(){
-        return this.liquidacionporcargo()+this.getliquidacionporantiguedad();
+    public double liquidaciondeHaberes(){
+        return this.liquidacionPorCargo()+this.getliquidacionporantiguedad();
     }
 }

@@ -3,22 +3,22 @@ package tp;
 public class Capitan extends Tripulante {
     
 
-    public Capitan(String id,String cargo,int antiguedad,double porcent) {
-        super(id,"Capitan",antiguedad,20/100);
+    public Capitan(String id,String cargo,int antiguedad,double porcent, String planeta) {
+        super(id,"Capitan",antiguedad,0.2, planeta);
     }
 
     @Override
-    public double liquidacionporcargo(){
+    public double liquidacionPorCargo(){
         return 1000;
 
     }
     @Override
-    public String descripcionhaberes(){
-        return ("Correspondiente al cargo Capitan:"+this.liquidacionporcargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
+    public String descripcionHaberes(){
+        return ("Correspondiente al cargo Capitan:"+this.liquidacionPorCargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
 
     }
     @Override
-    public double liquidaciondehaberes(){
-        return this.liquidacionporcargo()+this.getliquidacionporantiguedad();
+    public double liquidaciondeHaberes(){
+        return this.liquidacionPorCargo()+this.getliquidacionporantiguedad();
     }
 }

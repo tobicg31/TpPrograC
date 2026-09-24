@@ -1,22 +1,22 @@
 package tp;
 
 public class Alferez extends Tripulante {
-    public Alferez(String id,String cargo,int antiguedad,double porcent) {
-        super(id,"Alferez",antiguedad,0.5/100);
+    public Alferez(String id,String cargo,int antiguedad,double porcent, String planeta) {
+        super(id,"Alferez",antiguedad,0.005, planeta);
     }
     
     @Override
-    public double liquidacionporcargo(){
+    public double liquidacionPorCargo(){
         return 200;
 
     }
     @Override
-    public String descripcionhaberes(){
-        return ("Correspondiente al cargo Alferez:"+this.liquidacionporcargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
+    public String descripcionHaberes(){
+        return ("Correspondiente al cargo Alferez:"+this.liquidacionPorCargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad());
 
     }
     @Override
-    public double liquidaciondehaberes(){
-        return this.liquidacionporcargo()+this.getliquidacionporantiguedad();
+    public double liquidaciondeHaberes(){
+        return this.liquidacionPorCargo()+this.getliquidacionporantiguedad();
     }
 }

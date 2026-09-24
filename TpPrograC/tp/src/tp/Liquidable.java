@@ -3,7 +3,7 @@ package tp;
 
 
 public interface Liquidable {
-    public String descripcionhaberes();
-    public double liquidaciondehaberes();
+    public String descripcionHaberes();
+    public double liquidaciondeHaberes();
     
 }

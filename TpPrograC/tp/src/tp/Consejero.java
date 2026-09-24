@@ -1,34 +1,33 @@
 package tp;
 
 public class Consejero extends Tripulante {
-    private int cantidadconsejos=0;
-   // private int cantidadconsejos; ???
-    public Consejero(String id,String cargo,int antiguedad,double porcent) {
-        super(id,"Consejero",antiguedad,5/100);
+    private int cantidadConsejos=0;
+   
+    public Consejero(String id,String cargo,int antiguedad,double porcent, String planeta) {
+        super(id,"Consejero",antiguedad,0.05, planeta);
     }
-  
    @Override
-    public double liquidacionporcargo(){
+    public double liquidacionPorCargo(){
         return 600;
     }
     @Override
-    public String descripcionhaberes(){
-        return ("Correspondiente al cargo Consejero:"+this.liquidacionporcargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad()+" |Por ser Consejero:"+this.getliquidacionporcantconsejos());
+    public String descripcionHaberes(){
+        return ("Correspondiente al cargo Consejero:"+this.liquidacionPorCargo()+" |Por antiguedad:"+this.getliquidacionporantiguedad()+" |Por ser Consejero:"+this.getLiquidacionPorCantConsejos());
 
     }
     @Override
-    public double liquidaciondehaberes(){
-        return this.liquidacionporcargo()+this.getliquidacionporantiguedad()+this.getliquidacionporcantconsejos();
+    public double liquidaciondeHaberes(){
+        return this.liquidacionPorCargo()+this.getliquidacionporantiguedad()+this.getLiquidacionPorCantConsejos();
     }
 
-    public int getCantidadconsejos() {
-        return cantidadconsejos;
+    public int getCantidadConsejos() {
+        return cantidadConsejos;
     }
 
-    public void addCantidadconsejos(int cantidadconsejos) {
-        this.cantidadconsejos+= cantidadconsejos;
+    public void addCantidadConsejos(int cantidadConsejos) {
+        this.cantidadConsejos+= cantidadConsejos;
     }
-    public double getliquidacionporcantconsejos(){
-        return 2*this.cantidadconsejos;
+    public double getLiquidacionPorCantConsejos(){
+        return 2*this.cantidadConsejos;
     }
 }
