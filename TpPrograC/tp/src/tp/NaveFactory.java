@@ -3,10 +3,8 @@ public class NaveFactory {
         switch (tipoNave){
             case "Carguero":
                 return new Carguero();
-                break;
             case "Combate":
                 return new Combate();
-                break;
             default:
                 return new Exploradora();
         }
