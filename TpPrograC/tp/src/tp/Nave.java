@@ -21,6 +21,7 @@ public abstract class Nave {
         this.combustible = comb;
         this.energia = ener;
         this.desgaste = des;
+        this.asistente = new Asistente(this);
     }
 
     public int getCombustible() {
@@ -45,6 +46,10 @@ public abstract class Nave {
 
     public void setDesgaste(int desgaste) {
         this.desgaste = desgaste;
+    }
+
+    public void ejecutarMision(Mision mision){
+        this.asistente.ejecutarMision(mision);
     }
     
     
