@@ -16,7 +16,7 @@ public class Consejero extends Tripulante {
 
     }
     @Override
-    public double liquidaciondeHaberes(){
+    public double liquidacionDeHaberes(){
         return this.liquidacionPorCargo()+this.getliquidacionporantiguedad()+this.getLiquidacionPorCantConsejos();
     }
 

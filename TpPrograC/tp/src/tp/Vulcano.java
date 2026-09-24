@@ -8,12 +8,12 @@ public class Vulcano extends DecoratorLiquidacion {
 
     @Override
     public String descripcionHaberes() {
-        return super.getLiquidable().descripcionHaberes()+" |Por origen Vulcano:"+this.getliquidacionpororigen()+" |Total:"+this.liquidaciondeHaberes();
+        return super.getLiquidable().descripcionHaberes()+" |Por origen Vulcano:"+this.getliquidacionpororigen()+" |Total:"+this.liquidacionDeHaberes();
     }
 
     @Override
-    public double liquidaciondeHaberes() {
-        return super.getLiquidable().liquidaciondeHaberes()+getliquidacionpororigen();
+    public double liquidacionDeHaberes() {
+        return super.getLiquidable().liquidacionDeHaberes()+getliquidacionpororigen();
     }
 
     private double getliquidacionpororigen() {
