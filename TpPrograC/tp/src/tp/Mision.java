@@ -3,10 +3,10 @@ package tp;
 public abstract class Mision { //preguntar que hace bien cada mision y el paso a paso
     
 
-    public void preparar(Nave n)throws ErrorMision{
+    public void preparar(Nave n)throws NaveSinRecursosException{
         System.out.println("preparo la nave...");
         if (!((n.getCombustible() - 4 > 0) && (n.getDesgaste() + 4 < 100))){
-            throw new ErrorMision("Fallo de recursos");
+            throw new NaveSinRecursosException("Fallo de recursos");
         }
         else
             System.out.println("Nave preparada!");
@@ -29,7 +29,7 @@ public abstract class Mision { //preguntar que hace bien cada mision y el paso a
             evaluar(n);
             cerrar(n);
         }
-        catch(ErrorMision e){
+        catch(NaveSinRecursosException e){
             System.out.println("Error: "+ e.getMessage());
         }
     }
