@@ -21,6 +21,36 @@ public abstract class Nave {
         this.combustible = comb;
         this.energia = ener;
         this.desgaste = des;
+        this.asistente = new Asistente(this);
     }
+
+    public int getCombustible() {
+        return combustible;
+    }
+
+    public void setCombustible(int combustible) {
+        this.combustible = combustible;
+    }
+
+    public int getEnergia() {
+        return energia;
+    }
+
+    public void setEnergia(int energia) {
+        this.energia = energia;
+    }
+
+    public int getDesgaste() {
+        return desgaste;
+    }
+
+    public void setDesgaste(int desgaste) {
+        this.desgaste = desgaste;
+    }
+
+    public void ejecutarMision(Mision mision){
+        this.asistente.ejecutarMision(mision);
+    }
+    
     
 }
