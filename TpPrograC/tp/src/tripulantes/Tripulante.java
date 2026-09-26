@@ -1,16 +1,18 @@
 package tripulantes;
 
+import tripulantes.decorator.Liquidable;
+
 public abstract class Tripulante implements Liquidable {
-    protected  String identidad, cargo, planeta;
+    protected String identidad, cargo, planeta;
     protected int antiguedad;
     protected double porcentAdicional;
-    
-    public Tripulante(String id,String cargo,int antiguedad,double porcent, String planeta) {
-        this.identidad=id;
-        this.cargo=cargo;
-        this.antiguedad=antiguedad;
-        this.porcentAdicional=porcent;
-        this.planeta=planeta;
+
+    public Tripulante(String id, String cargo, int antiguedad, double porcent, String planeta) {
+        this.identidad = id;
+        this.cargo = cargo;
+        this.antiguedad = antiguedad;
+        this.porcentAdicional = porcent;
+        this.planeta = planeta;
     }
 
     public String getIdentidad() {
@@ -29,9 +31,9 @@ public abstract class Tripulante implements Liquidable {
         return antiguedad;
     }
 
-    protected double getliquidacionporantiguedad(){ /*Para que lo hereden tranquilamente todos sus hijos */
-        return (this.porcentAdicional*this.liquidacionPorCargo())*this.antiguedad;
+    protected double getliquidacionporantiguedad() { /* Para que lo hereden tranquilamente todos sus hijos */
+        return (this.porcentAdicional * this.liquidacionPorCargo()) * this.antiguedad;
     }
+
     public abstract double liquidacionPorCargo();
 }
-

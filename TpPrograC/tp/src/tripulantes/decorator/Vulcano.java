@@ -1,18 +1,19 @@
-package tripulantes/decorator;
+package tripulantes.decorator;
 
 public class Vulcano extends DecoratorLiquidacion {
-    public Vulcano(Liquidable liquidable){
+    public Vulcano(Liquidable liquidable) {
         super.setLiquidable(liquidable);
     }
 
     @Override
     public String descripcionHaberes() {
-        return super.getLiquidable().descripcionHaberes()+" |Por origen Vulcano:"+this.getLiquidacionPorOrigen()+" |Total:"+this.liquidacionDeHaberes();
+        return super.getLiquidable().descripcionHaberes() + " |Por origen Vulcano:" + this.getLiquidacionPorOrigen()
+                + " |Total:" + this.liquidacionDeHaberes();
     }
 
     @Override
     public double liquidacionDeHaberes() {
-        return super.getLiquidable().liquidacionDeHaberes()+getLiquidacionPorOrigen();
+        return super.getLiquidable().liquidacionDeHaberes() + getLiquidacionPorOrigen();
     }
 
     private double getLiquidacionPorOrigen() {
@@ -20,4 +21,3 @@ public class Vulcano extends DecoratorLiquidacion {
     }
 
 }
-

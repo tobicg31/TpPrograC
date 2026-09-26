@@ -9,7 +9,7 @@ public class Bitacora {
         this.bitacora = new ArrayList<String>();
     }
 
-    public void agregarEntrada(String entrada){
+    public void agregarEntrada(String entrada) {
         this.bitacora.add(entrada);
     }
 }

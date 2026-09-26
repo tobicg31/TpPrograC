@@ -2,6 +2,12 @@ package naves;
 
 import java.util.ArrayList;
 
+import asistentes.Asistente;
+import bitacoras.Bitacora;
+import misiones.Mision;
+import naves.state.MotorState;
+import tripulantes.Tripulante;
+
 public abstract class Nave {
     private int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     private boolean mantenimineto;
@@ -9,15 +15,15 @@ public abstract class Nave {
     MotorState motorWarp;
     Asistente asistente;
     Bitacora bitacora;
-    
+
     public Nave(int comb, int ener, int des) {
-        this.maxComb = 100; //hace falta tener atributos de maximo o con aclararlo en el contrato alcanza
+        this.maxComb = 100; // hace falta tener atributos de maximo o con aclararlo en el contrato alcanza
         this.maxEnergia = 100;
         this.maxDesgaste = 100;
         this.tripulantes = new ArrayList<Tripulante>();
-        //motor disponible Disponible(this)
+        // motor disponible Disponible(this)
         this.mantenimineto = false;
-        this.bitacora=new Bitacora();
+        this.bitacora = new Bitacora();
         this.combustible = comb;
         this.energia = ener;
         this.desgaste = des;
@@ -48,9 +54,8 @@ public abstract class Nave {
         this.desgaste = desgaste;
     }
 
-    public void ejecutarMision(Mision mision){
+    public void ejecutarMision(Mision mision) {
         this.asistente.ejecutarMision(mision);
     }
-    
-    
+
 }

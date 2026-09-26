@@ -1,10 +1,11 @@
-package misiones/exepciones;
+package misiones.excepciones;
 
 public class NaveSinRecursosException extends Exception {
-    public NaveSinRecursosException(String m){
+    public NaveSinRecursosException(String m) {
         super(m);
     }
-    public NaveSinRecursosException(){
+
+    public NaveSinRecursosException() {
         super("Fallo de recursos");
     }
 }

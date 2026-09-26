@@ -1,6 +1,8 @@
 package misiones;
 
-public class Mision01 extends Mision{
+import naves.Nave;
+
+public class Mision01 extends Mision {
 
     @Override
     public void evaluar(Nave n) {
@@ -9,7 +11,7 @@ public class Mision01 extends Mision{
 
     @Override
     public void cerrar(Nave n) {
-        n.setEnergia(n.getEnergia()+5);
+        n.setEnergia(n.getEnergia() + 5);
     }
-    
+
 }
