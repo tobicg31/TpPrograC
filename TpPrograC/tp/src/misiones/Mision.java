@@ -1,11 +1,13 @@
 package misiones;
 
+import asistentes.Asistente;
 import misiones.excepciones.NaveSinRecursosException;
 import naves.Nave;
 
 public abstract class Mision {
     protected String nombre;
     protected int combustibleNecesario, desgaste;
+    protected Asistente asistete;
 
     public Mision(String nombre) {
         this.nombre = nombre;
@@ -19,15 +21,16 @@ public abstract class Mision {
 
     public void preparar(Nave n) throws NaveSinRecursosException {
         System.out.println("preparo la nave...");
-        if (!((n.getCombustible() - combustibleNecesario > 0) && (n.getDesgaste() + desgaste < 100))) {
+        if (!((n.getCombustible() - this.combustibleNecesario >= 0) && (n.getDesgaste() + this.desgaste <= 100))) {
             throw new NaveSinRecursosException("Fallo de recursos");
         } else
             System.out.println("Nave preparada!");
     }
 
     public void ejecutar(Nave n) {
-        n.setCombustible(n.getCombustible() - combustibleNecesario);
-        n.setDesgaste(n.getDesgaste() + desgaste);
+        n.setCombustible(n.getCombustible() - this.combustibleNecesario);
+        n.setDesgaste(n.getDesgaste() + this.desgaste);
+        this.asistete.getBitacora().agregarEntrada("Se redujo el combustible de la nave en  " + this.combustibleNecesario + " unidades y aumentó el desgaste en " + this.desgaste + " unidades", "RECURSOS");
     }
 
     public abstract void evaluar(Nave n); // fecha, recursos, que hizo
@@ -47,6 +50,10 @@ public abstract class Mision {
         ejecutar(n);
         evaluar(n);
         cerrar(n);
+    }
+
+    public void setAsistente(Asistente asistente) {
+        this.asistete = asistente;
     }
 
 }

@@ -12,8 +12,10 @@ public class NaveFactory {
                 return new Carguero();
             case "Combate":
                 return new Combate();
-            default:
+            case "Exploradora":
                 return new Exploradora();
+            default:
+                return null;
         }
     }
 }

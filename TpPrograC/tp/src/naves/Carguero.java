@@ -1,6 +1,5 @@
 package naves;
 
-import asistentes.Asistente;
 
 public class Carguero extends Nave {
     public Carguero() {

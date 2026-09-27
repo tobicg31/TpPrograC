@@ -35,6 +35,7 @@ public class Asistente {
     public void ejecutarMision(Mision mision) {
 
         try {
+            mision.setAsistente(this);
             mision.ejecutarMision(this.nave);
             this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " ejecutada con exito", "INFO");
         } catch (NaveSinRecursosException e) {
