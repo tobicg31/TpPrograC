@@ -3,28 +3,32 @@ package naves;
 import java.util.ArrayList;
 
 import asistentes.Asistente;
-import misiones.Mision;
 import naves.state.MotorState;
 import tripulantes.Tripulante;
 
 public abstract class Nave {
-    private int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
-    private boolean mantenimineto;
-    ArrayList<Tripulante> tripulantes;
-    MotorState motorWarp;
-    Asistente asistente;
+    protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
+    protected boolean mantenimineto;
+    protected ArrayList<Tripulante> tripulantes;
+    protected MotorState motorWarp;
+    protected Asistente asistente;
 
-    public Nave(int comb, int ener, int des) {
-        this.maxComb = 100; // hace falta tener atributos de maximo o con aclararlo en el contrato alcanza
+    /**
+     * Constructor de la clase Nave.
+     * @param combustible Este parámetro representa la cantidad de combustible de la nave, no puede ser negativo.
+     * @param energia Este parámetro representa la cantidad de energía de la nave, no puede ser negativo.
+     * @param desgaste Este parámetro representa el nivel de desgaste de la nave, no puede ser negativo.
+     */
+    public Nave(int combustible, int energia, int desgaste) {
+        this.maxComb = 100;
         this.maxEnergia = 100;
         this.maxDesgaste = 100;
         this.tripulantes = new ArrayList<Tripulante>();
-        // motor disponible Disponible(this)
+        // Motor disponible Disponible(this)
         this.mantenimineto = false;
-        this.combustible = comb;
-        this.energia = ener;
-        this.desgaste = des;
-        this.asistente = new Asistente(this);
+        this.combustible = combustible;
+        this.energia = energia;
+        this.desgaste = desgaste;
     }
 
     public int getCombustible() {
@@ -67,8 +71,8 @@ public abstract class Nave {
         this.desgaste = desgaste;
     }
 
-    public void ejecutarMision(Mision mision) {
-        this.asistente.ejecutarMision(mision);
+    public void setAsistente(Asistente asistente) {
+        this.asistente = asistente;
     }
 
 }

@@ -9,8 +9,13 @@ public class Asistente {
     private Nave nave;
     private Bitacora bitacora;
 
+    /**
+     * Constructor de la clase Asistente.
+     * @param n Este parámetro representa la nave que se desea asociar al asistente, no puede ser nulo.
+     */
     public Asistente(Nave n) {
         this.nave = n;
+        n.setAsistente(this);
         this.bitacora = new Bitacora();
     }
 
@@ -37,4 +42,7 @@ public class Asistente {
         }
     }
 
+    public void consultarBitacora() {
+        this.bitacora.consultarBitacora();
+    }
 }

@@ -40,9 +40,9 @@ public abstract class Mision {
      * 
      * @param n Este parámetro representa la nave que se utilizará para ejecutar la misión, no puede ser nulo.
      * @throws NaveSinRecursosException Esta excepción se lanza si la nave no tiene suficientes recursos para ejecutar la misión.
+     * @return Realiza el paso a paso de la ejecución de la misión, incluyendo preparación, ejecución, evaluación y cierre, utilizando la nave proporcionada.
      */
     public void ejecutarMision(Nave n) throws NaveSinRecursosException {
-        // Método del Patrón Template
         preparar(n);
         ejecutar(n);
         evaluar(n);
