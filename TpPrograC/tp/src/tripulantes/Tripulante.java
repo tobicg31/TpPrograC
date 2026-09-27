@@ -7,11 +7,11 @@ public abstract class Tripulante implements Liquidable {
     protected int antiguedad;
     protected double porcentAdicional;
 
-    public Tripulante(String id, String cargo, int antiguedad, double porcent, String planeta) {
-        this.identidad = id;
+    public Tripulante(String identidad, String cargo, int antiguedad, double porcentAdicional, String planeta) {
+        this.identidad = identidad;
         this.cargo = cargo;
         this.antiguedad = antiguedad;
-        this.porcentAdicional = porcent;
+        this.porcentAdicional = porcentAdicional;
         this.planeta = planeta;
     }
 
@@ -31,9 +31,16 @@ public abstract class Tripulante implements Liquidable {
         return antiguedad;
     }
 
-    protected double getliquidacionporantiguedad() { /* Para que lo hereden tranquilamente todos sus hijos */
+    public abstract double liquidacionPorCargo();
+
+    /**
+     * Método que calcula la parte de la liquidación correspondiente a la antigüedad
+     * del tripulante.
+     *
+     * @return La liquidación por antigüedad.
+     */
+    protected double liquidacionPorAntiguedad() {
         return (this.porcentAdicional * this.liquidacionPorCargo()) * this.antiguedad;
     }
 
-    public abstract double liquidacionPorCargo();
 }

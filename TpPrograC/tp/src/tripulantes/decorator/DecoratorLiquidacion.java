@@ -1,7 +1,8 @@
 package tripulantes.decorator;
 
 public abstract class DecoratorLiquidacion implements Liquidable {
-    private Liquidable liquidable;
+    protected Liquidable liquidable;
+    protected double subsidioPorOrigen;
 
     public Liquidable getLiquidable() {
         return liquidable;

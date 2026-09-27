@@ -15,13 +15,13 @@ public class Consejero extends Tripulante {
     @Override
     public String descripcionHaberes() {
         return ("Correspondiente al cargo Consejero:" + this.liquidacionPorCargo() + " |Por antiguedad:"
-                + this.getliquidacionporantiguedad() + " |Por ser Consejero:" + this.getLiquidacionPorCantConsejos());
+                + this.liquidacionPorAntiguedad() + " |Por ser Consejero:" + this.getLiquidacionPorCantConsejos());
 
     }
 
     @Override
     public double liquidacionDeHaberes() {
-        return this.liquidacionPorCargo() + this.getliquidacionporantiguedad() + this.getLiquidacionPorCantConsejos();
+        return this.liquidacionPorCargo() + this.liquidacionPorAntiguedad() + this.getLiquidacionPorCantConsejos();
     }
 
     public int getCantidadConsejos() {

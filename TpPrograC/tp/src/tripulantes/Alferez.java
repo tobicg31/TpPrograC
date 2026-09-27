@@ -8,18 +8,17 @@ public class Alferez extends Tripulante {
     @Override
     public double liquidacionPorCargo() {
         return 200;
-
     }
 
     @Override
     public String descripcionHaberes() {
         return ("Correspondiente al cargo Alferez:" + this.liquidacionPorCargo() + " |Por antiguedad:"
-                + this.getliquidacionporantiguedad());
+                + this.liquidacionPorAntiguedad());
 
     }
 
     @Override
     public double liquidacionDeHaberes() {
-        return this.liquidacionPorCargo() + this.getliquidacionporantiguedad();
+        return this.liquidacionPorCargo() + this.liquidacionPorAntiguedad();
     }
 }

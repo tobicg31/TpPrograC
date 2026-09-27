@@ -15,12 +15,12 @@ public class Capitan extends Tripulante {
     @Override
     public String descripcionHaberes() {
         return ("Correspondiente al cargo Capitan:" + this.liquidacionPorCargo() + " |Por antiguedad:"
-                + this.getliquidacionporantiguedad());
+                + this.liquidacionPorAntiguedad());
 
     }
 
     @Override
     public double liquidacionDeHaberes() {
-        return this.liquidacionPorCargo() + this.getliquidacionporantiguedad();
+        return this.liquidacionPorCargo() + this.liquidacionPorAntiguedad();
     }
 }
