@@ -3,6 +3,7 @@ package naves;
 import java.util.ArrayList;
 
 import asistentes.Asistente;
+import naves.state.Disponible;
 import naves.state.MotorState;
 import tripulantes.Tripulante;
 
@@ -25,6 +26,7 @@ public abstract class Nave {
         this.maxDesgaste = 100;
         this.tripulantes = new ArrayList<Tripulante>();
         // Motor disponible Disponible(this)
+        motorWarp = new Disponible(this);
         this.mantenimineto = false;
         this.combustible = combustible;
         this.energia = energia;
@@ -74,6 +76,9 @@ public abstract class Nave {
 
     public void setAsistente(Asistente asistente) {
         this.asistente = asistente;
+    }
+    public void setEstado(MotorState estado){
+        this.motorWarp = estado;
     }
 
 }
