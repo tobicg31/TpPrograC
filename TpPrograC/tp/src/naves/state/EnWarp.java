@@ -1,4 +1,4 @@
 package naves.state;
 
-public class EnWarp extends MotorState {
+public class EnWarp implements MotorState {
 }

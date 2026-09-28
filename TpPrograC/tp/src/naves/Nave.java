@@ -29,6 +29,7 @@ public abstract class Nave {
         this.combustible = combustible;
         this.energia = energia;
         this.desgaste = desgaste;
+        this.asistente = null;
     }
 
     public int getCombustible() {

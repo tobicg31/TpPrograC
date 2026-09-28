@@ -13,6 +13,7 @@ public abstract class Mision {
         this.nombre = nombre;
         this.combustibleNecesario = 4;
         this.desgaste = 4;
+        this.asistete = null;
     }
 
     public String getNombreMision() {

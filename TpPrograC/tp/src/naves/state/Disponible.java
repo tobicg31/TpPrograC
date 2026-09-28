@@ -1,5 +1,5 @@
 package naves.state;
 
-public class Disponible extends MotorState {
+public class Disponible implements MotorState {
 
 }

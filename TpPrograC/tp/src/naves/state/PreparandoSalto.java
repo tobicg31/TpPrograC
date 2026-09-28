@@ -1,5 +1,5 @@
 package naves.state;
 
-public class PreparandoSalto extends MotorState {
+public class PreparandoSalto implements MotorState {
     
 }
