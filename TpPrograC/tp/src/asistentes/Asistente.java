@@ -22,6 +22,10 @@ public class Asistente {
         return bitacora;
     }
 
+    public void hacerMantenimiento(Nave nave){
+        nave.setDesgaste(0);
+    }
+
     /**
      * Este método permite ejecutar una misión utilizando la nave asociada al asistente.
      * @param mision Este parámetro representa la misión que se desea ejecutar, no puede ser nulo.
@@ -37,7 +41,6 @@ public class Asistente {
             this.bitacora.agregarEntrada("Error al ejecutar mision " + mision.getNombreMision() + ": " + e.getMessage(), "ERROR");
         } catch (NaveMantenimientoException e){
             this.bitacora.agregarEntrada("Error al ejecutar mision " + mision.getNombreMision() + ": " + e.getMessage(), "ERROR");
-            nave.setDesgaste(0);
         }
     }
 
