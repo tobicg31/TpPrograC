@@ -15,7 +15,6 @@ public class Asistente {
      */
     public Asistente(Nave n) {
         this.nave = n;
-        n.setAsistente(this);
         this.bitacora = new Bitacora();
     }
 
