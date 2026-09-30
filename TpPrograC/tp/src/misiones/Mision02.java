@@ -1,0 +1,20 @@
+package misiones;
+
+import naves.Nave;
+
+public class Mision02 extends Mision {
+    public Mision02(String nombre) {
+        super(nombre);
+        //TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public void evaluar(Nave n) {
+        System.out.println("Mision 02: Recoleccion | ");
+    }
+
+    @Override
+    public void cerrar(Nave n) {
+        n.setEnergia(n.getEnergia() + 5);
+    }
+}

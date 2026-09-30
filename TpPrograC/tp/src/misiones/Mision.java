@@ -1,0 +1,60 @@
+package misiones;
+
+import asistentes.Asistente;
+import misiones.excepciones.NaveSinRecursosException;
+import naves.Nave;
+
+public abstract class Mision {
+    protected String nombre;
+    protected int combustibleNecesario, desgaste;
+    protected Asistente asistete;
+
+    public Mision(String nombre) {
+        this.nombre = nombre;
+        this.combustibleNecesario = 4;
+        this.desgaste = 4;
+        this.asistete = null;
+    }
+
+    public String getNombreMision() {
+        return nombre;
+    }
+
+    public void preparar(Nave n) throws NaveSinRecursosException {
+        System.out.println("preparo la nave...");
+        if (!((n.getCombustible() - this.combustibleNecesario >= 0) && (n.getDesgaste() + this.desgaste <= 100))) {
+            throw new NaveSinRecursosException("Fallo de recursos");
+        } else
+            System.out.println("Nave preparada!");
+    }
+
+    public void ejecutar(Nave n) {
+        n.setCombustible(n.getCombustible() - this.combustibleNecesario);
+        n.setDesgaste(n.getDesgaste() + this.desgaste);
+        this.asistete.getBitacora().agregarEntrada("Se redujo el combustible de la nave en  " + this.combustibleNecesario + " unidades y aumentó el desgaste en " + this.desgaste + " unidades", "RECURSOS");
+    }
+
+    public abstract void evaluar(Nave n); // fecha, recursos, que hizo
+
+    public void cerrar(Nave n) {
+    }
+
+    /**
+     * Este método permite ejecutar una misión utilizando la nave proporcionada.
+     * 
+     * @param n Este parámetro representa la nave que se utilizará para ejecutar la misión, no puede ser nulo.
+     * @throws NaveSinRecursosException Esta excepción se lanza si la nave no tiene suficientes recursos para ejecutar la misión.
+     * @return Realiza el paso a paso de la ejecución de la misión, incluyendo preparación, ejecución, evaluación y cierre, utilizando la nave proporcionada.
+     */
+    public void ejecutarMision(Nave n) throws NaveSinRecursosException {
+        preparar(n);
+        ejecutar(n);
+        evaluar(n);
+        cerrar(n);
+    }
+
+    public void setAsistente(Asistente asistente) {
+        this.asistete = asistente;
+    }
+
+}
