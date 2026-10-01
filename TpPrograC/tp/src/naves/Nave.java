@@ -13,7 +13,6 @@ public abstract class Nave {
     protected boolean mantenimineto;
     protected ArrayList<Tripulante> tripulantes;
     protected MotorState motorWarp;
-    protected Asistente asistente;
 
     /**
      * Constructor de la clase Nave.
@@ -32,7 +31,6 @@ public abstract class Nave {
         this.combustible = combustible;
         this.energia = energia;
         this.desgaste = desgaste;
-        this.asistente = new Asistente(this);
     }
 
     public void ejecutarMision(Mision mision){

@@ -7,7 +7,7 @@ import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
 
 public class Asistente {
-    //private Nave nave;
+    private Nave nave;
     private Bitacora bitacora;
 
     /**
