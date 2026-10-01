@@ -23,7 +23,7 @@ public class EnWarp implements MotorState {
     }
 
     @Override
-    public void enWarp() {
+    public void saltar() {
         System.out.println("ERROR: ya se esta en Warp. Enfrie el motor o pase a disponible");
     }
 
@@ -33,7 +33,7 @@ public class EnWarp implements MotorState {
     }
 
     @Override
-    public void disponible() {
+    public void pasaTiempo() {
         this.nave.setEstado(new Disponible(this.nave));
     }
 }

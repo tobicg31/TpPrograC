@@ -22,7 +22,7 @@ public class Disponible implements MotorState {
     }
 
     @Override
-    public void enWarp() {
+    public void saltar() {
         System.out.println("ERROR: falta preparar el salto. Prepare el salto para comenzar");
     }
 
@@ -32,7 +32,7 @@ public class Disponible implements MotorState {
     }
 
     @Override
-    public void disponible() {
+    public void pasaTiempo() {
         System.out.println("ERROR: ya esta disponible el motor. Prepare el salto para comenzar");
     }
 

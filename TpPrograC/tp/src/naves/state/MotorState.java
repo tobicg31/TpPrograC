@@ -2,7 +2,7 @@ package naves.state;
 
 public interface MotorState {
     void prepararSalto();
-    void enWarp();
+    void saltar();
     void enfriar();
-    void disponible();
+    void pasaTiempo();
 }

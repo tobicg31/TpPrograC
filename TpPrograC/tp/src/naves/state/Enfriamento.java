@@ -22,7 +22,7 @@ public class Enfriamento implements MotorState {
     }
 
     @Override
-    public void enWarp() {
+    public void saltar() {
         System.out.println("ERROR: no esta preparado el motor. Ponga el motor en disponible");
     }
 
@@ -32,7 +32,7 @@ public class Enfriamento implements MotorState {
     }
 
     @Override
-    public void disponible() {
+    public void pasaTiempo() {
         this.nave.setEstado(new Disponible(this.nave));
     }
 }
