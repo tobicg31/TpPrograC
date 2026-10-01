@@ -15,7 +15,7 @@ private ArrayList<Asistente> asistentes = new ArrayList<Asistente>();
      * 
      * Asistente está registrado en el sistema.
      */
-    public static void registrarAsistente(Asistente asistente) {
+    public  void registrarAsistente(Asistente asistente) {
         this.asistentes.add(asistente);
         System.out.println("Asistente registrado en el sistema.");
     }
@@ -24,7 +24,7 @@ private ArrayList<Asistente> asistentes = new ArrayList<Asistente>();
      * Este método permite obtener la lista de asistentes registrados en el sistema.
      * @return Una lista con los asistentes registrados.
      */
-    public static ArrayList<Asistente> getAsistentesDeNaves() {
+    public ArrayList<Asistente> getAsistentesDeNaves() {
         return this.asistentes;
     }
 
