@@ -32,7 +32,7 @@ public abstract class Nave {
         this.combustible = combustible;
         this.energia = energia;
         this.desgaste = desgaste;
-        this.asistente = null;
+        this.asistente = new Asistente(this);
     }
 
     public void ejecutarMision(Mision mision){
@@ -79,9 +79,6 @@ public abstract class Nave {
         this.desgaste = desgaste;
     }
 
-    public void setAsistente(Asistente asistente) {
-        this.asistente = asistente;
-    }
     public void setEstado(MotorState estado){
         this.motorWarp = estado;
     }
