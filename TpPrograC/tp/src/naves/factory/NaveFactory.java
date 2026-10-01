@@ -6,7 +6,7 @@ import naves.Exploradora;
 import naves.Nave;
 
 public class NaveFactory {
-    public Nave getNave(String tipoNave) {
+    public static Nave getNave(String tipoNave) {
         switch (tipoNave) {
             case "Carguero":
                 return new Carguero();

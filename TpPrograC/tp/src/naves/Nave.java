@@ -2,18 +2,15 @@ package naves;
 
 import java.util.ArrayList;
 
-import asistentes.Asistente;
 import naves.state.Disponible;
 import naves.state.MotorState;
 import tripulantes.Tripulante;
-import misiones.Mision;
 
 public abstract class Nave {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimineto;
     protected ArrayList<Tripulante> tripulantes;
     protected MotorState motorWarp;
-    protected Asistente asistente;
 
     /**
      * Constructor de la clase Nave.
@@ -26,17 +23,11 @@ public abstract class Nave {
         this.maxEnergia = 100;
         this.maxDesgaste = 100;
         this.tripulantes = new ArrayList<Tripulante>();
-        // Motor disponible Disponible(this)
         motorWarp = new Disponible(this);
         this.mantenimineto = false;
         this.combustible = combustible;
         this.energia = energia;
         this.desgaste = desgaste;
-        this.asistente = new Asistente(this);
-    }
-
-    public void ejecutarMision(Mision mision){
-        this.asistente.ejecutarMision(mision, this);
     }
 
     public int getCombustible() {
