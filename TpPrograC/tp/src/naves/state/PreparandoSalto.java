@@ -3,9 +3,15 @@ package naves.state;
 import naves.Nave;
 
 public class PreparandoSalto implements MotorState {
-
     private Nave nave;
 
+    /**
+     * Constructor de la clase PreparandoSalto.
+     * <b>PRE:</b>
+     * - n != null
+     * 
+     * @param n Nave a la que pertenece el estado PreparandoSalto.
+     */
     public PreparandoSalto(Nave n) {
         this.nave = n;
     }
@@ -29,5 +35,5 @@ public class PreparandoSalto implements MotorState {
     public void disponible() {
         System.out.println("ERROR: preparando un salto no se puede estar disponible. Pase el motor en warp");
     }
-    
+
 }
