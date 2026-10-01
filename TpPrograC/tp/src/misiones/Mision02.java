@@ -3,18 +3,29 @@ package misiones;
 import naves.Nave;
 
 public class Mision02 extends Mision {
-    public Mision02(String nombre) {
-        super(nombre);
-        //TODO Auto-generated constructor stub
-    }
 
+    /**
+     * (non-Javadoc)
+     * 
+     * @see misiones.Mision#evaluar(naves.Nave)
+     * @return Agrega a la bitacora el informe de la misión.
+     */
     @Override
-    public String evaluar(Nave n) {
-        String informe = "Mision 02: Recoleccion | combustible gastado: "+ this.combustibleNecesario + " desgaste efectuado en la nave: " + this.desgaste;
-        informe += "Estado final nave: Combustible: "+ n.getCombustible() + " Energia: "+ n.getEnergia()+ " Desgaste: "+ n.getDesgaste();
-        return informe;
+    public void evaluar(Nave n) {
+        System.out.println("Evaluando misión 01...");
+        String informe = "Mision 02: Recoleccion | combustible gastado: " + this.combustibleNecesario
+                + " desgaste efectuado en la nave: " + this.desgaste;
+        informe += "Estado final nave: Combustible: " + n.getCombustible() + " Energia: " + n.getEnergia()
+                + " Desgaste: " + n.getDesgaste();
+        this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
     }
 
+    /**
+     * (non-Javadoc)
+     * 
+     * @see misiones.Mision#cerrar(naves.Nave)
+     * @return Modifica la energia de la nave.
+     */
     @Override
     public void cerrar(Nave n) {
         n.setEnergia(n.getEnergia() + 5);
