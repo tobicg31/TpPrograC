@@ -6,6 +6,7 @@ import asistentes.Asistente;
 import naves.state.Disponible;
 import naves.state.MotorState;
 import tripulantes.Tripulante;
+import misiones.Mision;
 
 public abstract class Nave {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
@@ -32,6 +33,10 @@ public abstract class Nave {
         this.energia = energia;
         this.desgaste = desgaste;
         this.asistente = new Asistente(this);
+    }
+
+    public void ejecutarMision(Mision mision){
+        this.asistente.ejecutarMision(mision, this);
     }
 
     public int getCombustible() {
@@ -66,7 +71,7 @@ public abstract class Nave {
         return maxDesgaste;
     }
 
-    public boolean isMantenimineto() {
+    public boolean requiereMantenimineto() {
         return mantenimineto;
     }
 
