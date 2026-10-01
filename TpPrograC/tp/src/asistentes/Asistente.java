@@ -12,9 +12,12 @@ public class Asistente {
 
     /**
      * Constructor de la clase Asistente.
+     * <b>PRE:</b>
+     * - nave != null
      * 
      * @param nave Este parámetro representa la nave que se desea asociar al
-     *             asistente, no puede ser nulo.
+     *             asistente.
+     * @return Crea un nuevo objeto Asistente con la nave proporcionada y una nueva bitácora.
      */
     public Asistente(Nave nave) {
         this.nave = nave;
@@ -32,9 +35,10 @@ public class Asistente {
     /**
      * Este método permite ejecutar una misión utilizando la nave asociada al
      * asistente.
+     * <b>PRE:</b>
+     * - mision != null
      * 
-     * @param mision Este parámetro representa la misión que se desea ejecutar, no
-     *               puede ser nulo.
+     * @param mision Este parámetro representa la misión que se desea ejecutar.
      * @return Registra en la bitácora el resultado de la ejecución de la misión.
      */
     public void ejecutarMision(Mision mision) {

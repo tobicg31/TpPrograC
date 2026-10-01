@@ -6,6 +6,15 @@ import misiones.Mision02;
 import misiones.Mision03;
 
 public class MisionFactory {
+
+  /**
+   * Método que devuelve una instancia de Mision según el tipo de misión.
+   * <b>PRE:</b> 
+   * - tipoMision != null && !tipoMision.isEmpty()
+   *
+   * @param tipoMision El tipo de misión ("01", "02", "03").
+   * @return Una instancia de Mision correspondiente al tipo especificado, o null si el tipo no es válido.
+   */
   public static Mision getMision(String tipoMision) {
     switch (tipoMision) {
       case "01":

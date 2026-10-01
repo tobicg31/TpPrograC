@@ -5,6 +5,13 @@ import naves.Nave;
 public class Disponible implements MotorState {
     private Nave nave;
 
+    /**
+     * Constructor de la clase Disponible.
+     * <b>PRE:</b>
+     * - n != null
+     * 
+     * @param n Nave a la que pertenece el estado Disponible.
+     */
     public Disponible(Nave n) {
         this.nave = n;
     }

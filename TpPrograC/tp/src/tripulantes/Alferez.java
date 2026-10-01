@@ -1,6 +1,7 @@
 package tripulantes;
 
 public class Alferez extends Tripulante {
+
     public Alferez(String id, String cargo, int antiguedad, double porcent, String planeta) {
         super(id, "Alferez", antiguedad, 0.005, planeta);
     }
