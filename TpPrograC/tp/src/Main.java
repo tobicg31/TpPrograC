@@ -1,21 +1,31 @@
-
-
-
+import asistentes.Asistente;
+import bitacoras.Bitacora;
+import misiones.Mision;
+import naves.Nave;
+import naves.factory.NaveFactory;
+import tripulantes.Alferez;
+import tripulantes.Capitan;
+import tripulantes.Consejero;
+import tripulantes.Teniente;
+import tripulantes.decorator.Liquidable;
+import tripulantes.decorator.Marciano;
+import tripulantes.decorator.Terricola;
+import tripulantes.decorator.Vulcano;
 
 public class Main {
-    public static void Main(String [] args){
+    public static void main(String [] args){
        Nave nave = NaveFactory.getNave("Combate"); 
        Asistente asistente = new Asistente(nave); 
        Sistema.registrarAsistente(asistente);
        System.out.println("--- INICIO: Estado Inicial ---");
 
 
-       nave.MotorWarp.prepararSalto(); 
-       nave.MotorWarp.saltar();         
-       nave.MotorWarp.pasaTiempo();
+       nave.getMotor().prepararSalto(); 
+       nave.getMotor().saltar();         
+       nave.getMotor().pasaTiempo();
        
-       nave.MotorWarp.prepararSalto();        
-       nave.MotorWarp.pasaTiempo();
+       nave.getMotor().prepararSalto();        
+       nave.getMotor().pasaTiempo();
  
        Mision m1 = MisionFactory.getMision("01");
        asistente.ejecutarMision(m1, nave);
