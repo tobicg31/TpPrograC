@@ -2,24 +2,28 @@ package naves;
 
 import java.util.ArrayList;
 
-import asistentes.Asistente;
 import naves.state.Disponible;
 import naves.state.MotorState;
 import tripulantes.Tripulante;
-import misiones.Mision;
 
 public abstract class Nave {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimineto;
     protected ArrayList<Tripulante> tripulantes;
     protected MotorState motorWarp;
-    protected Asistente asistente;
 
     /**
      * Constructor de la clase Nave.
-     * @param combustible Este parámetro representa la cantidad de combustible de la nave, no puede ser negativo.
-     * @param energia Este parámetro representa la cantidad de energía de la nave, no puede ser negativo.
-     * @param desgaste Este parámetro representa el nivel de desgaste de la nave, no puede ser negativo.
+     * <b>PRE:</b>
+     * - combustible >= 0
+     * - energia >= 0
+     * - desgaste >= 0
+     * 
+     * @param combustible Este parámetro representa la cantidad de combustible de la
+     *                    nave.
+     * @param energia     Este parámetro representa la cantidad de energía de la
+     *                    nave.
+     * @param desgaste    Este parámetro representa el nivel de desgaste de la nave.
      */
     public Nave(int combustible, int energia, int desgaste) {
         this.maxComb = 100;
@@ -82,7 +86,7 @@ public abstract class Nave {
         this.desgaste = desgaste;
     }
 
-    public void setEstado(MotorState estado){
+    public void setEstado(MotorState estado) {
         this.motorWarp = estado;
     }
 

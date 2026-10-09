@@ -1,11 +1,19 @@
 package misiones.excepciones;
 
 public class NaveMantenimientoException extends Exception {
-    public NaveMantenimientoException(String m){
+
+    /**
+     * Constructor de la clase NaveMantenimientoException.
+     * <b>PRE:</b>
+     * - m != null && !m.isEmpty()
+     * 
+     * @param m Mensaje de error.
+     */
+    public NaveMantenimientoException(String m) {
         super(m);
     }
-    public NaveMantenimientoException(){
+
+    public NaveMantenimientoException() {
         super("La nave requiere mantenimiento");
     }
 }
-

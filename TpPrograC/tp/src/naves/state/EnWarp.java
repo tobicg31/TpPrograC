@@ -5,16 +5,25 @@ import naves.Nave;
 public class EnWarp implements MotorState {
     private Nave nave;
 
+    /**
+     * Constructor de la clase EnWarp.
+     * <b>PRE:</b>
+     * - n != null
+     * 
+     * @param n Nave a la que pertenece el estado EnWarp.
+     */
     public EnWarp(Nave n) {
         this.nave = n;
     }
+
     @Override
     public void prepararSalto() {
-        System.out.println("ERROR: no se puede preparar el salto en medio de un salto. Enfrie el motor o pase a disponible");
+        System.out.println(
+                "ERROR: no se puede preparar el salto en medio de un salto. Enfrie el motor o pase a disponible");
     }
 
     @Override
-    public void enWarp() {
+    public void saltar() {
         System.out.println("ERROR: ya se esta en Warp. Enfrie el motor o pase a disponible");
     }
 
@@ -24,7 +33,7 @@ public class EnWarp implements MotorState {
     }
 
     @Override
-    public void disponible() {
+    public void pasaTiempo() {
         this.nave.setEstado(new Disponible(this.nave));
     }
 }
