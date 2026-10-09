@@ -36,14 +36,9 @@ public abstract class Nave {
         this.combustible = combustible;
         this.energia = energia;
         this.desgaste = desgaste;
-        this.asistente = new Asistente(this);
     }
     public MotorState getMotor(){
         return this.motorWarp;
-    }
-
-    public void ejecutarMision(Mision mision){
-        this.asistente.ejecutarMision(mision, this);
     }
 
     public int getCombustible() {
