@@ -30,7 +30,6 @@ public abstract class Nave {
         this.maxEnergia = 100;
         this.maxDesgaste = 100;
         this.tripulantes = new ArrayList<Tripulante>();
-        // Motor disponible Disponible(this)
         this.motorWarp = new Disponible(this);
         this.mantenimineto = false;
         this.combustible = combustible;
