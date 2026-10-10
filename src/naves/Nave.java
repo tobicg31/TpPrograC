@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import naves.state.Disponible;
 import naves.state.MotorState;
-import tripulantes.Tripulante;
+import tripulantes.decorator.Liquidable;
 
 /**
  * Esta clase representa las naves.
@@ -18,7 +18,7 @@ import tripulantes.Tripulante;
 public abstract class Nave {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimineto;
-    protected ArrayList<Tripulante> tripulantes;
+    protected ArrayList<Liquidable> tripulantes;
     protected MotorState motorWarp;
 
     private boolean invariante() {
@@ -45,7 +45,7 @@ public abstract class Nave {
         this.maxComb = 100;
         this.maxEnergia = 100;
         this.maxDesgaste = 100;
-        this.tripulantes = new ArrayList<Tripulante>();
+        this.tripulantes = new ArrayList<Liquidable>();
         this.motorWarp = new Disponible(this);
         this.mantenimineto = false;
         this.combustible = combustible;
@@ -53,7 +53,7 @@ public abstract class Nave {
         this.desgaste = desgaste;
     }
 
-    public void agregarTripulante(Tripulante t){
+    public void agregarTripulante(Liquidable t){
         this.tripulantes.add(t);
     }
 

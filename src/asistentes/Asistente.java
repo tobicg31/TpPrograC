@@ -6,6 +6,7 @@ import misiones.excepciones.NaveSinRecursosException;
 import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
 import tripulantes.Tripulante;
+import tripulantes.decorator.Liquidable;
 
 /**
  * Esta clase representa al Asistente de Comandos que se encarga de ejecutar
@@ -74,7 +75,7 @@ public class Asistente {
         }
     }
 
-    public void agregarTripulante(Tripulante t){
+    public void agregarTripulante(Liquidable t){
         this.nave.agregarTripulante(t);
     }
 
