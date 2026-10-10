@@ -4,6 +4,7 @@ import naves.Nave;
 
 public class EnWarp implements MotorState {
     private Nave nave;
+    private String descripcion;
 
     /**
      * Constructor de la clase EnWarp.
@@ -14,6 +15,11 @@ public class EnWarp implements MotorState {
      */
     public EnWarp(Nave n) {
         this.nave = n;
+        this.descripcion = "En Warp";
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
     @Override

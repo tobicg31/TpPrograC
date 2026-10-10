@@ -4,6 +4,7 @@ import naves.Nave;
 
 public class PreparandoSalto implements MotorState {
     private Nave nave;
+    private String descripcion;
 
     /**
      * Constructor de la clase PreparandoSalto.
@@ -14,6 +15,11 @@ public class PreparandoSalto implements MotorState {
      */
     public PreparandoSalto(Nave n) {
         this.nave = n;
+        this.descripcion = "Preparando salto";
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
     @Override
@@ -33,7 +39,7 @@ public class PreparandoSalto implements MotorState {
 
     @Override
     public void pasaTiempo() {
-        System.out.println("ERROR: preparando un salto no se puede estar disponible. Pase el motor en warp");
+        System.out.println("ERROR: preparando un salto no se puede pasar a disponible. Pase el motor en warp");
     }
 
 }

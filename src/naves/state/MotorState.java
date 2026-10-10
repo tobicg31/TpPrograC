@@ -5,4 +5,5 @@ public interface MotorState {
     void saltar();
     void enfriar();
     void pasaTiempo();
+    String getDescripcion();
 }

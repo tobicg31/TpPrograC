@@ -4,6 +4,7 @@ import naves.Nave;
 
 public class Enfriamento implements MotorState {
     private Nave nave;
+    private String descripcion;
 
     /**
      * Constructor de la clase Enfriamento.
@@ -14,6 +15,11 @@ public class Enfriamento implements MotorState {
      */
     public Enfriamento(Nave n) {
         this.nave = n;
+        this.descripcion = "Enfriamento";
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
     @Override
