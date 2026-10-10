@@ -14,6 +14,7 @@ public class Disponible implements MotorState {
      * @param n Nave a la que pertenece el estado Disponible.
      */
     public Disponible(Nave n) {
+        assert n != null : "La nave no puede ser nula";
         this.nave = n;
         this.descripcion = "Disponible";
     }

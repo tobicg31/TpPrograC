@@ -16,6 +16,7 @@ public class Mision01 extends Mision {
      */
     @Override
     public void evaluar(Nave n) {
+        assert n != null : "La nave no puede ser nula";
         System.out.println("Evaluando misión 01...");
         String informe = "Mision 01: Intercepcion-Asistencia | combustible gastado: " + this.combustibleNecesario
                 + " desgaste efectuado en la nave: " + this.desgaste;
@@ -32,6 +33,7 @@ public class Mision01 extends Mision {
      */
     @Override
     public void cerrar(Nave n) {
+        assert n != null : "La nave no puede ser nula";
         n.setEnergia(n.getEnergia() + 5);
     }
 

@@ -10,6 +10,10 @@ public class Asistente {
     private Nave nave;
     private Bitacora bitacora;
 
+    private boolean invariante() {
+        return this.nave != null && this.bitacora != null;
+    }
+
     /**
      * Constructor de la clase Asistente.
      * <b>PRE:</b>
@@ -22,6 +26,7 @@ public class Asistente {
     public Asistente(Nave nave) {
         this.nave = nave;
         this.bitacora = new Bitacora();
+        assert invariante() : "Ni la nave ni la bitacora deben ser nulos";
     }
 
     public Bitacora getBitacora() {
@@ -43,6 +48,8 @@ public class Asistente {
      */
     public void ejecutarMision(Mision mision) {
 
+        assert invariante() : "Ni la nave ni la bitacora deben ser nulos";
+        assert mision != null : "La misión no puede ser nula";
         try {
             mision.setAsistente(this);
             mision.ejecutarMision(this.nave);

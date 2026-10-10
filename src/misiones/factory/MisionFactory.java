@@ -16,6 +16,7 @@ public class MisionFactory {
    * @return Una instancia de Mision correspondiente al tipo especificado, o null si el tipo no es válido.
    */
   public static Mision getMision(String tipoMision) {
+    assert tipoMision != null && !tipoMision.isEmpty() : "El tipo de mision no puede ser nulo o vacío";
     switch (tipoMision) {
       case "01":
         return new Mision01();

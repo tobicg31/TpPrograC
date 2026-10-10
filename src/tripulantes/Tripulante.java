@@ -26,6 +26,11 @@ public abstract class Tripulante implements Liquidable {
      *                         Terricola, Vulcano ó Marciano.
      */
     public Tripulante(String identidad, String cargo, int antiguedad, double porcentAdicional, String planeta) {
+        assert identidad != null && !identidad.isEmpty() : "La identidad no puede ser nula o vacía";
+        assert cargo != null && !cargo.isEmpty() : "El cargo no puede ser nulo o vacío";
+        assert antiguedad >= 0 : "La antigüedad no puede ser negativa";
+        assert porcentAdicional >= 0 : "El porcentaje adicional no puede ser negativo";
+        assert planeta != null && !planeta.isEmpty() : "El planeta no puede ser nulo o vacío";
         this.identidad = identidad;
         this.cargo = cargo;
         this.antiguedad = antiguedad;
@@ -49,6 +54,12 @@ public abstract class Tripulante implements Liquidable {
         return antiguedad;
     }
 
+    /**
+     * Método abstracto que calcula la liquidación correspondiente al cargo del
+     * tripulante.
+     *
+     * @return Devuelve la liquidación por cargo.
+     */
     public abstract double liquidacionPorCargo();
 
     /**
