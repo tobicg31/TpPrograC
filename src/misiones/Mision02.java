@@ -8,7 +8,6 @@ public class Mision02 extends Mision {
         super();
         this.nombre = "Recoleccion";
     }
-
     /**
      * (non-Javadoc)
      * 

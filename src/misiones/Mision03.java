@@ -8,7 +8,6 @@ public class Mision03 extends Mision {
         super();
         this.nombre = "Retorno Seguro";
     }
-
     /**
      * (non-Javadoc)
      * 

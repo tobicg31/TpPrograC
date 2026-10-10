@@ -6,10 +6,6 @@ public class PreparandoSalto implements MotorState {
     private Nave nave;
     private String descripcion;
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
     /**
      * Constructor de la clase PreparandoSalto.
      * <b>PRE:</b>
@@ -20,6 +16,10 @@ public class PreparandoSalto implements MotorState {
     public PreparandoSalto(Nave n) {
         this.nave = n;
         this.descripcion = "Preparando salto";
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
     @Override

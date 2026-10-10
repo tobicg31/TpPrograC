@@ -6,10 +6,6 @@ public class Enfriamento implements MotorState {
     private Nave nave;
     private String descripcion;
 
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-
     /**
      * Constructor de la clase Enfriamento.
      * <b>PRE:</b>
@@ -20,6 +16,10 @@ public class Enfriamento implements MotorState {
     public Enfriamento(Nave n) {
         this.nave = n;
         this.descripcion = "Enfriamento";
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
     @Override
