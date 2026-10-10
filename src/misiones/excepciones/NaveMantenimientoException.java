@@ -1,5 +1,9 @@
 package misiones.excepciones;
 
+/**
+ * Esta clase representa la excepción que se lanza cuando una nave requeire
+ * mantenimiento.
+ */
 public class NaveMantenimientoException extends Exception {
 
     /**

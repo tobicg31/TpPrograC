@@ -1,6 +1,9 @@
 import asistentes.Asistente;
 import java.util.ArrayList;
 
+/**
+ * Esta clase representa lo que sería la capa de negocio del problema.
+ */
 public class Sistema {
     private ArrayList<Asistente> asistentes = new ArrayList<Asistente>();
 

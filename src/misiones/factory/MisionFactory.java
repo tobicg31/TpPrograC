@@ -5,15 +5,20 @@ import misiones.Mision01;
 import misiones.Mision02;
 import misiones.Mision03;
 
+/**
+ * Esta clase es una fábrica de misiones que proporciona un método para obtener
+ * instancias de misiones según el tipo especificado.
+ */
 public class MisionFactory {
 
   /**
    * Método que devuelve una instancia de Mision según el tipo de misión.
-   * <b>PRE:</b> 
+   * <b>PRE:</b>
    * - tipoMision != null && !tipoMision.isEmpty()
    *
    * @param tipoMision El tipo de misión ("01", "02", "03").
-   * @return Una instancia de Mision correspondiente al tipo especificado, o null si el tipo no es válido.
+   * @return Una instancia de Mision correspondiente al tipo especificado, o null
+   *         si el tipo no es válido.
    */
   public static Mision getMision(String tipoMision) {
     assert tipoMision != null && !tipoMision.isEmpty() : "El tipo de mision no puede ser nulo o vacío";

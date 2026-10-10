@@ -6,6 +6,16 @@ import misiones.excepciones.NaveSinRecursosException;
 import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
 
+/**
+ * Esta clase representa al Asistente de Comandos que se encarga de ejecutar
+ * misiones utilizando una nave asociada.Contiene una bitácora para registrar
+ * los resultados de las misiones ejecutadas.
+ * 
+ * <b>Invariantes de clase:</b>
+ * - nave != null luego de completarse la inicialización.
+ * - bitacora != null luego de completarse la inicialización.
+ * 
+ */
 public class Asistente {
     private Nave nave;
     private Bitacora bitacora;

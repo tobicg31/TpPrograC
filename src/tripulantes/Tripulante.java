@@ -2,11 +2,23 @@ package tripulantes;
 
 import tripulantes.decorator.Liquidable;
 
+/**
+ * Esta clase representa la abstracción de los Tripulantes abordo de la nave.
+ *  
+ * <b>Invariantes de clase:</b>
+ * - identidad luego de la inicialización.
+ * - porcentAdicional >= 0
+ * - antiguedad >= 0
+ * 
+ */
 public abstract class Tripulante implements Liquidable {
     protected String identidad, cargo, planeta;
     protected int antiguedad;
     protected double porcentAdicional;
 
+    protected boolean invariante() {
+        return this.porcentAdicional >= 0 && this.antiguedad >= 0;
+    }
     /**
      * Constructor de la clase Tripulante.
      * <b>PRE:</b>
@@ -36,6 +48,7 @@ public abstract class Tripulante implements Liquidable {
         this.antiguedad = antiguedad;
         this.porcentAdicional = porcentAdicional;
         this.planeta = planeta;
+        assert invariante() : "Invariante de clase violada: porcentAdicional y antiguedad deben ser mayores o iguales a 0";
     }
 
     public String getIdentidad() {
@@ -69,6 +82,7 @@ public abstract class Tripulante implements Liquidable {
      * @return Devuelve la liquidación por antigüedad.
      */
     protected double liquidacionPorAntiguedad() {
+        assert invariante() : "Invariante de clase violada: porcentAdicional y antiguedad deben ser mayores o iguales a 0";
         return (this.porcentAdicional * this.liquidacionPorCargo()) * this.antiguedad;
     }
 

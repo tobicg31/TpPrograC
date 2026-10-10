@@ -2,6 +2,14 @@ package naves.state;
 
 import naves.Nave;
 
+/**
+ * Esta clase representa uno de los posibles estados del MotorWarp de una nave,
+ * en este caso Enfriamiento.
+ * 
+ * <b>Invariante de clase:</b>
+ * - nave != null luego de completarse la inicialización.
+ * 
+ */
 public class Enfriamento implements MotorState {
     private Nave nave;
     private String descripcion;
@@ -26,16 +34,19 @@ public class Enfriamento implements MotorState {
     @Override
     public void prepararSalto() {
         System.out.println("ERROR: no se puede preparar el salto enfriando motor. Ponga el motor en disponible");
+        assert this.nave != null : "La nave no puede ser nula";
     }
 
     @Override
     public void saltar() {
         System.out.println("ERROR: no esta preparado el motor. Ponga el motor en disponible");
+        assert this.nave != null : "La nave no puede ser nula";
     }
 
     @Override
     public void enfriar() {
         System.out.println("ERROR: ya esta enfriado el motor. Ponga el motor en disponible");
+        assert this.nave != null : "La nave no puede ser nula";
     }
 
     @Override

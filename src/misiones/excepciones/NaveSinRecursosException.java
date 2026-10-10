@@ -1,5 +1,9 @@
 package misiones.excepciones;
 
+/**
+ * Esta clase representa la excepción que se lanza cuando una nave no tiene
+ * los recursos necesarios para realizar una misión.
+ */
 public class NaveSinRecursosException extends Exception {
 
     /**
