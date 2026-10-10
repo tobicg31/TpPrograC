@@ -10,6 +10,7 @@ public class NaveSinRecursosException extends Exception {
      * @param m Mensaje de error.
      */
     public NaveSinRecursosException(String m) {
+        assert m != null && !m.isEmpty() : "El mensaje de error no puede ser nulo o vacío";
         super(m);
     }
 

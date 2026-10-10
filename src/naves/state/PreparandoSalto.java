@@ -14,6 +14,7 @@ public class PreparandoSalto implements MotorState {
      * @param n Nave a la que pertenece el estado PreparandoSalto.
      */
     public PreparandoSalto(Nave n) {
+        assert n != null : "La nave no puede ser nula";
         this.nave = n;
         this.descripcion = "Preparando salto";
     }

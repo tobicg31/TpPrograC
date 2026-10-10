@@ -33,6 +33,7 @@ public abstract class Mision {
      *                                    mantenimiento.
      */
     public void preparar(Nave n) throws NaveSinRecursosException, NaveMantenimientoException {
+        assert n != null : "La nave no puede ser nula";
         System.out.println("preparo la nave...");
         if (!((n.getCombustible() - this.combustibleNecesario >= 0) && (n.getDesgaste() + this.desgaste <= 100))) {
             throw new NaveSinRecursosException("Fallo de recursos");
@@ -54,6 +55,7 @@ public abstract class Mision {
      *         nave según los requerimientos de la misión.
      */
     public void ejecutar(Nave n) {
+        assert n != null : "La nave no puede ser nula";
         n.setCombustible(n.getCombustible() - this.combustibleNecesario);
         n.setDesgaste(n.getDesgaste() + this.desgaste);
     }
@@ -94,6 +96,7 @@ public abstract class Mision {
      *         proporcionada.
      */
     public void ejecutarMision(Nave n) throws NaveSinRecursosException, NaveMantenimientoException {
+        assert n != null : "La nave no puede ser nula";
         preparar(n);
         ejecutar(n);
         evaluar(n);
@@ -110,6 +113,7 @@ public abstract class Mision {
      * @return Asocia el asistente proporcionado a la misión.
      */
     public void setAsistente(Asistente asistente) {
+        assert asistente != null : "El asistente no puede ser nulo";
         this.asistente = asistente;
     }
 
@@ -123,6 +127,7 @@ public abstract class Mision {
      * @return Establece el nombre de la misión con el valor proporcionado.
      */
     public void setNombre(String nombre) {
+        assert nombre != null : "El nombre no puede ser nulo";
         this.nombre = nombre;
     }
 

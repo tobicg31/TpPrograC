@@ -8,6 +8,7 @@ public class Bitacora {
 
     public Bitacora() {
         this.bitacora = new ArrayList<EventoBitacora>();
+        assert this.bitacora != null : "La bitácora no puede ser nulla";
     }
 
     /**
@@ -23,6 +24,9 @@ public class Bitacora {
      *                registrar en la bitácora.
      */
     public void agregarEntrada(String mensaje, String tipo) {
+        assert this.bitacora != null : "La bitácora no puede ser nulla";
+        assert mensaje != null : "El mensaje no puede ser nulo";
+        assert tipo != null : "El tipo no puede ser nulo";
         EventoBitacora entrada = new EventoBitacora(mensaje, tipo);
         this.bitacora.add(entrada);
     }
@@ -35,6 +39,7 @@ public class Bitacora {
      *         hasta la más reciente.
      */
     public void consultarBitacora() {
+        assert this.bitacora != null : "La bitácora no puede ser nulla";
         System.out.println("Bitacora:");
         ArrayList<EventoBitacora> bitacoraOrdenada = (ArrayList<EventoBitacora>) this.bitacora.clone();
         bitacoraOrdenada.sort(Comparator.comparing(EventoBitacora::getFecha));
