@@ -21,19 +21,26 @@ public class Main {
         sistema.registrarAsistente(asistente);
         System.out.println("--- INICIO: Estado Inicial ---");
 
-        System.out.println("Ciclo correcto del motor \nestado inicial:" + nave.getMotor().getDescripcion());
-        nave.getMotor().prepararSalto();
-        System.out.println("estado: " + nave.getMotor().getDescripcion());
-        nave.getMotor().saltar();
-        System.out.println("estado: " + nave.getMotor().getDescripcion());
-        nave.getMotor().pasaTiempo();
-        System.out.println("estado: " + nave.getMotor().getDescripcion());
+        System.out.println("Ciclo correcto del motor \nestado inicial:" + asistente.getEstadoMotor());
+        //nave.getMotor().prepararSalto();
+        asistente.prepararSalto();
+        System.out.println("estado: " + asistente.getEstadoMotor());
+
+        //nave.getMotor().saltar();
+        asistente.saltar();
+        System.out.println("estado: " + asistente.getEstadoMotor());
+
+        //nave.getMotor().pasaTiempo();
+        asistente.prepararSalto();
+        System.out.println("estado: " + asistente.getEstadoMotor());
 
         System.out.println("\nCiclo incorrecto del motor\nestado inicial:" + nave.getMotor().getDescripcion());
-        nave.getMotor().prepararSalto();
-        System.out.println("estado: " + nave.getMotor().getDescripcion());
-        nave.getMotor().pasaTiempo();
-        System.out.println("estado: " + nave.getMotor().getDescripcion());
+        //nave.getMotor().prepararSalto();
+        asistente.prepararSalto();
+        System.out.println("estado: " + asistente.getEstadoMotor());
+        //nave.getMotor().pasaTiempo();
+        asistente.prepararSalto();
+        System.out.println("estado: " + asistente.getEstadoMotor());
 
         System.out.println("\nCreacion y ejecucion Mision 1");
         Mision m1 = MisionFactory.getMision("01");
@@ -61,9 +68,16 @@ public class Main {
 
         System.out.println("\nCreacion de la tripulacion, minimo un capitan");
         Liquidable alferezMarciano = new Marciano(alferez);
+        asistente.agregarTripulante(alferezMarciano);
+
         Liquidable capitanVulcano = new Vulcano(capitan);
+        asistente.agregarTripulante(capitanVulcano);
+
         Liquidable tenienteTerricola = new Terricola(teniente);
+        asistente.agregarTripulante(tenienteTerricola);
+        
         Liquidable consejeroTerricola = new Terricola(consejero);
+        asistente.agregarTripulante(consejeroTerricola);
 
         System.out.println("\nCalculo de sus respectivos haberes:");
         System.out.println("-> Alferez Marciano:\n   " + alferezMarciano.descripcionHaberes() + "\n");
