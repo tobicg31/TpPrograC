@@ -22,47 +22,38 @@ public class Main {
     public static void main(String[] args) {
         Nave nave = NaveFactory.getNave("Combate");
         Asistente asistente = new Asistente(nave);
+        Bitacora bitacora = asistente.getBitacora();
         Sistema sistema = new Sistema();
         sistema.registrarAsistente(asistente);
         System.out.println("--- INICIO: Estado Inicial ---");
 
         System.out.println("Ciclo correcto del motor \nestado inicial:" + asistente.getEstadoMotor());
-        //nave.getMotor().prepararSalto();
         asistente.prepararSalto();
-        System.out.println("estado: " + asistente.getEstadoMotor());
-
-        //nave.getMotor().saltar();
+        bitacora.consultarBitacora();
         asistente.saltar();
-        System.out.println("estado: " + asistente.getEstadoMotor());
-
-        //nave.getMotor().pasaTiempo();
-        asistente.prepararSalto();
-        System.out.println("estado: " + asistente.getEstadoMotor());
-
+        bitacora.consultarBitacora();
+        asistente.pasaTiempo();
+        bitacora.consultarBitacora();
+        
         System.out.println("\nCiclo incorrecto del motor\nestado inicial:" + nave.getMotor().getDescripcion());
-        //nave.getMotor().prepararSalto();
         asistente.prepararSalto();
-        System.out.println("estado: " + asistente.getEstadoMotor());
-        //nave.getMotor().pasaTiempo();
+        bitacora.consultarBitacora();
         asistente.prepararSalto();
-        System.out.println("estado: " + asistente.getEstadoMotor());
+        bitacora.consultarBitacora();
 
         System.out.println("\nCreacion y ejecucion Mision 1");
         Mision m1 = MisionFactory.getMision("01");
         asistente.ejecutarMision(m1);
-        Bitacora bitacora = asistente.getBitacora();
         bitacora.consultarBitacora();
 
         System.out.println("\nCreacion y ejecucion Mision 2");
         Mision m2 = MisionFactory.getMision("02");
         asistente.ejecutarMision(m2);
-        // Bitacora bitacora = asistente.getBitacora();
         bitacora.consultarBitacora();
 
         System.out.println("\nCreacion y ejecucion Mision 3");
         Mision m3 = MisionFactory.getMision("03");
         asistente.ejecutarMision(m3);
-        // Bitacora bitacora = asistente.getBitacora();
         bitacora.consultarBitacora();
 
         Tripulante alferez = new Alferez("A01", "Alferez", 3, 0.005, "Tierra");

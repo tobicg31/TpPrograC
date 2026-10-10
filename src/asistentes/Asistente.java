@@ -85,15 +85,19 @@ public class Asistente {
 
     public void prepararSalto(){
         nave.getMotor().prepararSalto();
+        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
     }
     public void saltar(){
         nave.getMotor().saltar();
+        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
     }
     public void enfriar(){
         nave.getMotor().enfriar();
+        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
     }
     public void pasaTiempo(){
         nave.getMotor().pasaTiempo();
+        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
     }
     public String getEstadoMotor(){
         return nave.getMotor().getDescripcion();
