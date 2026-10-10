@@ -6,10 +6,25 @@ import misiones.excepciones.NaveSinRecursosException;
 import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
 import tripulantes.Tripulante;
+import tripulantes.decorator.Liquidable;
 
+/**
+ * Esta clase representa al Asistente de Comandos que se encarga de ejecutar
+ * misiones utilizando una nave asociada.Contiene una bitácora para registrar
+ * los resultados de las misiones ejecutadas.
+ * 
+ * <b>Invariantes de clase:</b>
+ * - nave != null luego de completarse la inicialización.
+ * - bitacora != null luego de completarse la inicialización.
+ * 
+ */
 public class Asistente {
     private Nave nave;
     private Bitacora bitacora;
+
+    private boolean invariante() {
+        return this.nave != null && this.bitacora != null;
+    }
 
     /**
      * Constructor de la clase Asistente.
@@ -23,6 +38,7 @@ public class Asistente {
     public Asistente(Nave nave) {
         this.nave = nave;
         this.bitacora = new Bitacora();
+        assert invariante() : "Ni la nave ni la bitacora deben ser nulos";
     }
 
     public Bitacora getBitacora() {
@@ -44,6 +60,8 @@ public class Asistente {
      */
     public void ejecutarMision(Mision mision) {
 
+        assert invariante() : "Ni la nave ni la bitacora deben ser nulos";
+        assert mision != null : "La misión no puede ser nula";
         try {
             mision.setAsistente(this);
             mision.ejecutarMision(this.nave);
@@ -57,7 +75,7 @@ public class Asistente {
         }
     }
 
-    public void agregarTripulante(Tripulante t){
+    public void agregarTripulante(Liquidable t){
         this.nave.agregarTripulante(t);
     }
 

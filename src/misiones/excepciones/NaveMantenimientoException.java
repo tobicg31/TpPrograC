@@ -1,5 +1,9 @@
 package misiones.excepciones;
 
+/**
+ * Esta clase representa la excepción que se lanza cuando una nave requeire
+ * mantenimiento.
+ */
 public class NaveMantenimientoException extends Exception {
 
     /**
@@ -10,6 +14,7 @@ public class NaveMantenimientoException extends Exception {
      * @param m Mensaje de error.
      */
     public NaveMantenimientoException(String m) {
+        assert m != null && !m.isEmpty() : "El mensaje de error no puede ser nulo o vacío";
         super(m);
     }
 

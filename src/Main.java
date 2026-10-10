@@ -8,11 +8,16 @@ import tripulantes.Alferez;
 import tripulantes.Capitan;
 import tripulantes.Consejero;
 import tripulantes.Teniente;
+import tripulantes.Tripulante;
 import tripulantes.decorator.Liquidable;
 import tripulantes.decorator.Marciano;
 import tripulantes.decorator.Terricola;
 import tripulantes.decorator.Vulcano;
 
+/**
+ * Esta clase representa el punto de entrada principal del programa. Contiene el
+ * método main que se encarga de ejecutar la lógica principal del sistema.
+ */
 public class Main {
     public static void main(String[] args) {
         Nave nave = NaveFactory.getNave("Combate");
@@ -60,9 +65,9 @@ public class Main {
         // Bitacora bitacora = asistente.getBitacora();
         bitacora.consultarBitacora();
 
-        Liquidable alferez = new Alferez("A01", "Alferez", 3, 0.005, "Tierra");
-        Liquidable capitan = new Capitan("C01", "Capitan", 10, 0.2, "Vulcano");
-        Liquidable teniente = new Teniente("T01", "Teniente", 5, 0.03, "Marte");
+        Tripulante alferez = new Alferez("A01", "Alferez", 3, 0.005, "Tierra");
+        Tripulante capitan = new Capitan("C01", "Capitan", 10, 0.2, "Vulcano");
+        Tripulante teniente = new Teniente("T01", "Teniente", 5, 0.03, "Marte");
         Consejero consejero = new Consejero("CO01", "Consejero", 6, 0.05, "Marte");
         consejero.addCantidadConsejos(4);
 
@@ -81,9 +86,9 @@ public class Main {
 
         System.out.println("\nCalculo de sus respectivos haberes:");
         System.out.println("-> Alferez Marciano:\n   " + alferezMarciano.descripcionHaberes() + "\n");
-        System.out.println("-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n" );
+        System.out.println("-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n");
         System.out.println("-> Teniente Terricola:\n   " + tenienteTerricola.descripcionHaberes() + "\n");
-        System.out.println("-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n"); 
+        System.out.println("-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n");
 
     }
 }
