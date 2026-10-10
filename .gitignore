@@ -88,3 +88,10 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 ._*
+
+# Datos locales de H2
+*.mv.db
+*.h2.db
+*.trace.db
+*.lock.db
+*.temp.db
