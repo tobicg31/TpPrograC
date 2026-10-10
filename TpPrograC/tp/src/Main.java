@@ -21,24 +21,33 @@ public class Main {
        sistema.registrarAsistente(asistente);
        System.out.println("--- INICIO: Estado Inicial ---");
 
-
-       nave.getMotor().prepararSalto(); 
+       System.out.println("Ciclo correcto del motor \nestado inicial:"+ nave.getMotor().getDescripcion());
+       nave.getMotor().prepararSalto();
+       System.out.println("estado: "+ nave.getMotor().getDescripcion()); 
        nave.getMotor().saltar();         
+       System.out.println("estado: "+ nave.getMotor().getDescripcion()); 
        nave.getMotor().pasaTiempo();
+       System.out.println("estado: "+ nave.getMotor().getDescripcion()); 
        
-       nave.getMotor().prepararSalto();        
+       System.out.println("\nCiclo incorrecto del motor\nestado inicial:"+ nave.getMotor().getDescripcion());
+       nave.getMotor().prepararSalto();     
+       System.out.println("estado: "+ nave.getMotor().getDescripcion());    
        nave.getMotor().pasaTiempo();
+       System.out.println("estado: "+ nave.getMotor().getDescripcion()); 
  
+       System.out.println("\nCreacion y ejecucion Mision 1");
        Mision m1 = MisionFactory.getMision("01");
        asistente.ejecutarMision(m1);
        Bitacora bitacora = asistente.getBitacora();
        bitacora.consultarBitacora();
 
+       System.out.println("\nCreacion y ejecucion Mision 2");
        Mision m2 = MisionFactory.getMision("02");
        asistente.ejecutarMision(m2);
        //Bitacora bitacora = asistente.getBitacora();
        bitacora.consultarBitacora();
 
+       System.out.println("\nCreacion y ejecucion Mision 3");
        Mision m3 = MisionFactory.getMision("03");
        asistente.ejecutarMision(m3);
        //Bitacora bitacora = asistente.getBitacora();
@@ -50,16 +59,17 @@ public class Main {
        Consejero consejero = new Consejero("CO01", "Consejero", 6, 0.05, "Marte");
        consejero.addCantidadConsejos(4); 
 
-       
+       System.out.println("\nCreacion de la tripulacion, minimo un capitan");
         Liquidable alferezMarciano = new Marciano(alferez);
         Liquidable capitanVulcano = new Vulcano(capitan);
         Liquidable tenienteTerricola = new Terricola(teniente);
         Liquidable consejeroTerricola = new Terricola(consejero);
 
+       System.out.println("\nCalculo de sus respectivos haberes:");
         System.out.println("-> Alferez Marciano:\n   " + alferezMarciano.descripcionHaberes() + "\n");
-        System.out.println("\n-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n" );
-        System.out.println("\n-> Teniente Terricola:\n   " + tenienteTerricola.descripcionHaberes() + "\n");
-        System.out.println("\n-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n"); 
+        System.out.println("-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n" );
+        System.out.println("-> Teniente Terricola:\n   " + tenienteTerricola.descripcionHaberes() + "\n");
+        System.out.println("-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n"); 
 
     }
 }
