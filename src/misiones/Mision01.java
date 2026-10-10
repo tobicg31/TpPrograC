@@ -2,6 +2,10 @@ package misiones;
 
 import naves.Nave;
 
+/**
+ * Esta clase representa una misión concreta que puede ser ejecutada por una nave.
+ */
+
 public class Mision01 extends Mision {
 
     public Mision01(){

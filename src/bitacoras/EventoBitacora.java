@@ -2,6 +2,15 @@ package bitacoras;
 
 import java.time.LocalDate;
 
+/**
+ * Esta clase representa el contenido que tendrá la Bitacora.
+ *  
+ * <b>Invariantes de clase:</b>
+ * - mensaje != null luego de completarse la inicialización.
+ * - tipo != null luego de completarse la inicialización.
+ * - fecha != null luego de completarse la inicialización.
+ * 
+ */
 public class EventoBitacora {
   private String mensaje, tipo;
   private LocalDate fecha;

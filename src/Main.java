@@ -13,6 +13,10 @@ import tripulantes.decorator.Marciano;
 import tripulantes.decorator.Terricola;
 import tripulantes.decorator.Vulcano;
 
+/**
+ * Esta clase representa el punto de entrada principal del programa. Contiene el
+ * método main que se encarga de ejecutar la lógica principal del sistema.
+ */
 public class Main {
     public static void main(String[] args) {
         Nave nave = NaveFactory.getNave("Combate");
@@ -81,9 +85,9 @@ public class Main {
 
         System.out.println("\nCalculo de sus respectivos haberes:");
         System.out.println("-> Alferez Marciano:\n   " + alferezMarciano.descripcionHaberes() + "\n");
-        System.out.println("-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n" );
+        System.out.println("-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n");
         System.out.println("-> Teniente Terricola:\n   " + tenienteTerricola.descripcionHaberes() + "\n");
-        System.out.println("-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n"); 
+        System.out.println("-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n");
 
     }
 }

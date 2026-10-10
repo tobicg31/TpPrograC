@@ -3,6 +3,14 @@ package bitacoras;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * Esta clase representa la Bitacora que se utiliza para registrar los eventos,
+ * resultados y errores a lo largo de la nave.
+ * 
+ * <b>Invariante de clase:</b>
+ * - bitacora != null luego de completarse la inicialización.
+ * 
+ */
 public class Bitacora {
     private ArrayList<EventoBitacora> bitacora;
 

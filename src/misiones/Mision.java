@@ -5,15 +5,28 @@ import misiones.excepciones.NaveMantenimientoException;
 import misiones.excepciones.NaveSinRecursosException;
 import naves.Nave;
 
+/**
+ * Esta clase representa la abstracción de una misión que puede ser ejecutada
+ * por una nave.
+ * 
+ * <b>Invariantes de clase:</b>
+ * - combustibleNecesario == 4
+ * - desgaste == 4
+ */
 public abstract class Mision {
     protected String nombre;
     protected int combustibleNecesario, desgaste;
     protected Asistente asistente;
 
+    private boolean invariante() {
+        return combustibleNecesario == 4 && desgaste == 4;
+    }
+
     public Mision() {
         this.combustibleNecesario = 4;
         this.desgaste = 4;
         this.asistente = null;
+        assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
     public String getNombreMision() {
@@ -42,6 +55,7 @@ public abstract class Mision {
         } else {
             System.out.println("Nave preparada!");
         }
+        assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
     /**
@@ -58,6 +72,7 @@ public abstract class Mision {
         assert n != null : "La nave no puede ser nula";
         n.setCombustible(n.getCombustible() - this.combustibleNecesario);
         n.setDesgaste(n.getDesgaste() + this.desgaste);
+        assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
     /**
@@ -101,6 +116,7 @@ public abstract class Mision {
         ejecutar(n);
         evaluar(n);
         cerrar(n);
+        assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
     /**
@@ -115,6 +131,7 @@ public abstract class Mision {
     public void setAsistente(Asistente asistente) {
         assert asistente != null : "El asistente no puede ser nulo";
         this.asistente = asistente;
+        assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
     /**
@@ -129,6 +146,7 @@ public abstract class Mision {
     public void setNombre(String nombre) {
         assert nombre != null : "El nombre no puede ser nulo";
         this.nombre = nombre;
+        assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
 }

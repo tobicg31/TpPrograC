@@ -6,12 +6,25 @@ import naves.state.Disponible;
 import naves.state.MotorState;
 import tripulantes.Tripulante;
 
+/**
+ * Esta clase representa las naves.
+ *  
+ * <b>Invariantes de clase:</b>
+ * - combustible >= 0
+ * - energia >= 0
+ * - desgaste >= 0
+ * 
+ */
 public abstract class Nave {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimineto;
     protected ArrayList<Tripulante> tripulantes;
     protected MotorState motorWarp;
 
+    private boolean invariante() {
+        return this.combustible >= 0 && this.energia >= 0 && this.desgaste >= 0;
+    }
+    
     /**
      * Constructor de la clase Nave.
      * <b>PRE:</b>
@@ -61,6 +74,7 @@ public abstract class Nave {
     public void setCombustible(int combustible) {
         assert combustible >= 0 : "El combustible no puede ser negativo";
         this.combustible = combustible;
+        assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
 
     public int getEnergia() {
@@ -76,6 +90,7 @@ public abstract class Nave {
     public void setEnergia(int energia) {
         assert energia >= 0 : "La energía no puede ser negativa";
         this.energia = energia;
+         assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
 
     public int getDesgaste() {
@@ -95,6 +110,7 @@ public abstract class Nave {
     }
 
     public boolean requiereMantenimineto() {
+        assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
         return mantenimineto;
     }
 
@@ -107,6 +123,7 @@ public abstract class Nave {
     public void setDesgaste(int desgaste) {
         assert desgaste >= 0 : "El desgaste no puede ser negativo";
         this.desgaste = desgaste;
+        assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
 
     /**
@@ -118,6 +135,7 @@ public abstract class Nave {
     public void setEstado(MotorState estado) {
         assert estado != null : "El estado no puede ser nulo";
         this.motorWarp = estado;
+        assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
 
 }
