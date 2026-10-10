@@ -1,4 +1,90 @@
-bin/
-*.jar
-.data/
+# ==============================================================================
+# ARCHIVOS DE COMPILACIÓN Y SALIDA (JAVA & MAVEN)
+# ==============================================================================
+target/
 *.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+# Logs y reportes de ejecución
+*.log
+hs_err_pid*
+replay_pid*
+
+# ==============================================================================
+# VISUAL STUDIO CODE
+# ==============================================================================
+.vscode/
+*.code-workspace
+.history/
+
+# ==============================================================================
+# ECLIPSE
+# ==============================================================================
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders/
+
+# Descriptores de proyecto Eclipse
+.project
+.classpath
+.factorypath
+.springBeans
+
+# ==============================================================================
+# ORACLE JDEVELOPER
+# ==============================================================================
+# Salidas de compilación y despliegue por defecto de JDeveloper
+classes/
+deploy/
+temp/
+
+# Caché, metadatos locales y datos de usuario de JDeveloper
+**/.data/
+*.data
+*.cdi
+*.jpr.bak
+*.jws.bak
+
+# Archivos de definición de espacio de trabajo y proyecto de JDeveloper
+# (Excluidos para mantener Maven como la única fuente de verdad)
+*.jws
+*.jpr
+*.cws
+
+# ==============================================================================
+# INTELLIJ IDEA (POR PREVENCIÓN EN EQUIPOS DE JAVA)
+# ==============================================================================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ==============================================================================
+# SISTEMA OPERATIVO
+# ==============================================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
