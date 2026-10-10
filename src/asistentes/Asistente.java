@@ -5,6 +5,7 @@ import misiones.Mision;
 import misiones.excepciones.NaveSinRecursosException;
 import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
+import tripulantes.Tripulante;
 
 public class Asistente {
     private Nave nave;
@@ -56,7 +57,28 @@ public class Asistente {
         }
     }
 
+    public void agregarTripulante(Tripulante t){
+        this.nave.agregarTripulante(t);
+    }
+
     public void consultarBitacora() {
         this.bitacora.consultarBitacora();
     }
+
+    public void prepararSalto(){
+        nave.getMotor().prepararSalto();
+    }
+    public void saltar(){
+        nave.getMotor().saltar();
+    }
+    public void enfriar(){
+        nave.getMotor().enfriar();
+    }
+    public void pasaTiempo(){
+        nave.getMotor().pasaTiempo();
+    }
+    public String getEstadoMotor(){
+        return nave.getMotor().getDescripcion();
+    }
+
 }

@@ -36,6 +36,11 @@ public abstract class Nave {
         this.energia = energia;
         this.desgaste = desgaste;
     }
+
+    public void agregarTripulante(Tripulante t){
+        this.tripulantes.add(t);
+    }
+
     public MotorState getMotor(){
         return this.motorWarp;
     }
