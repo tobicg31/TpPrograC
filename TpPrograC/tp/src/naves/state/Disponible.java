@@ -3,6 +3,7 @@ package naves.state;
 import naves.Nave;
 
 public class Disponible implements MotorState {
+    private String descripcion;
     private Nave nave;
 
     /**
@@ -14,6 +15,11 @@ public class Disponible implements MotorState {
      */
     public Disponible(Nave n) {
         this.nave = n;
+        this.descripcion = "Disponible";
+    }
+
+    public String getDescripcion(){
+        return this.descripcion;
     }
 
     @Override

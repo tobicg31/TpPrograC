@@ -4,6 +4,11 @@ import naves.Nave;
 
 public class Mision01 extends Mision {
 
+    public Mision01(){
+        super();
+        this.nombre = "Intercepcion-Asistencia";
+    }
+
     /**
      * (non-Javadoc)
      * 
