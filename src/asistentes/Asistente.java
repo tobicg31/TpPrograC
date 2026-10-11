@@ -7,7 +7,6 @@ import misiones.excepciones.NaveSinRecursosException;
 import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
 import naves.state.TransicionErroneaException;
-import tripulantes.Tripulante;
 import tripulantes.decorator.Liquidable;
 
 /**
