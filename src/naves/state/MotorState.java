@@ -5,14 +5,14 @@ package naves.state;
  * de una nave. Cada estado implementará estas acciones de manera específica
  * según su lógica.
  */
-public interface MotorState {
-    void prepararSalto();
+public interface MotorState{
+    void prepararSalto() throws TransicionErroneaException ;
 
-    void saltar();
+    void saltar() throws TransicionErroneaException ;
 
-    void enfriar();
+    void enfriar() throws TransicionErroneaException ;
 
-    void pasaTiempo();
+    void pasaTiempo() throws TransicionErroneaException ;
 
     String getDescripcion();
 }
