@@ -32,21 +32,21 @@ public class Enfriamento implements MotorState {
     }
 
     @Override
-    public void prepararSalto() {
-        System.out.println("ERROR: no se puede preparar el salto enfriando motor. Ponga el motor en disponible");
+    public void prepararSalto()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: no se puede preparar el salto enfriando motor. Ponga el motor en disponible");
     }
 
     @Override
-    public void saltar() {
-        System.out.println("ERROR: no esta preparado el motor. Ponga el motor en disponible");
+    public void saltar()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: no esta preparado el motor. Ponga el motor en disponible");
     }
 
     @Override
-    public void enfriar() {
-        System.out.println("ERROR: ya esta enfriado el motor. Ponga el motor en disponible");
+    public void enfriar()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: ya esta enfriado el motor. Ponga el motor en disponible");
     }
 
     @Override

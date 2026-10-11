@@ -32,15 +32,15 @@ public class EnWarp implements MotorState {
     }
 
     @Override
-    public void prepararSalto() {
-        System.out.println("ERROR: no se puede preparar el salto en medio de un salto. Enfrie el motor o pase a disponible");
+    public void prepararSalto()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: no se puede preparar el salto en medio de un salto. Enfrie el motor o pase a disponible");
     }
 
     @Override
-    public void saltar() {
-        System.out.println("ERROR: ya se esta en Warp. Enfrie el motor o pase a disponible");
+    public void saltar()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: ya se esta en Warp. Enfrie el motor o pase a disponible");
     }
 
     @Override

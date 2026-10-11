@@ -1,10 +1,12 @@
 package asistentes;
 
+
 import bitacoras.Bitacora;
 import misiones.Mision;
 import misiones.excepciones.NaveSinRecursosException;
 import misiones.excepciones.NaveMantenimientoException;
 import naves.Nave;
+import naves.state.TransicionErroneaException;
 import tripulantes.Tripulante;
 import tripulantes.decorator.Liquidable;
 
@@ -84,21 +86,46 @@ public class Asistente {
     }
 
     public void prepararSalto(){
-        nave.getMotor().prepararSalto();
-        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+        try{
+            String mensaje = "Cambio de estado: "+ getEstadoMotor();
+            nave.getMotor().prepararSalto();
+            this.bitacora.agregarEntrada(mensaje + " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+        }
+        catch (TransicionErroneaException e){
+            this.bitacora.agregarEntrada(e.getMessage(), "ERROR");
+        }
     }
+
     public void saltar(){
-        nave.getMotor().saltar();
-        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+        try {
+            String mensaje = "Cambio de estado: "+ getEstadoMotor();
+            nave.getMotor().saltar();
+            this.bitacora.agregarEntrada(mensaje + " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+        } catch (TransicionErroneaException e) {
+            this.bitacora.agregarEntrada(e.getMessage(), "ERROR");
+        }
     }
+
     public void enfriar(){
-        nave.getMotor().enfriar();
-        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+        try {
+            String mensaje = "Cambio de estado: "+ getEstadoMotor();
+            nave.getMotor().enfriar();
+            this.bitacora.agregarEntrada(mensaje + " a: "+ getEstadoMotor(), "CAMBIO ESTADO");    
+        } catch (TransicionErroneaException e) {
+            this.bitacora.agregarEntrada(e.getMessage(), "ERROR");
+        }
     }
+
     public void pasaTiempo(){
-        nave.getMotor().pasaTiempo();
-        this.bitacora.agregarEntrada("Cambio de estado: "+ getEstadoMotor()+ " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+        try {
+            String mensaje = "Cambio de estado: "+ getEstadoMotor();
+            nave.getMotor().pasaTiempo();
+            this.bitacora.agregarEntrada(mensaje + " a: "+ getEstadoMotor(), "CAMBIO ESTADO"); 
+        } catch (TransicionErroneaException e) {
+            this.bitacora.agregarEntrada(e.getMessage(), "ERROR");
+        }
     }
+
     public String getEstadoMotor(){
         return nave.getMotor().getDescripcion();
     }

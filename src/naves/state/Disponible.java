@@ -10,7 +10,7 @@ import naves.Nave;
  * - nave != null luego de completarse la inicialización.
  * 
  */
-public class Disponible implements MotorState {
+public class Disponible implements MotorState{
     private String descripcion;
     private Nave nave;
 
@@ -38,21 +38,21 @@ public class Disponible implements MotorState {
     }
 
     @Override
-    public void saltar() {
-        System.out.println("ERROR: falta preparar el salto. Prepare el salto para comenzar");
+    public void saltar()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: falta preparar el salto. Prepare el salto para comenzar");
     }
 
     @Override
-    public void enfriar() {
-        System.out.println("ERROR: no se puede enfriar estando ya disponible. Prepare el salto para comenzar");
+    public void enfriar()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: no se puede enfriar estando ya disponible. Prepare el salto para comenzar");
     }
 
     @Override
-    public void pasaTiempo() {
-        System.out.println("ERROR: ya esta disponible el motor. Prepare el salto para comenzar");
+    public void pasaTiempo() throws TransicionErroneaException  {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: ya esta disponible el motor. Prepare el salto para comenzar");
     }
 
 }

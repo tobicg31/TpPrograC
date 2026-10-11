@@ -32,9 +32,9 @@ public class PreparandoSalto implements MotorState {
     }
 
     @Override
-    public void prepararSalto() {
-        System.out.println("ERROR: ya se esta preparando el salto. Pase el motor en warp");
+    public void prepararSalto()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: ya se esta preparando el salto. Pase el motor en warp");
     }
 
     @Override
@@ -44,15 +44,15 @@ public class PreparandoSalto implements MotorState {
     }
 
     @Override
-    public void enfriar() {
-        System.out.println("ERROR: no se puede enfriar mientras se prepara un salto. Pase el motor en warp");
+    public void enfriar()  throws TransicionErroneaException {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: no se puede enfriar mientras se prepara un salto. Pase el motor en warp");
     }
 
     @Override
-    public void pasaTiempo() {
-        System.out.println("ERROR: preparando un salto no se puede pasar a disponible. Pase el motor en warp");
+    public void pasaTiempo() throws TransicionErroneaException  {
         assert this.nave != null : "La nave no puede ser nula";
+        throw new TransicionErroneaException("ERROR: preparando un salto no se puede pasar a disponible. Pase el motor en warp");
     }
 
 }
