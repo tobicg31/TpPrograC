@@ -13,6 +13,7 @@ import tripulantes.decorator.Liquidable;
 import tripulantes.decorator.Marciano;
 import tripulantes.decorator.Terricola;
 import tripulantes.decorator.Vulcano;
+//import concurrencia.*; // Importa todas las clases del paquete concurrencia
 
 /**
  * Esta clase representa el punto de entrada principal del programa. Contiene el
@@ -20,6 +21,9 @@ import tripulantes.decorator.Vulcano;
  */
 public class Main {
     public static void main(String[] args) {
+
+
+        //ACA IRA UNA PRIMER INTERFAZ DE USUARIO PARA ELEGIR LA NAVE Y EL TIPO DE MISION
         Nave nave = NaveFactory.getNave("Combate");
         Asistente asistente = new Asistente(nave);
         Bitacora bitacora = asistente.getBitacora();
@@ -80,6 +84,11 @@ public class Main {
         System.out.println("-> Capitan Vulcano:\n   " + capitanVulcano.descripcionHaberes() + "\n");
         System.out.println("-> Teniente Terricola:\n   " + tenienteTerricola.descripcionHaberes() + "\n");
         System.out.println("-> Consejero Terricola:\n   " + consejeroTerricola.descripcionHaberes() + "\n");
+
+
+        //ACA IRA UNA SEGUNDA INTERFAZ DE USUARIO PARA EJECUTAR CONCURRENCIA DE RECURSO COMUN PLATADORMA DE CARGA
+        //PODRIAMOS PEDIR Q ESPECIFIQUE CANT GENERADORES DE ENERGIA, CANT DE NAVES CONSUMIDORAS (NO IMPORTA EL TIPO DE NAVE)
+    
 
     }
 }
