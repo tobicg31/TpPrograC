@@ -1,11 +1,14 @@
 
 package concurrencia;
+
+import java.util.Observable;
+
 /**
  * Esta clase representa una plataforma de carga que permite la generación y consumo de energía de manera concurrente.
  * Implementa dos métodos synchronized para garantizar que los generadores y consumidores puedan operar de manera dinámica.
  */
 
-class PlataformaDeCarga {
+public class PlataformaDeCarga extends Observable{
     private int cantbat = 0, topedeposito; // Cantidad de baterías disponibles en la plataforma
     
 
@@ -23,13 +26,16 @@ class PlataformaDeCarga {
        while(cantbat == topedeposito) {
             try {
                 wait(); // Espera hasta que haya espacio disponible en la plataforma
-                System.out.println("[Generadora " + id + "]: esperando a que se libere espacio en la Plataforma.");
+                clearChanged(); // cant bat no cambia por "alguna razon", no se notifica a los observadores
+                notifyObservers();
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
         this.cantbat++;
-        System.out.println("Batería producida por [Generadora " + id + "]. Total disponible: " + this.cantbat);
+        setChanged();
+        notifyObservers(); // Notifica a los observadores que la cantidad de baterías ha cambiado
+        //System.out.println("Batería producida por [Generadora " + id + "]. Total disponible: " + this.cantbat);
         notifyAll(); // Notifica a los hilos 
     }
 
@@ -37,13 +43,16 @@ class PlataformaDeCarga {
         while (cantbat == 0) {
             try {
                 wait(); // Espera hasta que haya energía disponible
-                System.out.println("[Nave " + id + "]: esperando por falta de baterías en la Plataforma.");
+                clearChanged(); // cant bat no cambia por "alguna razon", no se notifica a los observadores
+                notifyObservers();
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
         this.cantbat--;
-        System.out.println("Batería retirada y utilizada por [Nave " + id + "]. Total disponible: " + this.cantbat);
+        setChanged();
+        notifyObservers(); // Notifica a los observadores que la cantidad de baterías ha cambiado
+       // System.out.println("Batería retirada y utilizada por [Nave " + id + "]. Total disponible: " + this.cantbat);
         notifyAll(); // Notifica a los hilos 
     }
 
