@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -30,6 +31,7 @@ public class VentanaConcurrencia extends JFrame {
 	private JLabel lblNewLabel;
 	private JScrollPane scrollPane;
 	private JTextArea textArea;
+	private JButton btnStart;
 	private JPanel PanelGeneradores;
 	private JLabel lblNewLabel_2;
 	private JScrollPane scrollPane_1;
@@ -74,6 +76,7 @@ public class VentanaConcurrencia extends JFrame {
 		this.PanelNaves.setLayout(new BorderLayout(0, 0));
 		
 		this.btnNewButton_2 = new JButton("CREAR NAVE");
+		this.btnNewButton_2.setMargin(new Insets(0, 14, 0, 14));
 		this.PanelNaves.add(this.btnNewButton_2, BorderLayout.SOUTH);
 		
 		this.lblNewLabel_1 = new JLabel("Naves");
@@ -99,6 +102,10 @@ public class VentanaConcurrencia extends JFrame {
 		
 		this.textArea = new JTextArea();
 		this.scrollPane.setViewportView(this.textArea);
+
+		this.btnStart = new JButton("EJECUTAR");
+		this.btnStart.setMargin(new Insets(0, 14, 0, 14));
+		this.PanelLogs.add(this.btnStart, BorderLayout.SOUTH);
 		
 		this.PanelGeneradores = new JPanel();
 		this.PanelColumnas.add(this.PanelGeneradores);
@@ -115,6 +122,7 @@ public class VentanaConcurrencia extends JFrame {
 		this.scrollPane_1.setViewportView(this.list_1);
 		
 		this.btnNewButton_1 = new JButton("CREAR GENERADOR");
+		this.btnNewButton_1.setMargin(new Insets(0, 14, 0, 14));
 		this.PanelGeneradores.add(this.btnNewButton_1, BorderLayout.SOUTH);
 		
 		this.PanelBotón = new JPanel();
@@ -123,6 +131,7 @@ public class VentanaConcurrencia extends JFrame {
 		this.PanelGeneral.add(this.PanelBotón, BorderLayout.SOUTH);
 		
 		this.btnNewButton = new JButton("VOLVER");
+		this.btnNewButton.setMargin(new Insets(0, 14, 0, 14));
 		this.PanelBotón.add(this.btnNewButton);
 
 	}
