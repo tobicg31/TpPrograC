@@ -5,20 +5,38 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.GridLayout;
 import java.awt.Insets;
+
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
+
 import java.awt.BorderLayout;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JList;
+
 import java.awt.FlowLayout;
 
-public class VentanaConcurrencia extends JFrame {
+import model.concurrencia.ObserverPlataforma;
 
+import java.awt.event.ActionListener;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import controller.ControladorConcurrencia;
+import model.concurrencia.PlataformaDeCarga;
+
+public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia,ObserverPlataforma {
+	private JList<String> list;      // antes: JList
+	private JList<String> list_1;    // antes: JList
+	private final DefaultListModel<String> modeloNaves = new DefaultListModel<>();
+	private final DefaultListModel<String> modeloGeneradores = new DefaultListModel<>();
 	private static final long serialVersionUID = 1L;
 	private JPanel PanelGeneral;
 	private JPanel PanelColumnas;
@@ -26,7 +44,6 @@ public class VentanaConcurrencia extends JFrame {
 	private JButton btnNewButton_2;
 	private JLabel lblNewLabel_1;
 	private JScrollPane scrollPane_3;
-	private JList list;
 	private JPanel PanelLogs;
 	private JLabel lblNewLabel;
 	private JScrollPane scrollPane;
@@ -35,7 +52,6 @@ public class VentanaConcurrencia extends JFrame {
 	private JPanel PanelGeneradores;
 	private JLabel lblNewLabel_2;
 	private JScrollPane scrollPane_1;
-	private JList list_1;
 	private JButton btnNewButton_1;
 	private JPanel PanelBotón;
 	private JButton btnNewButton;
@@ -44,17 +60,19 @@ public class VentanaConcurrencia extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaConcurrencia frame = new VentanaConcurrencia();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            try {
+                VentanaConcurrencia frame = new VentanaConcurrencia();
+                PlataformaDeCarga modelo = new PlataformaDeCarga(3);   // capacidad del depósito
+                new ControladorConcurrencia(frame, modelo);
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    });
+}
 
 	/**
 	 * Create the frame.
@@ -79,14 +97,15 @@ public class VentanaConcurrencia extends JFrame {
 		this.btnNewButton_2.setMargin(new Insets(0, 14, 0, 14));
 		this.PanelNaves.add(this.btnNewButton_2, BorderLayout.SOUTH);
 		
-		this.lblNewLabel_1 = new JLabel("Naves");
-		this.lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		this.lblNewLabel_1 = new JLabel("Naves");               
+		this.lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER); 
 		this.PanelNaves.add(this.lblNewLabel_1, BorderLayout.NORTH);
 		
 		this.scrollPane_3 = new JScrollPane();
 		this.PanelNaves.add(this.scrollPane_3, BorderLayout.CENTER);
 		
-		this.list = new JList();
+		this.list = new JList<String>(modeloNaves);
 		this.scrollPane_3.setViewportView(this.list);
 		
 		this.PanelLogs = new JPanel();
@@ -115,10 +134,12 @@ public class VentanaConcurrencia extends JFrame {
 		this.lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		this.PanelGeneradores.add(this.lblNewLabel_2, BorderLayout.NORTH);
 		
+		
+		
 		this.scrollPane_1 = new JScrollPane();
 		this.PanelGeneradores.add(this.scrollPane_1, BorderLayout.CENTER);
 		
-		this.list_1 = new JList();
+		this.list_1 = new JList<String>(modeloGeneradores);
 		this.scrollPane_1.setViewportView(this.list_1);
 		
 		this.btnNewButton_1 = new JButton("CREAR GENERADOR");
@@ -135,4 +156,39 @@ public class VentanaConcurrencia extends JFrame {
 		this.PanelBotón.add(this.btnNewButton);
 
 	}
+	@Override
+public void setActionListener(ActionListener listener) {
+    btnStart.setActionCommand("EJECUTAR");
+    btnNewButton_2.setActionCommand("CREAR NAVE");
+    btnNewButton_1.setActionCommand("CREAR GENERADOR");
+
+    btnStart.addActionListener(listener);
+    btnNewButton_2.addActionListener(listener);
+    btnNewButton_1.addActionListener(listener);
+}
+
+@Override
+public boolean validaParametros() {
+    int naves = modeloNaves.getSize();
+    int generadores = modeloGeneradores.getSize();
+    if (naves == 0 || naves != generadores) {
+        JOptionPane.showMessageDialog(this,
+                "La cantidad de naves y generadores debe ser igual y mayor a 0.",
+                "Parámetros inválidos", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    return true;
+}
+
+@Override
+public void agregarNave(String nombre) { modeloNaves.addElement(nombre); }
+
+@Override
+public void agregarGenerador(String nombre) { modeloGeneradores.addElement(nombre); }
+
+@Override
+public void actualizar(String evento) {
+    // llega desde los hilos; Swing solo se toca desde su propio hilo
+    SwingUtilities.invokeLater(() -> textArea.append(evento + "\n"));
+}
 }
