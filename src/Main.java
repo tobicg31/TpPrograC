@@ -1,19 +1,19 @@
-import asistentes.Asistente;
-import bitacoras.Bitacora;
-import misiones.Mision;
-import misiones.factory.MisionFactory;
-import naves.Nave;
-import naves.factory.NaveFactory;
-import tripulantes.Alferez;
-import tripulantes.Capitan;
-import tripulantes.Consejero;
-import tripulantes.Teniente;
-import tripulantes.Tripulante;
-import tripulantes.decorator.Liquidable;
-import tripulantes.decorator.Marciano;
-import tripulantes.decorator.Terricola;
-import tripulantes.decorator.Vulcano;
-//import concurrencia.*; // Importa todas las clases del paquete concurrencia
+import model.asistentes.Asistente;
+import model.bitacoras.Bitacora;
+import model.misiones.Mision;
+import model.misiones.factory.MisionFactory;
+import model.naves.Nave;
+import model.naves.factory.NaveFactory;
+import model.tripulantes.Alferez;
+import model.tripulantes.Capitan;
+import model.tripulantes.Consejero;
+import model.tripulantes.Teniente;
+import model.tripulantes.Tripulante;
+import model.tripulantes.decorator.Liquidable;
+import model.tripulantes.decorator.Marciano;
+import model.tripulantes.decorator.Terricola;
+import model.tripulantes.decorator.Vulcano;
+//import model.concurrencia.*; // Importa todas las clases del paquete concurrencia
 
 /**
  * Esta clase representa el punto de entrada principal del programa. Contiene el

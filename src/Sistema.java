@@ -1,4 +1,4 @@
-import asistentes.Asistente;
+import model.asistentes.Asistente;
 import java.util.ArrayList;
 
 /**
