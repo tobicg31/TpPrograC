@@ -8,17 +8,20 @@ import model.destinoytablero.Destino;
 import model.destinoytablero.DimensionesDeTableroInconsistentesException;
 import model.destinoytablero.Tablero;
 import model.elementosUniverso.ElementoDelUniverso;
+import model.naves.Nave;
 import view.IVentanaTablero;
 
 public class ControladorTablero implements ActionListener{
     private final IVentanaTablero vista;
     private Tablero tablero;
     private Destino destino;
+    private final Nave nave;
 
     
 
-    public ControladorTablero(IVentanaTablero vista) {
+    public ControladorTablero(IVentanaTablero vista, Nave nave) {
         this.vista = vista;
+        this.nave = nave;
     }
 
 
@@ -41,15 +44,20 @@ public class ControladorTablero implements ActionListener{
         }
     }
     
-    public void mostrarTablero(Tablero tablero){
+    public void mostrarTablero(){
 
     }
 
-    public void turnoNave(Tablero tablero){
-
+    public void setObjetivo(){
+        //busca el objetivo mas cercano (tablero.obtenerObjetivo() ) y
+        //le dice a la nave principal que mision arrancar
     }
 
-    public void turnoTablero(Tablero tablero){
+    public void turnoNave(){
+        //no estoy tan seguro de esta pero bueno
+    }
 
+    public void turnoTablero(){
+        //es llamar a turnoDestino del Destino xd
     }
 }
