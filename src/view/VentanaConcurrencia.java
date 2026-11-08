@@ -21,8 +21,6 @@ import javax.swing.JList;
 
 import java.awt.FlowLayout;
 
-import model.concurrencia.ObserverPlataforma;
-
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
@@ -32,7 +30,7 @@ import javax.swing.SwingUtilities;
 import controller.ControladorConcurrencia;
 import model.concurrencia.PlataformaDeCarga;
 
-public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia, ObserverPlataforma {
+public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia {
 	private JList<String> list; // antes: JList
 	private JList<String> list_1; // antes: JList
 	private final DefaultListModel<String> modeloNaves = new DefaultListModel<>();
