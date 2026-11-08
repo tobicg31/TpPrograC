@@ -1,6 +1,9 @@
 package model.acceso;
 
+import java.sql.SQLException;
+
 public interface UsuarioDAO {
-    public void crearUsuario(Usuario usuario);
-    public boolean iniciarSesion(Usuario usuario);    
+    boolean crearUsuario(Usuario usuario) throws SQLException;
+
+    boolean iniciarSesion(Usuario usuario) throws SQLException;
 } 

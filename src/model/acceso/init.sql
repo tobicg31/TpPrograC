@@ -1,5 +1,5 @@
-CREATE TABLE usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id               INTEGER      PRIMARY KEY AUTOINCREMENT,
     nomUsuario       VARCHAR(20)  NOT NULL UNIQUE,
-    contraseña       VARCHAR(200) NOT NULL,
+    contraseña       VARCHAR(200) NOT NULL
 );
