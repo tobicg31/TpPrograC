@@ -16,12 +16,12 @@ public class NaveConsumidora implements Runnable {
 
     @Override
     public void run() {
-     plataforma.consumirEnergia(this.id);
-     try {
-            Thread.sleep((int) (Math.random() * 100)); // Simula el tiempo que tarda en consumir energía 
+        try {
+            Thread.sleep((int) (Math.random() * 2000)); // Simula el tiempo que tarda en consumir energía nuevamente
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+        plataforma.consumirEnergia(this.id);
     }
 
 }

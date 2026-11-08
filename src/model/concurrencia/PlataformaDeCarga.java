@@ -27,15 +27,23 @@ public class PlataformaDeCarga{
     //TODOS LOS SYSTEM.OUT.PRINTLN DEBEN SER LANZADOS POR PATRON OBSERVER
 
    public synchronized void generarEnergia(int id) {
+       if (cantbat==topedeposito) {
+            notificarObservadores("[Generadora " + id + "] esperando a que se libere espacio en la Plataforma");
+        }
        while(cantbat == topedeposito) {
             try {
                 wait(); // Espera hasta que haya espacio disponible en la plataforma
-                notificarObservadores("[Generadora " + id + "] esperando a que se libere espacio en la Plataforma");
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
         this.cantbat++;
+        notificarObservadores("Produciendo bateria...");
+        try {
+            Thread.sleep((int) (1000)); // Simula el tiempo que tarda en producir energía
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
         notificarObservadores("Batería producida por [Generadora " + id + "]. Total disponible: " + this.cantbat);
         notifyAll(); // Notifica a los hilos 
     }
@@ -43,13 +51,19 @@ public class PlataformaDeCarga{
     public synchronized void consumirEnergia(int id) {
         while (cantbat == 0) {
             try {
-                wait(); // Espera hasta que haya energía disponible
                 notificarObservadores("[Nave " + id + "] esperando por falta de baterías en la Plataforma."); 
+                wait(); // Espera hasta que haya energía disponible
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
         this.cantbat--;
+        notificarObservadores("Retirando bateria...");
+        try {
+            Thread.sleep((int) (1000)); // Simula el tiempo que tarda en consumir energía
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
         notificarObservadores("Batería retirada y utilizada por [Nave " + id + "]. Total disponible: " + this.cantbat);
         notifyAll(); // Notifica a los hilos 
     }
