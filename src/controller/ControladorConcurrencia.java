@@ -3,6 +3,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import model.concurrencia.GeneradoradeEnergia;
 import model.concurrencia.NaveConsumidora;
@@ -51,11 +53,18 @@ public class ControladorConcurrencia implements ActionListener {
     }
 
     private void ejecutar() {
+        ArrayList<Thread> hilos = new ArrayList<>();
         for (int i = 1; i <= cantGeneradores; i++) {
-            new Thread(new GeneradoradeEnergia(i, modelo, 1)).start();
+            Thread hiloGenerador = new Thread(new GeneradoradeEnergia(i, modelo));
+            hilos.add(hiloGenerador);
         }
         for (int i = 1; i <= cantNaves; i++) {
-            new Thread(new NaveConsumidora(i, modelo)).start();
+            Thread hiloNave = new Thread(new NaveConsumidora(i, modelo));
+            hilos.add(hiloNave);
+        }
+        Collections.shuffle(hilos);
+        for (Thread hilo : hilos) {
+        hilo.start();
         }
     }
 }

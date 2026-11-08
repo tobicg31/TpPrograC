@@ -7,28 +7,22 @@ package model.concurrencia;
  */
 public class GeneradoradeEnergia implements Runnable {
     
-    private int id;//, cantidadEnergiaGenerada;???
-    private PlataformaDeCarga plataforma;
+    private final int id;
+    private final PlataformaDeCarga plataforma;
 
-    public GeneradoradeEnergia(int id, PlataformaDeCarga plataforma, int cantidadEnergiaGenerada) {
+    public GeneradoradeEnergia(int id, PlataformaDeCarga plataforma) {
         this.id = id;
-       // this.cantidadEnergiaGenerada = cantidadEnergiaGenerada;
         this.plataforma = plataforma;
     }
 
     @Override
     public void run(){
-       /* int i;
-        for (i = 0; i < cantidadEnergiaGenerada; i++) {*/
-             plataforma.generarEnergia(this.id);
 
             try {
-                Thread.sleep((int) (Math.random() * 100)); // Simula el tiempo que tarda en generar energía nuevamente
+                Thread.sleep((int) (Math.random() * 2000)); // Simula el tiempo que tarda en generar energía nuevamente
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
-    
-        /*}  */
             }
-
+            plataforma.generarEnergia(this.id);
     }
 }

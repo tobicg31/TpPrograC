@@ -170,9 +170,9 @@ public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia 
 	public boolean validaParametros() {
 		int naves = modeloNaves.getSize();
 		int generadores = modeloGeneradores.getSize();
-		if (naves == 0 || naves != generadores) {
+		if (naves == 0 || naves > generadores) {
 			JOptionPane.showMessageDialog(this,
-					"La cantidad de naves y generadores debe ser igual y mayor a 0.",
+					"La cantidad de naves debe ser igual y menor a los generadores creados.",
 					"Parámetros inválidos", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -192,7 +192,7 @@ public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia 
 	@Override
 	public void actualizar(String evento) {
 		// llega desde los hilos; Swing solo se toca desde su propio hilo
-		SwingUtilities.invokeLater(() -> textArea.append(evento + "\n"));
+		SwingUtilities.invokeLater(() -> textArea.append(evento + "\n\n"));
 	}
 
 	@Override
