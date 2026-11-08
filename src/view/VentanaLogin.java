@@ -1,5 +1,7 @@
 package view;
 
+import java.nio.file.Path;
+
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
+import controller.ControladorAcceso;
+import model.acceso.UsuarioDAOSql;
 
 public class VentanaLogin extends JFrame implements IVentanaLogin {
 
@@ -39,6 +44,7 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 			public void run() {
 				try {
 					VentanaLogin frame = new VentanaLogin();
+					new ControladorAcceso(frame, new UsuarioDAOSql(Path.of("usuarios.db")));
 					frame.arranca();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -150,17 +156,24 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 
 	@Override
 	public void limpiarError() {
+		this.lblError.setForeground(Color.RED);
 		this.lblError.setText("");
 	}
 
 	@Override
 	public String getUsuario() {
-		return this.lblUsuario.getText();
+		return this.txtUsuario.getText();
 	}
 
 	@Override
 	public String getContrasenia() {
-		return this.lblPassword.getText();
+		return new String(this.txtPassword.getPassword());
+	}
+
+	@Override
+	public void mostrarMensaje(String mensaje) {
+		this.lblError.setForeground(new Color(0, 128, 0));
+		this.lblError.setText(mensaje);
 	}
 
 	@Override

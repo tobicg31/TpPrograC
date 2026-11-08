@@ -10,6 +10,8 @@ public interface IVentanaLogin {
 
   void mostrarError(String error);
 
+  void mostrarMensaje(String mensaje);
+
   void limpiarCampos();
 
   void limpiarError();

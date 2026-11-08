@@ -2,11 +2,11 @@ package model.acceso;
 
 public class Usuario {
     private String nombre;
-    private String contraseña;
+    private String contrasenia;
     
-    public Usuario(String nombre, String contraseña) {
+    public Usuario(String nombre, String contrasenia) {
         this.nombre = nombre;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
     }
 
     public String getNombre() {
@@ -17,12 +17,12 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     

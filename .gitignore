@@ -95,3 +95,6 @@ $RECYCLE.BIN/
 *.trace.db
 *.lock.db
 *.temp.db
+*.db
+*.db-shm
+*.db-wal
