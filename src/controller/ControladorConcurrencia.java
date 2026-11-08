@@ -9,7 +9,6 @@ import model.concurrencia.NaveConsumidora;
 import model.concurrencia.PlataformaDeCarga;
 import view.IVentanaConcurrencia;
 
-
 public class ControladorConcurrencia implements ActionListener {
     private final IVentanaConcurrencia vista;
     private final PlataformaDeCarga modelo;
@@ -20,7 +19,7 @@ public class ControladorConcurrencia implements ActionListener {
         this.vista = vista;
         this.modelo = modelo;
         this.vista.setActionListener(this);
-        this.modelo.agregarObservador(vista);   // la vista se suscribe a la plataforma
+        this.modelo.agregarObservador(vista); // la vista se suscribe a la plataforma
     }
 
     @Override

@@ -304,7 +304,8 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 	}
 
 	@Override
-	public void agregarFilaTripulante(String nombre, String cargo, int antiguedad, double porcentajeAdicional, String planeta, double salario) {
+	public void agregarFilaTripulante(String nombre, String cargo, int antiguedad, double porcentajeAdicional,
+			String planeta, double salario) {
 		NumberFormat formatoNumero = NumberFormat.getNumberInstance(Locale.of("es", "AR"));
 		formatoNumero.setMaximumFractionDigits(2);
 		this.modeloTabla.addRow(new Object[] {
@@ -325,8 +326,9 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 	}
 
 	@Override
-	public double getCostoTotalSalarios(){
-		String textoCosto = this.lblCostoTotalSalarios.getText().replace("Costo total de salarios: $", "").replace(".", "").replace(",", ".");
+	public double getCostoTotalSalarios() {
+		String textoCosto = this.lblCostoTotalSalarios.getText().replace("Costo total de salarios: $", "").replace(".", "")
+				.replace(",", ".");
 		try {
 			return Double.parseDouble(textoCosto);
 		} catch (NumberFormatException e) {

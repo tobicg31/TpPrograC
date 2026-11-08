@@ -143,7 +143,8 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 
 	@Override
 	public void limpiarCampos() {
-		this.txtPassword.setText("");;
+		this.txtPassword.setText("");
+		;
 		this.txtUsuario.setText("");
 	}
 

@@ -26,31 +26,32 @@ public class ControladorCreacion implements ActionListener {
 		this.vista.setActionListener(this);
 		this.tripulantes = new ArrayList<Liquidable>();
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		vista.limpiarError();
-		
-    switch (e.getActionCommand()) {
-      case IVentanaCreacion.AGREGAR_TRIPULANTE:
-        agregarTripulante();
-      break;
-      case IVentanaCreacion.INSTANCIAR_NAVE:
-        instanciarNave();
-      break;
-    }
+
+		switch (e.getActionCommand()) {
+			case IVentanaCreacion.AGREGAR_TRIPULANTE:
+				agregarTripulante();
+				break;
+			case IVentanaCreacion.INSTANCIAR_NAVE:
+				instanciarNave();
+				break;
+		}
 	}
 
 	private void agregarTripulante() {
 		Tripulante tripulante = validarTripulante();
-		if(tripulante == null)
-			return ;
-		if(this.nave == null) {
+		if (tripulante == null)
+			return;
+		if (this.nave == null) {
 			vista.mostrarError("Debe instanciar una nave antes de agregar tripulantes");
-			return ;
+			return;
 		}
 		double salario = 0;
 		Liquidable liquidable = null;
-		switch(vista.getPlaneta()){
+		switch (vista.getPlaneta()) {
 			case "Tierra":
 				liquidable = new Vulcano(tripulante);
 				break;
@@ -62,29 +63,30 @@ public class ControladorCreacion implements ActionListener {
 				break;
 			default:
 				vista.mostrarError("El planeta no es válido");
-				return ;
+				return;
 		}
 		this.tripulantes.add(liquidable);
 		salario = liquidable.liquidacionDeHaberes();
-		vista.agregarFilaTripulante(tripulante.getIdentidad(), tripulante.getCargo(), tripulante.getAntiguedad(), tripulante.getPorcentajeAdicional(), tripulante.getPlaneta(), salario);
+		vista.agregarFilaTripulante(tripulante.getIdentidad(), tripulante.getCargo(), tripulante.getAntiguedad(),
+				tripulante.getPorcentajeAdicional(), tripulante.getPlaneta(), salario);
 		vista.actualizarCosto(vista.getCostoTotalSalarios() + salario);
 		vista.limpiarFormularioTripulante();
 	}
 
 	private void instanciarNave() {
 		String tipoNave = vista.getTipoNave();
-		if(tipoNave.isEmpty()) {
+		if (tipoNave.isEmpty()) {
 			vista.mostrarError("El tipo de nave no peude ser vacío");
-			return ;
+			return;
 		}
-		if(this.nave != null) {
+		if (this.nave != null) {
 			vista.mostrarError("Ya se ha instanciado una nave");
-			return ;
+			return;
 		}
 		this.nave = NaveFactory.getNave(tipoNave);
-		if(this.nave == null) {
+		if (this.nave == null) {
 			vista.mostrarError("El tipo de nave no es válido");
-			return ;
+			return;
 		}
 		vista.actualizarNave(tipoNave);
 		vista.actualizarCosto(0);
@@ -97,15 +99,15 @@ public class ControladorCreacion implements ActionListener {
 		double porcentajeAdicional = vista.getPorcentajeAdicional();
 		String planeta = vista.getPlaneta();
 
-		if(nombre.isEmpty() || cargo.isEmpty() || planeta.isEmpty()) {
+		if (nombre.isEmpty() || cargo.isEmpty() || planeta.isEmpty()) {
 			vista.mostrarError("Los parámetros de texto no deben estar vacíos");
 			return null;
 		}
-		if(porcentajeAdicional <= 0){
+		if (porcentajeAdicional <= 0) {
 			vista.mostrarError("El porcentaje adicional debe ser mayor a 0");
 			return null;
 		}
-		switch(cargo) {
+		switch (cargo) {
 			case "Alferez":
 				return new Alferez(nombre, cargo, antiguedad, porcentajeAdicional, planeta);
 			case "Teniente":
