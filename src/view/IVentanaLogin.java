@@ -12,4 +12,6 @@ public interface IVentanaLogin {
   void limpiarError();
   String getUsuario();
   String getContrasenia();
+  void arranca();
+  void cierra();
 }

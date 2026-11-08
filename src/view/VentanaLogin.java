@@ -39,7 +39,7 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 			public void run() {
 				try {
 					VentanaLogin frame = new VentanaLogin();
-					frame.setVisible(true);
+					frame.arranca();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -125,6 +125,9 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 		this.lblError = new JLabel(" ");
 		this.lblError.setForeground(Color.RED);
 		this.PanelInferior.add(this.lblError, BorderLayout.SOUTH);
+
+		this.btnLogin.setActionCommand(LOGIN);
+		this.btnRegister.setActionCommand(REGISTRAR);
 	}
 
 	@Override
@@ -157,6 +160,17 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 	@Override
 	public String getContrasenia() {
 		return this.lblPassword.getText();
+	}
+
+	@Override
+	public void arranca() {
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+
+	@Override
+	public void cierra() {
+		dispose();
 	}
 
 }
