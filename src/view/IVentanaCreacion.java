@@ -15,6 +15,7 @@ public interface IVentanaCreacion {
   String getPlaneta();
 	void agregarFilaTripulante(String nombre, String cargo, int antiguedad, double porcentajeAdicional, String planeta, double salario);
 	void actualizarCosto(double costoTotalSalarios);
+	double getCostoTotalSalarios();
 	void actualizarNave(String tipoNave);
 	void limpiarFormularioTripulante();
 	void mostrarError(String error);

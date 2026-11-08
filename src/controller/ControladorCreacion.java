@@ -67,7 +67,8 @@ public class ControladorCreacion implements ActionListener {
 		this.tripulantes.add(liquidable);
 		salario = liquidable.liquidacionDeHaberes();
 		vista.agregarFilaTripulante(tripulante.getIdentidad(), tripulante.getCargo(), tripulante.getAntiguedad(), tripulante.getPorcentajeAdicional(), tripulante.getPlaneta(), salario);
-		vista.actualizarCosto(salario);
+		vista.actualizarCosto(vista.getCostoTotalSalarios() + salario);
+		vista.limpiarFormularioTripulante();
 	}
 
 	private void instanciarNave() {

@@ -1,5 +1,6 @@
 package view;
 
+import controller.ControladorCreacion;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -61,6 +62,7 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 			public void run() {
 				try {
 					VentanaCreacion frame = new VentanaCreacion();
+					new ControladorCreacion(frame);
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -112,7 +114,7 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 		gbcCmbTipoNave.weightx = 1.0;
 		gbcCmbTipoNave.gridx = 1;
 		gbcCmbTipoNave.gridy = 0;
-		this.cmbTipoNave = new JComboBox<String>(new String[] { "Carguero", "Combate", "Exploradora" });
+		this.cmbTipoNave = new JComboBox<String>(new String[] { "", "Carguero", "Combate", "Exploradora" });
 		this.panelInstanciarNave.add(this.cmbTipoNave, gbcCmbTipoNave);
 
 		GridBagConstraints gbcBtnInstanciarNave = new GridBagConstraints();
@@ -160,7 +162,7 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 		gbcCmbCargo.gridx = 1;
 		gbcCmbCargo.gridy = 1;
 		this.cmbCargo = new JComboBox<String>(
-				new String[] { "Alferez", "Capitan", "Consejero", "Teniente" });
+				new String[] { "", "Alferez", "Capitan", "Consejero", "Teniente" });
 		this.panelCrearTripulante.add(this.cmbCargo, gbcCmbCargo);
 
 		GridBagConstraints gbcLblAntiguedad = new GridBagConstraints();
@@ -214,7 +216,7 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 		gbcCmbPlaneta.weightx = 1.0;
 		gbcCmbPlaneta.gridx = 1;
 		gbcCmbPlaneta.gridy = 4;
-		this.cmbPlaneta = new JComboBox<String>(new String[] { "Marte", "Tierra", "Vulcano" });
+		this.cmbPlaneta = new JComboBox<String>(new String[] { "", "Marte", "Tierra", "Vulcano" });
 		this.panelCrearTripulante.add(this.cmbPlaneta, gbcCmbPlaneta);
 
 		GridBagConstraints gbcBtnAgregarTripulante = new GridBagConstraints();
@@ -320,6 +322,16 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 		NumberFormat formatoNumero = NumberFormat.getNumberInstance(Locale.of("es", "AR"));
 		formatoNumero.setMaximumFractionDigits(2);
 		this.lblCostoTotalSalarios.setText("Costo total de salarios: $" + formatoNumero.format(costoTotalSalarios));
+	}
+
+	@Override
+	public double getCostoTotalSalarios(){
+		String textoCosto = this.lblCostoTotalSalarios.getText().replace("Costo total de salarios: $", "").replace(".", "").replace(",", ".");
+		try {
+			return Double.parseDouble(textoCosto);
+		} catch (NumberFormatException e) {
+			return 0.0;
+		}
 	}
 
 	@Override
