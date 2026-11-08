@@ -2,9 +2,9 @@ package view;
 
 import controller.ControladorCreacion;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -50,9 +51,9 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 	private JButton btnAgregarTripulante;
 	private JLabel lblNaveActual;
 	private JLabel lblCostoTotalSalarios;
-	private JLabel lblError;
 	private JTable tablaTripulantes;
 	private DefaultTableModel modeloTabla;
+	private JButton btnVolver;
 
 	/**
 	 * Launch the application.
@@ -259,18 +260,24 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 		this.panelResumen.add(this.lblCostoTotalSalarios);
 		this.panelTripulantes.add(this.panelResumen, BorderLayout.SOUTH);
 
-		this.lblError = new JLabel(" ");
-		this.lblError.setForeground(Color.RED);
-		this.panelContenedor.add(this.lblError, BorderLayout.SOUTH);
+		JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.panelContenedor.add(panelBoton, BorderLayout.SOUTH);
+		this.btnVolver = new JButton("VOLVER");
+		this.btnVolver.setActionCommand(VOLVER);
+		this.btnVolver.setMargin(new Insets(0, 14, 0, 14));
+		panelBoton.add(this.btnVolver);
 
 		this.btnAgregarTripulante.setActionCommand(AGREGAR_TRIPULANTE);
 		this.btnInstanciarNave.setActionCommand(INSTANCIAR_NAVE);
+
+		TemaOscuro.aplicar(this);
 	}
 
 	@Override
 	public void setActionListener(ActionListener listener) {
 		this.btnInstanciarNave.addActionListener(listener);
 		this.btnAgregarTripulante.addActionListener(listener);
+		this.btnVolver.addActionListener(listener);
 	}
 
 	@Override
@@ -352,12 +359,7 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 
 	@Override
 	public void mostrarError(String error) {
-		this.lblError.setText(error);
-	}
-
-	@Override
-	public void limpiarError() {
-		this.lblError.setText(" ");
+		JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override

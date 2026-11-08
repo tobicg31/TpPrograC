@@ -15,28 +15,39 @@ import model.tripulantes.decorator.Liquidable;
 import model.tripulantes.decorator.Marciano;
 import model.tripulantes.decorator.Vulcano;
 import view.IVentanaCreacion;
+import view.IVentanaMenu;
 
 public class ControladorCreacion implements ActionListener {
-	private IVentanaCreacion vista;
+	private final IVentanaCreacion vista;
+	private final IVentanaMenu vistaMenu;
 	private Nave nave = null;
 	private ArrayList<Liquidable> tripulantes;
 
 	public ControladorCreacion(IVentanaCreacion vista) {
+		this(vista, null);
+	}
+
+	public ControladorCreacion(IVentanaCreacion vista, IVentanaMenu vistaMenu) {
 		this.vista = vista;
+		this.vistaMenu = vistaMenu;
 		this.vista.setActionListener(this);
 		this.tripulantes = new ArrayList<Liquidable>();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		vista.limpiarError();
-
 		switch (e.getActionCommand()) {
 			case IVentanaCreacion.AGREGAR_TRIPULANTE:
 				agregarTripulante();
 				break;
 			case IVentanaCreacion.INSTANCIAR_NAVE:
 				instanciarNave();
+				break;
+			case IVentanaCreacion.VOLVER:
+				vista.cierra();
+				if (this.vistaMenu != null) {
+					this.vistaMenu.arranca(null);
+				}
 				break;
 		}
 	}

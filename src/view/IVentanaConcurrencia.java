@@ -6,13 +6,21 @@ import java.awt.event.ActionListener;
 import model.concurrencia.ObserverPlataforma;
 
 public interface IVentanaConcurrencia extends ObserverPlataforma {
+    String EJECUTAR = "EJECUTAR";
+    String CREAR_NAVE = "CREAR NAVE";
+    String CREAR_GENERADOR = "CREAR GENERADOR";
+    String VOLVER = "VOLVER";
 
-    public void setActionListener(ActionListener listener);
+    void setActionListener(ActionListener listener);
 
-    public boolean validaParametros();
+    boolean validaParametros();
 
-    public void agregarNave(String string);
+    void agregarNave(String string);
 
-    public void agregarGenerador(String string);
+    void agregarGenerador(String string);
+
+    void arranca();
+
+    void cierra();
 
 }

@@ -8,15 +8,18 @@ import model.concurrencia.GeneradoradeEnergia;
 import model.concurrencia.NaveConsumidora;
 import model.concurrencia.PlataformaDeCarga;
 import view.IVentanaConcurrencia;
+import view.IVentanaMenu;
 
 public class ControladorConcurrencia implements ActionListener {
     private final IVentanaConcurrencia vista;
+    private final IVentanaMenu vistaMenu;
     private final PlataformaDeCarga modelo;
     private int cantNaves = 0;
     private int cantGeneradores = 0;
 
-    public ControladorConcurrencia(IVentanaConcurrencia vista, PlataformaDeCarga modelo) {
+    public ControladorConcurrencia(IVentanaConcurrencia vista, IVentanaMenu vistaMenu, PlataformaDeCarga modelo) {
         this.vista = vista;
+        this.vistaMenu = vistaMenu;
         this.modelo = modelo;
         this.vista.setActionListener(this);
         this.modelo.agregarObservador(vista); // la vista se suscribe a la plataforma
@@ -37,6 +40,10 @@ public class ControladorConcurrencia implements ActionListener {
                 if (vista.validaParametros()) {
                     ejecutar();
                 }
+                break;
+            case "VOLVER":
+                vista.cierra();
+                vistaMenu.arranca(null);
                 break;
             default:
                 break;

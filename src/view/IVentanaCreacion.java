@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 public interface IVentanaCreacion {
 	String INSTANCIAR_NAVE = "INSTANCIAR NAVE";
 	String AGREGAR_TRIPULANTE = "AGREGAR TRIPULANTE";
+	String VOLVER = "VOLVER";
 
 	void setActionListener(ActionListener listener);
 
@@ -32,8 +33,6 @@ public interface IVentanaCreacion {
 	void limpiarFormularioTripulante();
 
 	void mostrarError(String error);
-
-	void limpiarError();
 
 	void arranca();
 

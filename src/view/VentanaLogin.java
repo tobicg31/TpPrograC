@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import controller.ControladorAcceso;
 import model.acceso.UsuarioDAOSql;
@@ -44,7 +45,8 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 			public void run() {
 				try {
 					VentanaLogin frame = new VentanaLogin();
-					new ControladorAcceso(frame, new UsuarioDAOSql(Path.of("usuarios.db")));
+					VentanaMenu menu = new VentanaMenu();
+					new ControladorAcceso(frame, menu, new UsuarioDAOSql(Path.of("usuarios.db")));
 					frame.arranca();
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -134,6 +136,9 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 
 		this.btnLogin.setActionCommand(LOGIN);
 		this.btnRegister.setActionCommand(REGISTRAR);
+
+		TemaOscuro.aplicar(this);
+		this.lblError.setForeground(Color.RED);
 	}
 
 	@Override
@@ -144,7 +149,7 @@ public class VentanaLogin extends JFrame implements IVentanaLogin {
 
 	@Override
 	public void mostrarError(String error) {
-		this.lblError.setText(error);
+		JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override

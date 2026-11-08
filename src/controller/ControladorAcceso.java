@@ -7,13 +7,16 @@ import java.sql.SQLException;
 import model.acceso.Usuario;
 import model.acceso.UsuarioDAO;
 import view.IVentanaLogin;
+import view.IVentanaMenu;
 
 public class ControladorAcceso implements ActionListener {
     private final IVentanaLogin vista;
+    private final IVentanaMenu vistaMenu;
     private final UsuarioDAO usuarioDAO;
 
-    public ControladorAcceso(IVentanaLogin vista, UsuarioDAO usuarioDAO) {
+    public ControladorAcceso(IVentanaLogin vista, IVentanaMenu vistaMenu, UsuarioDAO usuarioDAO) {
         this.vista = vista;
+        this.vistaMenu = vistaMenu;
         this.usuarioDAO = usuarioDAO;
         this.vista.setActionListener(this);
     }
@@ -41,6 +44,8 @@ public class ControladorAcceso implements ActionListener {
         try {
             if (usuarioDAO.iniciarSesion(usuario)) {
                 vista.mostrarMensaje("Inicio de sesión exitoso.");
+                vista.cierra();
+                vistaMenu.arranca(usuario);
             } else {
                 vista.mostrarError("Usuario o contraseña incorrectos.");
             }

@@ -62,8 +62,9 @@ public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia 
 			public void run() {
 				try {
 					VentanaConcurrencia frame = new VentanaConcurrencia();
+					VentanaMenu vistaMenu = new VentanaMenu();
 					PlataformaDeCarga modelo = new PlataformaDeCarga(3); // capacidad del depósito
-					new ControladorConcurrencia(frame, modelo);
+					new ControladorConcurrencia(frame, vistaMenu, modelo);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -150,17 +151,19 @@ public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia 
 		this.btnNewButton.setMargin(new Insets(0, 14, 0, 14));
 		this.PanelBotón.add(this.btnNewButton);
 
+		this.btnStart.setActionCommand(EJECUTAR);
+		this.btnNewButton_2.setActionCommand(CREAR_NAVE);
+		this.btnNewButton_1.setActionCommand(CREAR_GENERADOR);
+		this.btnNewButton.setActionCommand(VOLVER);
+		TemaOscuro.aplicar(this);
 	}
 
 	@Override
 	public void setActionListener(ActionListener listener) {
-		btnStart.setActionCommand("EJECUTAR");
-		btnNewButton_2.setActionCommand("CREAR NAVE");
-		btnNewButton_1.setActionCommand("CREAR GENERADOR");
-
 		btnStart.addActionListener(listener);
 		btnNewButton_2.addActionListener(listener);
 		btnNewButton_1.addActionListener(listener);
+		btnNewButton.addActionListener(listener);
 	}
 
 	@Override
@@ -190,5 +193,16 @@ public class VentanaConcurrencia extends JFrame implements IVentanaConcurrencia 
 	public void actualizar(String evento) {
 		// llega desde los hilos; Swing solo se toca desde su propio hilo
 		SwingUtilities.invokeLater(() -> textArea.append(evento + "\n"));
+	}
+
+	@Override
+	public void arranca() {
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+
+	@Override
+	public void cierra() {
+		dispose();
 	}
 }
