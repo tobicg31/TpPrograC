@@ -9,7 +9,6 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
@@ -26,7 +25,7 @@ public class VentanaConcurrencia extends JFrame {
 	private JButton btnNewButton_2;
 	private JLabel lblNewLabel_1;
 	private JScrollPane scrollPane_3;
-	private JList list;
+	private JList<String> list;
 	private JPanel PanelLogs;
 	private JLabel lblNewLabel;
 	private JScrollPane scrollPane;
@@ -35,7 +34,7 @@ public class VentanaConcurrencia extends JFrame {
 	private JPanel PanelGeneradores;
 	private JLabel lblNewLabel_2;
 	private JScrollPane scrollPane_1;
-	private JList list_1;
+	private JList<String> list_1;
 	private JButton btnNewButton_1;
 	private JPanel PanelBotón;
 	private JButton btnNewButton;
@@ -86,7 +85,7 @@ public class VentanaConcurrencia extends JFrame {
 		this.scrollPane_3 = new JScrollPane();
 		this.PanelNaves.add(this.scrollPane_3, BorderLayout.CENTER);
 		
-		this.list = new JList();
+		this.list = new JList<String>();
 		this.scrollPane_3.setViewportView(this.list);
 		
 		this.PanelLogs = new JPanel();
@@ -118,7 +117,7 @@ public class VentanaConcurrencia extends JFrame {
 		this.scrollPane_1 = new JScrollPane();
 		this.PanelGeneradores.add(this.scrollPane_1, BorderLayout.CENTER);
 		
-		this.list_1 = new JList();
+		this.list_1 = new JList<String>();
 		this.scrollPane_1.setViewportView(this.list_1);
 		
 		this.btnNewButton_1 = new JButton("CREAR GENERADOR");

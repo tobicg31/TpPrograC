@@ -67,6 +67,10 @@ public abstract class Tripulante implements Liquidable {
         return antiguedad;
     }
 
+    public double getPorcentajeAdicional() {
+        return porcentAdicional;
+    }
+
     /**
      * Método abstracto que calcula la liquidación correspondiente al cargo del
      * tripulante.
