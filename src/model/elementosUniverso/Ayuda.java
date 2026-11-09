@@ -6,7 +6,7 @@ public class Ayuda implements ElementoDelUniverso{
 
     @Override
     public void interactua(Nave nave) {
-        // TODO Auto-generated method stub
+        nave.aumentarEnergiayCombustible(energia, combustible);
     }
     
 }

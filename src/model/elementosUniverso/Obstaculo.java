@@ -5,8 +5,11 @@ public class Obstaculo implements ElementoDelUniverso{
     private int energia;
 
     @Override
+    public Obstaculo(int energia){
+        this.energia = energia;
+    }
     public void interactua(Nave nave) {
-        // TODO Auto-generated method stub
+        nave.sacaEnergia(energia);
     }
     
 }
