@@ -9,6 +9,7 @@ import model.destinoytablero.DimensionesDeTableroInconsistentesException;
 import model.destinoytablero.Tablero;
 import model.elementosUniverso.ElementoDelUniverso;
 import model.naves.Nave;
+import view.IVentanaLogin;
 import view.IVentanaTablero;
 
 public class ControladorTablero implements ActionListener{
@@ -27,7 +28,17 @@ public class ControladorTablero implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+        switch (e.getActionCommand()) {
+            case IVentanaMision.Mision01:
+                crearMision("01");
+                break;
+            case IVentanaMision.Mision02:
+                crearMision("02");
+                break;
+            case IVentanaMision.Mision03:
+                crearMision("03");
+                break;    
+        }
     }
 
     
@@ -59,5 +70,9 @@ public class ControladorTablero implements ActionListener{
 
     public void turnoTablero(){
         //es llamar a turnoDestino del Destino xd
+    }
+    public void crearMision(String mision){ //VENTANA DONDE SE SELECCIONA LA MISION
+        //
+        
     }
 }

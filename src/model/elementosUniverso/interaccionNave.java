@@ -1,6 +1,6 @@
 public interface interaccionNave {
-    String chocha(InteraccionNave nave);
-    String chochaExploradora();
-    String chochaCarguera();
-    String chochaCombate();
+    boolean chocha(InteraccionNave nave);
+    boolean chochaExploradora();
+    boolean chochaCarguera();
+    boolean chochaCombate();
 }

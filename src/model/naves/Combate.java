@@ -1,6 +1,7 @@
 package model.naves;
 
 import model.elementosUniverso.interaccionNave;
+import model.elementosUniverso.excepciones.NaveInoperativa;
 
 /**
  * Esta clase representa un tipo de nave Concreta, en este caso, una de Combate.
@@ -13,12 +14,12 @@ public class Combate extends Nave implements interaccionNave {
         return nave.chochaCombate();
     }
     boolean chochaExploradora(){
-        return "Gana";
+        return true;
     }
-    boolean chochaCarguera(){
-        return "Pierde";
+    boolean chochaCarguera() throws NaveInoperativa{
+        throw new NaveInoperativa("Perdio la nave y exploto");
     }
     boolean chochaCombate(){
-        return "Pacto de Paz";
+        return true;
     }
 } 
