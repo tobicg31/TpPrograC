@@ -1,12 +1,12 @@
 package model.elementosUniverso;
 
 import model.naves.Nave;
-public class Naves implements ElementoDelUniverso {
+public class Obstaculo implements ElementoDelUniverso{
+    private int energia;
 
     @Override
     public void interactua(Nave nave) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'interactua'");
     }
     
 }
