@@ -7,10 +7,14 @@ import model.naves.Nave;
  */
 
 public class Mision01 extends Mision {
+    private int energiaRequerida;
+    private int combustibleTrans = 20;//DEBERIAN SER ALEATORIOS
+    private int energiaTrans = 30;//DEBERIAN SER ALEATORIOS
 
     public Mision01(){
         super();
         this.nombre = "Intercepcion-Asistencia";
+
     }
     /**
      * (non-Javadoc)

@@ -2,6 +2,8 @@ package model.naves;
 
 import java.util.ArrayList;
 
+import model.elementosUniverso.ElementoDelUniverso;
+import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.naves.state.Disponible;
 import model.naves.state.MotorState;
 import model.tripulantes.decorator.Liquidable;
@@ -15,7 +17,7 @@ import model.tripulantes.decorator.Liquidable;
  * - desgaste >= 0
  * 
  */
-public abstract class Nave {
+public abstract class Nave implements ElementoDelUniverso {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimineto;
     protected ArrayList<Liquidable> tripulantes;
@@ -138,4 +140,50 @@ public abstract class Nave {
         assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
 
+     /**
+     * Metodo llamado desde Obstaculo, el cual disminuye la energia de la nave.
+     * <b>PRE:</b>
+     * - energia > 0
+     * @throws NaveInoperativa si la energia final se vuelve menor o igual cero.
+     * <b>POST:</b>
+     * -energia final menor a energia inicial
+     */
+    public void sacaEnergia(int energia) throws NaveInoperativa{
+
+        if(this.energia - energia > 0){
+            this.energia -= energia; 
+        }
+        else {
+            throw new NaveInoperativa("La nave ha quedado sin energia, la mision falló");
+        }
+           
+    }
+
+/**
+     * Metodo llamado desde Ayuda, el cual aumenta la energia y el combustible de la nave.
+     * <b>PRE:</b>
+     * - energia > 0
+     * - combustible > 0
+     * <b>POST:</b>
+     * -energia final mayor a energia inicial.
+     * -combustible inicial mayor a combustible inicial.
+     */
+    public void aumentarEnergiayCombustible(int energia, int combustible){
+
+        if(this.energia + energia >= maxEnergia){
+            this.energia = maxEnergia; 
+        }
+        else {
+            this.energia += energia;
+           
+        }
+    if(this.combustible + combustible >= maxCom){
+            this.combustible = maxComb; 
+        }
+        else {
+            this.combustible += combustible;
+           
+    }
+
+}
 }

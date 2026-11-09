@@ -13,4 +13,5 @@ public interface IVentanaTablero {
     void limpiarError();
     int getX(); //filas
     int getY(); //columnas
+    String getMision();//desplegable con las distintas misiones
 }
