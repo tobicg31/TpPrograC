@@ -1,6 +1,9 @@
 package model.misiones;
 
 import model.asistentes.Asistente;
+import model.destinoytablero.Tablero;
+import model.elementosUniverso.ElementoDelUniverso;
+import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.misiones.excepciones.NaveMantenimientoException;
 import model.misiones.excepciones.NaveSinRecursosException;
 import model.naves.Nave;
@@ -19,15 +22,17 @@ public abstract class Mision {
     protected Asistente asistente;
     protected boolean misionTerminada = false;
     protected boolean naveViva = true;
+    protected Tablero tablero;
 
     private boolean invariante() {
         return combustibleNecesario == 4 && desgaste == 4;
     }
 
-    public Mision() {
+    public Mision(Tablero tablero) {
         this.combustibleNecesario = 4;
         this.desgaste = 4;
         this.asistente = null;
+        this.tablero = tablero;
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
@@ -74,6 +79,7 @@ public abstract class Mision {
      *         nave según los requerimientos de la misión.
      */
     public void ejecutar(Nave n) {
+        ElementoDelUniverso posActual;
         assert n != null : "La nave no puede ser nula";
         //gasto recursos de la mision:
         n.setCombustible(n.getCombustible() - this.combustibleNecesario);
@@ -81,18 +87,28 @@ public abstract class Mision {
         while (naveViva && !misionTerminada){
             //turno nave:
             //inspeccion posicion actual, hay que usar inspeccionarPosicion del Tablero
+            posActual = this.tablero.inspeccionarPosicion();
             //si devuelve null, no hay nada
             //si devuelve un elemento, hay que llamar a interactua del elemento
-            //catch NaveInoperativa, si se choca y explota, o pierde en el double dispatch
-            
-            //escaneo:
-            //radar corto alcanze, hay que usar observarAlrededores del Tablero
-            
-            //planificacion:
-            //decide si moverse uno o 2 lugares, por el motor
-
-            //turno tablero:
-            //hay q llamar a turnoDestino del Destino
+            try {
+                if (posActual != null){
+                    posActual.interactuar(this.asistente);
+                }
+                //escaneo:
+                //radar corto alcanze, hay que usar observarAlrededores del Tablero
+                alrededores = this.tablero.observarAlrededores();
+                
+                
+                //planificacion:
+                //decide si moverse uno o 2 lugares, por el motor
+                try {
+    
+                }
+                //turno tablero:
+                //hay q llamar a turnoDestino del Destino
+            } catch (NaveInoperativa e) {
+                naveViva = false;
+            }
         }
         //se llego a destino
         //habria q hacer un metodo abstracto para q cada mision decida que hacer en destino
