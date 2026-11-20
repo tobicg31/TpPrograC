@@ -1,6 +1,8 @@
 package model.misiones;
 
 import model.asistentes.Asistente;
+import model.destinoytablero.Destino;
+import model.destinoytablero.Posicion;
 import model.destinoytablero.Tablero;
 import model.elementosUniverso.ElementoDelUniverso;
 import model.elementosUniverso.excepciones.NaveInoperativa;
@@ -23,16 +25,20 @@ public abstract class Mision {
     protected boolean misionTerminada = false;
     protected boolean naveViva = true;
     protected Tablero tablero;
+    protected Destino destino;
+    protected int xRestantes, int yRestantes;
+    protected int dirX, dirY;
 
     private boolean invariante() {
         return combustibleNecesario == 4 && desgaste == 4;
     }
 
-    public Mision(Tablero tablero) {
+    public Mision(Tablero tablero, Destino destino) { //no sabemos si pasar aca el destino
         this.combustibleNecesario = 4;
         this.desgaste = 4;
         this.asistente = null;
         this.tablero = tablero;
+        this.destino = destino;
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
@@ -52,12 +58,12 @@ public abstract class Mision {
      * @throws NaveMantenimientoException En caso de que la nave requiera
      *                                    mantenimiento.
      */
-    public void preparar(Nave n) throws NaveSinRecursosException, NaveMantenimientoException {
-        assert n != null : "La nave no puede ser nula";
+    public void preparar(Asistente asistente) throws NaveSinRecursosException, NaveMantenimientoException {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
         System.out.println("preparo la nave...");
-        if (!((n.getCombustible() - this.combustibleNecesario >= 0) && (n.getDesgaste() + this.desgaste <= 100))) {
+        if (!((asistente.getNave().getCombustible() - this.combustibleNecesario >= 0) && (n.getDesgaste() + this.desgaste <= 100))) {
             throw new NaveSinRecursosException("Fallo de recursos");
-        } else if ((n.requiereMantenimineto())) {
+        } else if ((asistente.getNave().requiereMantenimineto())) {
             throw new NaveMantenimientoException("La nave requiere mantenimiento");
         } else {
             System.out.println("Nave preparada!");
@@ -67,8 +73,13 @@ public abstract class Mision {
         //hay que llamar a obtenerObjetivo() del Tablero.
         Posicion posObjetivo = this.tablero.obtenerObjetivo();
         Posicion posNaveInicial = this.tablero.getPosicionNave();
-        
 
+        this.xRestantes = posObjetivo.getX()-posNaveInicial.getX();
+        this.dirX = this.xRestantes / Math.abs(this.xRestantes);
+        this.xRestantes = Math.abs(this.xRestantes);
+        this.yRestantes = posObjetivo.getY()-posNaveInicial.getY();
+        this.dirY = this.yRestantes / Math.abs(this.yRestantes);
+        this.yRestantes = Math.abs(this.yRestantes);
     }
 
 
@@ -82,12 +93,13 @@ public abstract class Mision {
      * @return Realiza la ejecución de la misión, actualizando los recursos de la
      *         nave según los requerimientos de la misión.
      */
-    public void ejecutar(Nave n) {
+    public void ejecutar(Asistente asistente) {
         ElementoDelUniverso posActual;
-        assert n != null : "La nave no puede ser nula";
+        Posicion actualNave;
+        assert asistente.getNave() != null : "La nave no puede ser nula";
         //gasto recursos de la mision:
-        n.setCombustible(n.getCombustible() - this.combustibleNecesario);
-        n.setDesgaste(n.getDesgaste() + this.desgaste);
+        asistente.getNave().setCombustible(asistente.getNave().getCombustible() - this.combustibleNecesario);
+        asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
         while (naveViva && !misionTerminada){
             //turno nave:
             //inspeccion posicion actual, hay que usar inspeccionarPosicion del Tablero
@@ -100,19 +112,54 @@ public abstract class Mision {
                 }
                 //escaneo:
                 //radar corto alcanze, hay que usar observarAlrededores del Tablero
-                alrededores = this.tablero.observarAlrededores();
-
-                
+                alrededores = this.tablero.observarAlrededores();                
                 //planificacion:
                 //decide si moverse uno o 2 lugares, por el motor
                 try {
-    
+                    if (xRestantes > 0){
+                        actualNave = this.tablero.getPosicionNave();
+                        Posicion siguiente = new Posicion(actualNave.getX()+dirX, actualNave.getY());
+                        if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
+                            this.tablero.moverNave(siguiente);
+                            asistente.getNave().aumentarEnergiayCombustible(0, -2);
+                            this.xRestantes -=1;
+                        } else {
+                            try {
+                                //warp
+                                this.xRestantes -=2;
+                            } catch (excepcio e) {
+                                // TODO: handle exception
+                                naveViva = false;
+                            }
+                        }
+                    }
+                    if (yRestantes > 0){
+                        Posicion actualNave = this.tablero.getPosicionNave();
+                        Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY()+dirY);
+                        if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
+                            this.tablero.moverNave(siguiente);
+                            asistente.getNave().aumentarEnergiayCombustible(0, -2);
+                            this.xRestantes -=1;
+                        } else {
+                            try {
+                                //warp
+                                this.xRestantes -=2;
+                            } catch (excepcio e) {
+                                // TODO: handle exception
+                                naveViva = false;
+                            }
+                        }
+                    }
                 }
                 //turno tablero:
                 //hay q llamar a turnoDestino del Destino
+                this.destino.turnoDestino();
+
             } catch (NaveInoperativa e) {
                 naveViva = false;
             }
+            if (posObjetivo.equals(actualNave))
+                misionTerminada = true;
         }
         //se llego a destino
         //habria q hacer un metodo abstracto para q cada mision decida que hacer en destino

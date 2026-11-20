@@ -144,4 +144,8 @@ public class Asistente {
     public Nave getNave(){
         return this.nave;
     }
+
+    public boolean hayCombustible(){
+        return this.nave.getCombustible() > 0;
+    }
 }
