@@ -32,27 +32,20 @@ public class Disponible implements MotorState{
     }
 
     @Override
-    public void prepararSalto() {
-        this.nave.setEstado(new PreparandoSalto(this.nave));
+    public void saltar()  throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
+        if (this.nave.getCombustible() < 2) {
+            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+        }
+        else{
+            this.nave.setCombustible(this.nave.getCombustible() - 2);
+            this.nave.setEstado(new PreparandoSalto(this.nave));
+        }
     }
 
     @Override
-    public void saltar()  throws TransicionErroneaException {
+    public void saltarWarp()  throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: falta preparar el salto. Prepare el salto para comenzar");
+        throw new NaveInoperativaException("ERROR: la nave no está en estado de warp.");
     }
-
-    @Override
-    public void enfriar()  throws TransicionErroneaException {
-        assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: no se puede enfriar estando ya disponible. Prepare el salto para comenzar");
-    }
-
-    @Override
-    public void pasaTiempo() throws TransicionErroneaException  {
-        assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: ya esta disponible el motor. Prepare el salto para comenzar");
-    }
-
 }

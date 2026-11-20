@@ -32,25 +32,20 @@ public class Enfriamento implements MotorState {
     }
 
     @Override
-    public void prepararSalto()  throws TransicionErroneaException {
+    public void saltar()  throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: no se puede preparar el salto enfriando motor. Ponga el motor en disponible");
-    }
-
-    @Override
-    public void saltar()  throws TransicionErroneaException {
-        assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: no esta preparado el motor. Ponga el motor en disponible");
-    }
-
-    @Override
-    public void enfriar()  throws TransicionErroneaException {
-        assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: ya esta enfriado el motor. Ponga el motor en disponible");
-    }
-
-    @Override
-    public void pasaTiempo() {
+        if this.nave.getCombustible() < 2 {
+            throw new NaveInoperativa("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+        }
+        else{
+            this.nave.setCombustible(this.nave.getCombustible() - 2);
+        }
         this.nave.setEstado(new Disponible(this.nave));
+    }
+
+    @Override
+    public void saltarWarp()  throws NaveInoperativaException {
+        assert this.nave != null : "La nave no puede ser nula";
+        throw new NaveInoperativaException("ERROR: el motor esta enfriando.");
     }
 }

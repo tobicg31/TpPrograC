@@ -18,9 +18,9 @@ import model.tripulantes.decorator.Liquidable;
  * - desgaste >= 0
  * 
  */
-public abstract class Nave implements ElementoDelUniverso {
+public abstract class Nave implements ElementoDelUniverso,MotorState {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
-    protected boolean mantenimineto;
+    protected boolean mantenimiento;
     protected ArrayList<Liquidable> tripulantes;
     protected MotorState motorWarp;
 
@@ -135,10 +135,14 @@ public abstract class Nave implements ElementoDelUniverso {
      * - estado != null
      * @param estado Representa el nuevo estado de la nave.
      */
-    public void setEstado(MotorState estado) {
-        assert estado != null : "El estado no puede ser nulo";
-        this.motorWarp = estado;
+    public void saltar() throws NaveInoperativa {
         assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
+        this.motorWarp.saltar();
+        
+    }
+    public void saltarWarp() throws NaveInoperativa {
+        assert invariante() : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
+        this.motorWarp.saltarWarp();
     }
 
      /**
