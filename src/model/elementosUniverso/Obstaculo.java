@@ -10,7 +10,7 @@ public class Obstaculo implements ElementoDelUniverso{
     public Obstaculo(int energia){
         this.energia = energia;
     }
-    public void interactua(Asistente asistente) throws NaveInoperativa {
+    public void interactuar(Asistente asistente) throws NaveInoperativa {
         try {
             asistente.NaveSacarEnergia(energia);
         } catch (NaveInoperativa e) {

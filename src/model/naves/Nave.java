@@ -186,7 +186,7 @@ public abstract class Nave implements ElementoDelUniverso {
            
     }
 
-    public void interactua(Asistente asistente){
+    public void interactuar(Asistente asistente){
         asistente.getNave().choca(this);
     }
 
