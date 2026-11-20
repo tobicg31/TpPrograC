@@ -10,16 +10,16 @@ public class Combate extends Nave implements interaccionNave {
     public Combate() {
         super(100, 60, 0);
     }
-   boolean chocha(interaccionNave nave){
+   boolean choca(interaccionNave nave){
         return nave.chochaCombate();
     }
-    boolean chochaExploradora(){
+    boolean chocaExploradora(){
         return true;
     }
-    boolean chochaCarguera() throws NaveInoperativa{
+    boolean chocaCarguera() throws NaveInoperativa{
         throw new NaveInoperativa("Perdio la nave y exploto");
     }
-    boolean chochaCombate(){
+    boolean chocaCombate(){
         return true;
     }
 } 

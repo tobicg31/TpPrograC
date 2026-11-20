@@ -2,6 +2,7 @@ package model.asistentes;
 
 
 import model.bitacoras.Bitacora;
+import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.misiones.Mision;
 import model.misiones.excepciones.NaveSinRecursosException;
 import model.misiones.excepciones.NaveMantenimientoException;
@@ -129,4 +130,15 @@ public class Asistente {
         return nave.getMotor().getDescripcion();
     }
 
+    public void NaveSacarEnergia(int energia) throws NaveInoperativa {
+        nave.sacaEnergia(energia);
+    }
+
+    public void NaveAumentarEnergiaYCombultible(int energia, int combustible) {
+        nave.aumentarEnergiayCombustible(energia, combustible);
+    }
+
+    public Nave getNave(){
+        return this.nave;
+    }
 }

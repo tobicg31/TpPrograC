@@ -10,16 +10,16 @@ public class Carguero extends Nave implements interaccionNave {
     public Carguero() {
         super(60, 80, 0);
     }
-    boolean chocha(interaccionNave nave){
+    boolean choca(interaccionNave nave){
         return nave.chochaCarguera()
     }
-    boolean chochaExploradora() throws NaveInoperativa{
+    boolean chocaExploradora() throws NaveInoperativa{
         throw new NaveInoperativa("Perdio la nave y exploto");
     }
-    boolean chochaCarguera(){
+    boolean chocaCarguera(){
         return true;
     }
-    boolean chochaCombate(){
+    boolean chocaCombate(){
         return true;
     }
 }

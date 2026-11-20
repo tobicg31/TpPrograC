@@ -2,6 +2,7 @@ package model.naves;
 
 import java.util.ArrayList;
 
+import model.asistentes.Asistente;
 import model.elementosUniverso.ElementoDelUniverso;
 import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.naves.state.Disponible;
@@ -183,6 +184,10 @@ public abstract class Nave implements ElementoDelUniverso {
         else {
             this.combustible += combustible;
            
+    }
+
+    public void interactua(Asistente asistente){
+        asistente.getNave().choca(this);
     }
 
 }

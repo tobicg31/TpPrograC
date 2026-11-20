@@ -1,5 +1,6 @@
 package model.elementosUniverso;
 
+import model.asistentes.Asistente;
 import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.naves.Nave;
 public class Obstaculo implements ElementoDelUniverso{
@@ -9,9 +10,9 @@ public class Obstaculo implements ElementoDelUniverso{
     public Obstaculo(int energia){
         this.energia = energia;
     }
-    public void interactua(Nave nave) throws NaveInoperativa {
+    public void interactua(Asistente asistente) throws NaveInoperativa {
         try {
-            nave.sacaEnergia(energia);
+            asistente.NaveSacarEnergia(energia);
         } catch (NaveInoperativa e) {
             throw e;
         }

@@ -1,5 +1,7 @@
 package model.misiones;
 
+import java.util.Random;
+
 import model.naves.Nave;
 
 /**
@@ -8,8 +10,9 @@ import model.naves.Nave;
 
 public class Mision01 extends Mision {
     private int energiaRequerida;
-    private int combustibleTrans = 20;//DEBERIAN SER ALEATORIOS
-    private int energiaTrans = 30;//DEBERIAN SER ALEATORIOS
+    Random rand = new Random();
+    private int combustibleTrans = rand.nextInt(100);
+    private int energiaTrans = rand.nextInt(100);
 
     public Mision01(){
         super();

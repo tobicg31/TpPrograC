@@ -16,13 +16,13 @@ public class ControladorTablero implements ActionListener{
     private final IVentanaTablero vista;
     private Tablero tablero;
     private Destino destino;
-    private final Nave nave;
+    private final Asistente asistente;
 
     
 
-    public ControladorTablero(IVentanaTablero vista, Nave nave) {
+    public ControladorTablero(IVentanaTablero vista, Asistente asistente) {
         this.vista = vista;
-        this.nave = nave;
+        this.asistente = asistente;
     }
 
 

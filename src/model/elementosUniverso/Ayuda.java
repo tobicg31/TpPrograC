@@ -1,5 +1,6 @@
 package model.elementosUniverso;
 
+import model.asistentes.Asistente;
 import model.naves.Nave;
 public class Ayuda implements ElementoDelUniverso{
     private int combustible, energia;
@@ -10,8 +11,8 @@ public class Ayuda implements ElementoDelUniverso{
     }
 
     @Override
-    public void interactua(Nave nave) {
-        nave.aumentarEnergiayCombustible(energia, combustible);
+    public void interactua(Asistente asistente) {
+        asistente.NaveAumentarEnergiaYCombultible(this.energia, this.combustible);
     }
     
 }

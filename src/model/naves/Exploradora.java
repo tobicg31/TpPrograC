@@ -11,16 +11,16 @@ public class Exploradora extends Nave implements interaccionNave {
         super(80, 100, 0);
     }
 
-    boolean chocha(interaccionNave nave){
+    boolean choca(interaccionNave nave){
         return nave.chochaExploradora();
     }
-    boolean chochaExploradora(){
+    boolean chocaExploradora(){
         return true;
     }
-    boolean chochaCarguera(){
+    boolean chocaCarguera(){
         return true;
     }
-    boolean chochaCombate() throws NaveInoperativa{
+    boolean chocaCombate() throws NaveInoperativa{
         throw new NaveInoperativa("Perdio la nave y exploto");
     }
 }
