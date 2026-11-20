@@ -2,6 +2,8 @@ package model.asistentes;
 
 
 import model.bitacoras.Bitacora;
+import model.destinoytablero.Tablero;
+import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.misiones.Mision;
 import model.misiones.excepciones.NaveSinRecursosException;
 import model.misiones.excepciones.NaveMantenimientoException;
@@ -22,6 +24,7 @@ import model.tripulantes.decorator.Liquidable;
 public class Asistente {
     private Nave nave;
     private Bitacora bitacora;
+    protected Tablero tablero;
 
     private boolean invariante() {
         return this.nave != null && this.bitacora != null;
@@ -36,9 +39,10 @@ public class Asistente {
      *             asistente.
      * @return Crea un nuevo objeto Asistente con la nave proporcionada y una nueva bitácora.
      */
-    public Asistente(Nave nave) {
+    public Asistente(Nave nave, Tablero tablero) {
         this.nave = nave;
         this.bitacora = new Bitacora();
+        this.tablero = tablero;
         assert invariante() : "Ni la nave ni la bitacora deben ser nulos";
     }
 
@@ -129,4 +133,15 @@ public class Asistente {
         return nave.getMotor().getDescripcion();
     }
 
+    public void NaveSacarEnergia(int energia) throws NaveInoperativa {
+        nave.sacaEnergia(energia);
+    }
+
+    public void NaveAumentarEnergiaYCombultible(int energia, int combustible) {
+        nave.aumentarEnergiayCombustible(energia, combustible);
+    }
+
+    public Nave getNave(){
+        return this.nave;
+    }
 }

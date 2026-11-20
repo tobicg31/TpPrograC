@@ -1,6 +1,9 @@
 package model.misiones;
 
 import model.asistentes.Asistente;
+import model.destinoytablero.Tablero;
+import model.elementosUniverso.ElementoDelUniverso;
+import model.elementosUniverso.excepciones.NaveInoperativa;
 import model.misiones.excepciones.NaveMantenimientoException;
 import model.misiones.excepciones.NaveSinRecursosException;
 import model.naves.Nave;
@@ -17,15 +20,19 @@ public abstract class Mision {
     protected String nombre;
     protected int combustibleNecesario, desgaste;
     protected Asistente asistente;
+    protected boolean misionTerminada = false;
+    protected boolean naveViva = true;
+    protected Tablero tablero;
 
     private boolean invariante() {
         return combustibleNecesario == 4 && desgaste == 4;
     }
 
-    public Mision() {
+    public Mision(Tablero tablero) {
         this.combustibleNecesario = 4;
         this.desgaste = 4;
         this.asistente = null;
+        this.tablero = tablero;
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
@@ -56,7 +63,14 @@ public abstract class Mision {
             System.out.println("Nave preparada!");
         }
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
+        //CALCULO RUTA OBJETIVO
+        //hay que llamar a obtenerObjetivo() del Tablero.
+        Posicion posObjetivo = this.tablero.obtenerObjetivo();
+        Posicion posNaveInicial = this.tablero.getPosicionNave();
+        
+
     }
+
 
     /**
      * Este método permite ejecutar la misión utilizando la nave proporcionada.
@@ -69,9 +83,39 @@ public abstract class Mision {
      *         nave según los requerimientos de la misión.
      */
     public void ejecutar(Nave n) {
+        ElementoDelUniverso posActual;
         assert n != null : "La nave no puede ser nula";
+        //gasto recursos de la mision:
         n.setCombustible(n.getCombustible() - this.combustibleNecesario);
         n.setDesgaste(n.getDesgaste() + this.desgaste);
+        while (naveViva && !misionTerminada){
+            //turno nave:
+            //inspeccion posicion actual, hay que usar inspeccionarPosicion del Tablero
+            posActual = this.tablero.inspeccionarPosicion();
+            //si devuelve null, no hay nada
+            //si devuelve un elemento, hay que llamar a interactua del elemento
+            try {
+                if (posActual != null){
+                    posActual.interactuar(this.asistente);
+                }
+                //escaneo:
+                //radar corto alcanze, hay que usar observarAlrededores del Tablero
+                alrededores = this.tablero.observarAlrededores();
+
+                
+                //planificacion:
+                //decide si moverse uno o 2 lugares, por el motor
+                try {
+    
+                }
+                //turno tablero:
+                //hay q llamar a turnoDestino del Destino
+            } catch (NaveInoperativa e) {
+                naveViva = false;
+            }
+        }
+        //se llego a destino
+        //habria q hacer un metodo abstracto para q cada mision decida que hacer en destino
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
@@ -110,7 +154,7 @@ public abstract class Mision {
      *         preparación, ejecución, evaluación y cierre, utilizando la nave
      *         proporcionada.
      */
-    public void ejecutarMision(Nave n) throws NaveSinRecursosException, NaveMantenimientoException {
+    public void final ejecutarMision(Nave n) throws NaveSinRecursosException, NaveMantenimientoException {
         assert n != null : "La nave no puede ser nula";
         preparar(n);
         ejecutar(n);
