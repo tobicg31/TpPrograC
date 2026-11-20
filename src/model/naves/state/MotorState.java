@@ -6,13 +6,6 @@ package model.naves.state;
  * según su lógica.
  */
 public interface MotorState{
-    void prepararSalto() throws TransicionErroneaException ;
-
-    void saltar() throws TransicionErroneaException ;
-
-    void enfriar() throws TransicionErroneaException ;
-
-    void pasaTiempo() throws TransicionErroneaException ;
-
-    String getDescripcion();
+    void saltar() throws NaveInoperativaException; ;
+    void saltarWarp() throws NaveInoperativaException;
 }

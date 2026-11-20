@@ -31,28 +31,27 @@ public class PreparandoSalto implements MotorState {
         return this.descripcion;
     }
 
+
     @Override
-    public void prepararSalto()  throws TransicionErroneaException {
+    public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: ya se esta preparando el salto. Pase el motor en warp");
+        if (this.nave.getCombustible() < 2) {
+            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+        }
+        else{
+            this.nave.setCombustible(this.nave.getCombustible() - 2);
+            if (this.nave.getCombustible()>=5) {
+                this.nave.setEstado(new EnWarp(this.nave));
+            }
+        }
     }
 
     @Override
-    public void saltar() {
-        this.nave.setEstado(new EnWarp(this.nave));
+    public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
+        if (this.nave.getCombustible() >= 5) {
+        throw new NaveInoperativaException("ERROR: Aun no se ha terminado de preparar salto en warp.");
+        }
     }
-
-    @Override
-    public void enfriar()  throws TransicionErroneaException {
-        assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: no se puede enfriar mientras se prepara un salto. Pase el motor en warp");
-    }
-
-    @Override
-    public void pasaTiempo() throws TransicionErroneaException  {
-        assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: preparando un salto no se puede pasar a disponible. Pase el motor en warp");
-    }
-
 }
+
