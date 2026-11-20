@@ -65,6 +65,10 @@ public abstract class Mision {
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
         //CALCULO RUTA OBJETIVO
         //hay que llamar a obtenerObjetivo() del Tablero.
+        Posicion posObjetivo = this.tablero.obtenerObjetivo();
+        Posicion posNaveInicial = this.tablero.getPosicionNave();
+        
+
     }
 
 
@@ -97,7 +101,7 @@ public abstract class Mision {
                 //escaneo:
                 //radar corto alcanze, hay que usar observarAlrededores del Tablero
                 alrededores = this.tablero.observarAlrededores();
-                
+
                 
                 //planificacion:
                 //decide si moverse uno o 2 lugares, por el motor
