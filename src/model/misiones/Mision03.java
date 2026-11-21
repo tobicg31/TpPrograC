@@ -11,7 +11,7 @@ import model.naves.Nave;
 public class Mision03 extends Mision {
 
     public Mision03(Tablero t, Destino d){
-        super(t,d);
+        super(t,d,0);
         this.nombre = "Retorno Seguro";
     }
     /**
@@ -29,6 +29,19 @@ public class Mision03 extends Mision {
         informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
                 + " Desgaste: " + asistente.getNave().getDesgaste();
         this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
+    }
+
+    /**
+     * (non-Javadoc)
+     * 
+     * @see misiones.Mision#cerrar(naves.Nave)
+     * @return Se recarga energia y combustible, y se hace mantenimiento.
+     */
+    @Override
+    public void cerrar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
+        asistente.NaveAumentarEnergiaYCombultible(100,100);
+        asistente.hacerMantenimiento();
     }
 
 }

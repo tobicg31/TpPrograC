@@ -12,13 +12,12 @@ import model.naves.Nave;
  */
 
 public class Mision01 extends Mision {
-    private int energiaRequerida;
     Random rand = new Random();
-    private int combustibleTrans = rand.nextInt(100);
-    private int energiaTrans = rand.nextInt(100);
+    private int combustibleTrans = rand.nextInt(50);
+    private int energiaTrans = rand.nextInt(50);
 
     public Mision01(Tablero t, Destino d){
-        super(t,d);
+        super(t,d,5);
         this.nombre = "Intercepcion-Asistencia";
 
     }
@@ -43,12 +42,12 @@ public class Mision01 extends Mision {
      * (non-Javadoc)
      * 
      * @see misiones.Mision#cerrar(naves.Nave)
-     * @return Modifica la energia de la nave.
+     * @return Modifica la energia y combustible de la nave.
      */
     @Override
     public void cerrar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        asistente.getNave().setEnergia(asistente.getNave().getEnergia() + 5);
+        asistente.NaveAumentarEnergiaYCombultible(-energiaTrans,-combustibleTrans);
     }
 
 }

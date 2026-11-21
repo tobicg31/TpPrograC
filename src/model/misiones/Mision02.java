@@ -11,7 +11,7 @@ import model.naves.Nave;
 public class Mision02 extends Mision {
 
     public Mision02(Tablero t, Destino d){
-        super(t,d);
+        super(t,d,10);
         this.nombre = "Recoleccion";
     }
     /**
@@ -35,11 +35,11 @@ public class Mision02 extends Mision {
      * (non-Javadoc)
      * 
      * @see misiones.Mision#cerrar(naves.Nave)
-     * @return Modifica la energia de la nave.
+     * @return La nave recoge entre 20 y 100 gemas.
      */
     @Override
     public void cerrar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        asistente.getNave().setEnergia(asistente.getNave().getEnergia() + 5);
+
     }
 }

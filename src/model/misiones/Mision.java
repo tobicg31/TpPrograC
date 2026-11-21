@@ -19,7 +19,7 @@ import model.misiones.excepciones.NaveSinRecursosException;
  */
 public abstract class Mision {
     protected String nombre;
-    protected int combustibleNecesario, desgaste;
+    protected int combustibleNecesario, desgaste, energiaNecesaria;
     protected Asistente asistente;
     protected boolean misionTerminada = false;
     protected boolean naveViva = true;
@@ -33,12 +33,13 @@ public abstract class Mision {
         return combustibleNecesario == 4 && desgaste == 4;
     }
 
-    public Mision(Tablero tablero, Destino destino) { //no sabemos si pasar aca el destino
+    public Mision(Tablero tablero, Destino destino, int e) { //no sabemos si pasar aca el destino
         this.combustibleNecesario = 4;
         this.desgaste = 4;
         this.asistente = null;
         this.tablero = tablero;
         this.destino = destino;
+        this.energiaNecesaria = e;
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
@@ -99,8 +100,10 @@ public abstract class Mision {
         Posicion actualNave = this.tablero.getPosicionNave();
         assert asistente.getNave() != null : "La nave no puede ser nula";
         //gasto recursos de la mision:
-        asistente.getNave().setCombustible(asistente.getNave().getCombustible() - this.combustibleNecesario);
+
+        asistente.NaveAumentarEnergiaYCombultible(-this.energiaNecesaria,-this.combustibleNecesario);
         asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
+        
         while (naveViva && !misionTerminada){
             //turno nave:
             //inspeccion posicion actual, hay que usar inspeccionarPosicion del Tablero
