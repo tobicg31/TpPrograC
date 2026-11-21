@@ -1,7 +1,6 @@
 package model.elementosUniverso;
 
 import model.asistentes.Asistente;
-import model.naves.Nave;
 public class Ayuda implements ElementoDelUniverso{
     private int combustible, energia;
 

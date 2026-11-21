@@ -49,8 +49,16 @@ public class Asistente {
         return bitacora;
     }
 
+    /**
+     * Este método permite al asistente interactuar con la nave asociada.
+     * <b>PRE:</b>
+     * - nave != null
+     * <b>POST:</b>
+     * - Se registra en la bitácora el resultado de la interacción con la nave.
+     */
     public void hacerMantenimiento() {
         this.nave.setDesgaste(0);
+        this.bitacora.agregarEntrada("Se ha realizado mantenimiento a la nave", "NAVE");
     }
 
     /**

@@ -36,8 +36,15 @@ public class Consejero extends Tripulante {
         return cantidadConsejos;
     }
 
+    /**
+     * Este método permite agregar una cantidad de consejos al tripulante Consejero.
+     * <b>PRE:</b>
+     * - cantidadConsejos >= 0
+     * @param cantidadConsejos
+     */
     public void addCantidadConsejos(int cantidadConsejos) {
         assert invariante() : "Invariante de clase violada: porcentAdicional y antiguedad deben ser mayores o iguales a 0";
+        assert cantidadConsejos >= 0 : "La cantidad de consejos no puede ser negativa";
         this.cantidadConsejos += cantidadConsejos;
     }
 
