@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import model.asistentes.Asistente;
 import model.elementosUniverso.ElementoDelUniverso;
-import model.elementosUniverso.InteraccionNave;
 import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.naves.state.Disponible;
 import model.naves.state.MotorState;
@@ -19,7 +18,7 @@ import model.tripulantes.decorator.Liquidable;
  * - desgaste >= 0
  * 
  */
-public abstract class Nave implements ElementoDelUniverso, MotorState {
+public abstract class Nave implements ElementoDelUniverso {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimiento;
     protected ArrayList<Liquidable> tripulantes;
@@ -55,6 +54,10 @@ public abstract class Nave implements ElementoDelUniverso, MotorState {
         this.combustible = combustible;
         this.energia = energia;
         this.desgaste = desgaste;
+    }
+
+    public void interactuar(Asistente asistente) throws NaveInoperativaException {
+        // La nave no realiza ninguna interacción propia con el tablero.
     }
 
     public void agregarTripulante(Liquidable t) {
@@ -201,10 +204,6 @@ public abstract class Nave implements ElementoDelUniverso, MotorState {
             this.combustible += combustible;
 
         }
-    }
-
-    public void interactuar(Asistente asistente) {
-        asistente.getNave().choca(this);
     }
 
     /**

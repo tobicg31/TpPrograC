@@ -2,11 +2,12 @@ package view;
 
 
 import java.awt.event.ActionListener;
-import model.destinoytablero.Tablero;
-import model.elementosUniverso.ElementoDelUniverso;
 
 public interface IVentanaTablero {
 
+    String Mision01 = "01";
+    String Mision02 = "02";
+    String Mision03 = "03";
     
     void setActionListener(ActionListener listener);
     void mostrarError(String error);

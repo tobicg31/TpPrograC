@@ -11,7 +11,7 @@ public class Combate extends Nave implements InteraccionNave {
         super(100, 60, 0);
     }
 
-    public boolean choca(InteraccionNave nave) {
+    public boolean choca(InteraccionNave nave) throws NaveInoperativaException {
         return nave.chocaCombate();
     }
 
@@ -23,7 +23,7 @@ public class Combate extends Nave implements InteraccionNave {
         throw new NaveInoperativaException("Perdio la nave y exploto");
     }
 
-    public boolean chocaCombate() {
+    public boolean chocaCombate() throws NaveInoperativaException {
         return true;
     }
 }

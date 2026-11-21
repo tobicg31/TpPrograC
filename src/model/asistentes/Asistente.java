@@ -1,6 +1,5 @@
 package model.asistentes;
 
-
 import model.bitacoras.Bitacora;
 import model.destinoytablero.Tablero;
 import model.elementosUniverso.excepciones.NaveInoperativaException;
@@ -36,7 +35,8 @@ public class Asistente {
      * 
      * @param nave Este parámetro representa la nave que se desea asociar al
      *             asistente.
-     * @return Crea un nuevo objeto Asistente con la nave proporcionada y una nueva bitácora.
+     * @return Crea un nuevo objeto Asistente con la nave proporcionada y una nueva
+     *         bitácora.
      */
     public Asistente(Nave nave, Tablero tablero) {
         this.nave = nave;
@@ -79,7 +79,7 @@ public class Asistente {
         }
     }
 
-    public void agregarTripulante(Liquidable t){
+    public void agregarTripulante(Liquidable t) {
         this.nave.agregarTripulante(t);
     }
 
@@ -87,17 +87,23 @@ public class Asistente {
         this.bitacora.consultarBitacora();
     }
 
-    public void saltar(){
+    public void saltar() {
         try {
-            String mensaje = "Cambio de estado: "+ getEstadoMotor();
+            String mensaje = "Cambio de estado: " + getEstadoMotor();
             nave.saltar();
-            this.bitacora.agregarEntrada(mensaje + " a: "+ getEstadoMotor(), "CAMBIO ESTADO");
+            this.bitacora.agregarEntrada(mensaje + " a: " + getEstadoMotor(), "CAMBIO ESTADO");
         } catch (NaveInoperativaException e) {
             this.bitacora.agregarEntrada(e.getMessage(), "ERROR");
         }
     }
 
-    public String getEstadoMotor(){
+    public void saltarWarp() throws NaveInoperativaException {
+        String mensaje = "Cambio de estado: " + getEstadoMotor();
+        nave.saltarWarp();
+        this.bitacora.agregarEntrada(mensaje + " a: " + getEstadoMotor(), "CAMBIO ESTADO");
+    }
+
+    public String getEstadoMotor() {
         return nave.getMotor().getDescripcion();
     }
 
@@ -109,11 +115,11 @@ public class Asistente {
         nave.aumentarEnergiayCombustible(energia, combustible);
     }
 
-    public Nave getNave(){
+    public Nave getNave() {
         return this.nave;
     }
 
-    public boolean hayCombustible(){
+    public boolean hayCombustible() {
         return this.nave.getCombustible() > 0;
     }
 }

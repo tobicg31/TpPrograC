@@ -1,6 +1,5 @@
 package model.naves;
 
-import model.asistentes.Asistente;
 import model.elementosUniverso.InteraccionNave;
 import model.elementosUniverso.excepciones.NaveInoperativaException;
 
@@ -12,7 +11,7 @@ public class Carguero extends Nave implements InteraccionNave {
         super(60, 80, 0);
     }
 
-    public boolean choca(InteraccionNave nave) {
+    public boolean choca(InteraccionNave nave) throws NaveInoperativaException {
         return nave.chocaCarguera();
     }
 
@@ -24,7 +23,7 @@ public class Carguero extends Nave implements InteraccionNave {
         return true;
     }
 
-    public boolean chocaCombate() {
+    public boolean chocaCombate() throws NaveInoperativaException {
         return true;
     }
 }

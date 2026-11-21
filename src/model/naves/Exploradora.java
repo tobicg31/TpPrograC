@@ -12,7 +12,7 @@ public class Exploradora extends Nave implements InteraccionNave {
         super(80, 100, 0);
     }
 
-    public boolean choca(InteraccionNave nave) {
+    public boolean choca(InteraccionNave nave) throws NaveInoperativaException {
         return nave.chocaExploradora();
     }
 
@@ -25,6 +25,6 @@ public class Exploradora extends Nave implements InteraccionNave {
     }
 
     public boolean chocaCombate() throws NaveInoperativaException {
-        throw new NaveInoperativa("Perdio la nave y exploto");
+        throw new NaveInoperativaException("Perdio la nave y exploto");
     }
 }

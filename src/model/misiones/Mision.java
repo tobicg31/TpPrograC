@@ -5,7 +5,7 @@ import model.destinoytablero.Destino;
 import model.destinoytablero.Posicion;
 import model.destinoytablero.Tablero;
 import model.elementosUniverso.ElementoDelUniverso;
-import model.elementosUniverso.excepciones.NaveInoperativa;
+import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.misiones.excepciones.NaveMantenimientoException;
 import model.misiones.excepciones.NaveSinRecursosException;
 
@@ -64,7 +64,7 @@ public abstract class Mision {
         System.out.println("preparo la nave...");
         if (!((asistente.getNave().getCombustible() - this.combustibleNecesario >= 0) && (asistente.getNave().getDesgaste() + this.desgaste <= 100))) {
             throw new NaveSinRecursosException("Fallo de recursos");
-        } else if ((asistente.getNave().requiereMantenimineto())) {
+        } else if ((asistente.getNave().requiereMantenimiento())) {
             throw new NaveMantenimientoException("La nave requiere mantenimiento");
         } else {
             System.out.println("Nave preparada!");
@@ -128,11 +128,11 @@ public abstract class Mision {
                             this.xRestantes -=1;
                         } else {
                             try {
-                                //warp
+                                asistente.saltarWarp();
                                 this.xRestantes -=2;
-                            } catch (NaveInoperativa e) { //tira error porque en el try todavia no se lanza NaveInoperativa
-                                // TODO: handle exception
+                            } catch (NaveInoperativaException e) {
                                 naveViva = false;
+                                asistente.getBitacora().agregarEntrada(e.getMessage(), "ERROR");
                             }
                         }
                     }
@@ -145,11 +145,11 @@ public abstract class Mision {
                             this.xRestantes -=1;
                         } else {
                             try {
-                                //warp
+                                asistente.saltarWarp();
                                 this.xRestantes -=2;
-                            } catch (NaveInoperativa e) {
-                                // TODO: handle exception
+                            } catch (NaveInoperativaException e) {
                                 naveViva = false;
+                                asistente.getBitacora().agregarEntrada(e.getMessage(), "ERROR");
                             }
                         }
                     }
@@ -159,7 +159,7 @@ public abstract class Mision {
                 this.destino.turnoDestino();
                 }
 
-            } catch (NaveInoperativa e) {
+            } catch (NaveInoperativaException e) {
                 naveViva = false;
             }
             if (posObjetivo.equals(actualNave))

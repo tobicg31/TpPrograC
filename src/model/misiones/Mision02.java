@@ -3,7 +3,6 @@ package model.misiones;
 import model.asistentes.Asistente;
 import model.destinoytablero.Destino;
 import model.destinoytablero.Tablero;
-import model.naves.Nave;
 
 /**
  * Esta clase representa una misión concreta que puede ser ejecutada por una nave.
