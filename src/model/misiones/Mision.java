@@ -102,7 +102,7 @@ public abstract class Mision {
         assert asistente.getNave() != null : "La nave no puede ser nula";
         //gasto recursos de la mision:
         
-        asistente.NaveAumentarEnergiaYCombultible(-this.energiaNecesaria,-this.combustibleNecesario);
+        asistente.NaveModificarEnergiaYCombultible(-this.energiaNecesaria,-this.combustibleNecesario);
         asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
         
         while (naveViva && !misionTerminada){
@@ -127,7 +127,7 @@ public abstract class Mision {
                         if (this.tablero.estaLibre(siguiente)){
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
-                            asistente.NaveAumentarEnergiayCombustible(0, -2);
+                            asistente.NaveModificarEnergiayCombustible(0, -2);
                             this.xRestantes -=1;
                         } else {
                             try {
@@ -142,12 +142,12 @@ public abstract class Mision {
                                     this.yRestantes -=1;
                                 }
                                  this.tablero.moverNave(siguiente);
-                                 asistente.NaveAumentarEnergiayCombustible(0, -2);
+                                 asistente.NaveModificarEnergiayCombustible(0, -2);
                             } catch (NaveInoperativaException e) {
                                 this.error = e.getMessage();
                                 asistente.saltar();
                                 this.tablero.moverNave(siguiente);
-                                asistente.NaveAumentarEnergiayCombustible(0, -2);
+                                asistente.NaveModificarEnergiayCombustible(0, -2);
                                 this.xRestantes -=1;
                         }
                     }
@@ -157,7 +157,7 @@ public abstract class Mision {
                         if (this.tablero.estaLibre(siguiente)){
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
-                            asistente.NaveAumentarEnergiayCombustible(0, -2);
+                            asistente.NaveModificarEnergiayCombustible(0, -2);
                             this.yRestantes -=1;
                         } else {
                             try {
@@ -166,13 +166,13 @@ public abstract class Mision {
                                     this.yRestantes -=2;  
                                     siguiente = new Posicion(actualNave.getX(), actualNave.getY()+ 2*dirY);
                                     this.tablero.moverNave(siguiente);
-                                    asistente.NaveAumentarEnergiayCombustible(0, -2); 
+                                    asistente.NaveModificarEnergiayCombustible(0, -2); 
                                 }
                             } catch (NaveInoperativaException e) {
                                 this.error = e.getMessage();
                                 asistente.saltar();
                                 this.tablero.moverNave(siguiente);
-                                asistente.NaveAumentarEnergiayCombustible(0, -2);
+                                asistente.NaveModificarEnergiayCombustible(0, -2);
                                 this.yRestantes -=1;
                             }  
                         }

@@ -111,8 +111,8 @@ public class Asistente {
         nave.sacaEnergia(energia);
     }
 
-    public void NaveAumentarEnergiaYCombultible(int energia, int combustible) {
-        nave.aumentarEnergiayCombustible(energia, combustible);
+    public void NaveModificarEnergiaYCombultible(int energia, int combustible) {
+        nave.modificarEnergiayCombustible(energia, combustible);
     }
 
     public Nave getNave() {
