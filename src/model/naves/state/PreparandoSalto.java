@@ -1,5 +1,6 @@
 package model.naves.state;
 
+import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.naves.Nave;
 
 /**

@@ -1,5 +1,6 @@
 package model.naves.state;
 
+import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.naves.Nave;
 
 /**
@@ -10,7 +11,7 @@ import model.naves.Nave;
  * - nave != null luego de completarse la inicialización.
  * 
  */
-public class Disponible implements MotorState{
+public class Disponible implements MotorState {
     private String descripcion;
     private Nave nave;
 
@@ -27,24 +28,24 @@ public class Disponible implements MotorState{
         this.descripcion = "Disponible";
     }
 
+    @Override
     public String getDescripcion() {
         return this.descripcion;
     }
 
     @Override
-    public void saltar()  throws NaveInoperativaException {
+    public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         if (this.nave.getCombustible() < 2) {
             throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
-        }
-        else{
+        } else {
             this.nave.setCombustible(this.nave.getCombustible() - 2);
             this.nave.setEstado(new PreparandoSalto(this.nave));
         }
     }
 
     @Override
-    public void saltarWarp()  throws NaveInoperativaException {
+    public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         throw new NaveInoperativaException("ERROR: la nave no está en estado de warp.");
     }

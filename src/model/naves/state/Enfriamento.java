@@ -1,5 +1,6 @@
 package model.naves.state;
 
+import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.naves.Nave;
 
 /**
@@ -27,24 +28,24 @@ public class Enfriamento implements MotorState {
         this.descripcion = "Enfriamento";
     }
 
+    @Override
     public String getDescripcion() {
         return this.descripcion;
     }
 
     @Override
-    public void saltar()  throws NaveInoperativaException {
+    public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        if this.nave.getCombustible() < 2 {
-            throw new NaveInoperativa("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
-        }
-        else{
+        if (this.nave.getCombustible() < 2) {
+            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+        } else {
             this.nave.setCombustible(this.nave.getCombustible() - 2);
         }
         this.nave.setEstado(new Disponible(this.nave));
     }
 
     @Override
-    public void saltarWarp()  throws NaveInoperativaException {
+    public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         throw new NaveInoperativaException("ERROR: el motor esta enfriando.");
     }

@@ -11,12 +11,10 @@ public class Obstaculo implements ElementoDelUniverso {
     }
 
     public void interactuar(Asistente asistente) throws NaveInoperativaException {
-        {
-            try {
-                asistente.NaveSacarEnergia(energia);
-            } catch (NaveInoperativaException e) {
-                throw e;
-            }
+        try {
+            asistente.NaveSacarEnergia(energia);
+        } catch (NaveInoperativaException e) {
+            throw e;
         }
 
     }
