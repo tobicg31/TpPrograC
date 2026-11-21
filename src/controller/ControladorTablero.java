@@ -30,13 +30,13 @@ public class ControladorTablero implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case IVentanaMision.Mision01:
+            case IVentanaTablero.Mision01:
                 crearMision("01");
                 break;
-            case IVentanaMision.Mision02:
+            case IVentanaTablero.Mision02:
                 crearMision("02");
                 break;
-            case IVentanaMision.Mision03:
+            case IVentanaTablero.Mision03:
                 crearMision("03");
                 break;    
         }

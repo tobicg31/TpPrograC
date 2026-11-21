@@ -1,5 +1,6 @@
 package model.naves.state;
 
+import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.naves.Nave;
 
 /**
@@ -27,31 +28,36 @@ public class EnWarp implements MotorState {
         this.descripcion = "En Warp";
     }
 
+    @Override
     public String getDescripcion() {
         return descripcion;
     }
 
     @Override
-    public void prepararSalto()  throws TransicionErroneaException {
+    public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: no se puede preparar el salto en medio de un salto. Enfrie el motor o pase a disponible");
+        if (this.nave.getCombustible() < 5) {
+            this.nave.setEstado(new PreparandoSalto(this.nave));
+        } else {
+
+            if (this.nave.getCombustible() < 2) {
+                throw new NaveInoperativaException(
+                        "ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+            } else {
+                this.nave.setCombustible(this.nave.getCombustible() - 2);
+            }
+        }
     }
 
     @Override
-    public void saltar()  throws TransicionErroneaException {
+    public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new TransicionErroneaException("ERROR: ya se esta en Warp. Enfrie el motor o pase a disponible");
-    }
-
-    @Override
-    public void enfriar() {
-        this.nave.setEstado(new Enfriamento(this.nave));
-        assert this.nave != null : "La nave no puede ser nula";
-    }
-
-    @Override
-    public void pasaTiempo() {
-        this.nave.setEstado(new Disponible(this.nave));
-        assert this.nave != null : "La nave no puede ser nula";
+        if (this.nave.getCombustible() < 5) {
+            this.nave.setEstado(new PreparandoSalto(this.nave));
+            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar en warp.");
+        } else {
+            this.nave.setCombustible(this.nave.getCombustible() - 5);
+            this.nave.setEstado(new Enfriamento(this.nave));
+        }
     }
 }

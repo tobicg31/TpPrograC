@@ -1,8 +1,7 @@
 package model.naves;
 
-import model.asistentes.Asistente;
 import model.elementosUniverso.InteraccionNave;
-import model.elementosUniverso.excepciones.NaveInoperativa;
+import model.elementosUniverso.excepciones.NaveInoperativaException;
 
 /**
  * Esta clase representa un tipo de nave Concreta, en este caso, un Carguero.
@@ -11,16 +10,20 @@ public class Carguero extends Nave implements InteraccionNave {
     public Carguero() {
         super(60, 80, 0);
     }
-    public boolean choca(InteraccionNave nave){
+
+    public boolean choca(InteraccionNave nave) throws NaveInoperativaException {
         return nave.chocaCarguera();
     }
-    public boolean chocaExploradora() throws NaveInoperativa{
-        throw new NaveInoperativa("Perdio la nave y exploto");
+
+    public boolean chocaExploradora() throws NaveInoperativaException {
+        throw new NaveInoperativaException("Perdio la nave y exploto");
     }
-    public boolean chocaCarguera(){
+
+    public boolean chocaCarguera() {
         return true;
     }
-    public boolean chocaCombate(){
+
+    public boolean chocaCombate() throws NaveInoperativaException {
         return true;
     }
 }
