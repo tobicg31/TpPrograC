@@ -1,6 +1,7 @@
 package controller;
 
 import view.IVentanaConcurrencia;
+import view.IVentanaConfiguracionTablero;
 import view.IVentanaCreacion;
 import view.IVentanaLogin;
 import view.IVentanaMenu;
@@ -13,12 +14,15 @@ public class ControladorMenu implements ActionListener {
   private IVentanaCreacion vistaCreacion;
   private IVentanaLogin vistaLogin;
   private IVentanaConcurrencia vistaConcurrencia;
+  private IVentanaConfiguracionTablero vistaConfiguracionTablero;
 
-  public ControladorMenu(IVentanaMenu vistaMenu, IVentanaCreacion vistaCreacion, IVentanaLogin vistaLogin, IVentanaConcurrencia vistaConcurrencia) {
+  public ControladorMenu(IVentanaMenu vistaMenu, IVentanaCreacion vistaCreacion, IVentanaLogin vistaLogin,
+      IVentanaConcurrencia vistaConcurrencia, IVentanaConfiguracionTablero vistaConfiguracionTablero) {
     this.vistaMenu = vistaMenu;
     this.vistaCreacion = vistaCreacion;
     this.vistaLogin = vistaLogin;
     this.vistaConcurrencia = vistaConcurrencia;
+    this.vistaConfiguracionTablero = vistaConfiguracionTablero;
     this.vistaMenu.setActionListener(this);
   }
 
@@ -31,7 +35,7 @@ public class ControladorMenu implements ActionListener {
 				vistaCreacion.arranca();
 				break;
 			case IVentanaMenu.VISTA_CONTROL:
-				
+			  vistaConfiguracionTablero.arranca();
 				break;
       case IVentanaMenu.VISTA_CONCURRENCIA:
 				vistaConcurrencia.arranca();
