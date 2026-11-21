@@ -28,6 +28,17 @@ public class Mision03 extends Mision {
         informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
                 + " Desgaste: " + asistente.getNave().getDesgaste();
         this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
+        if (misionTerminada){
+            String informe = "Mision 03: Retorno seguro | combustible gastado: " + this.combustibleNecesario
+                + " desgaste efectuado en la nave: " + this.desgaste;
+            informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+                    + " Desgaste: " + asistente.getNave().getDesgaste();
+            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
+        } else {
+            String informe = "Mision 03: Retorno seguro | Mision fallida, la quedaste";
+            informe += " Motivo del fallo:" + this.error;
+            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");   
+        }
     }
 
     /**
