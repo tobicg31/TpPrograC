@@ -178,17 +178,16 @@ public abstract class Nave implements ElementoDelUniverso {
             this.energia += energia;
            
         }
-    if(this.combustible + combustible >= maxCom){
+        if(this.combustible + combustible >= maxComb){
             this.combustible = maxComb; 
         }
         else {
             this.combustible += combustible;
            
     }
-
-    public void interactuar(Asistente asistente){
-        asistente.getNave().choca(this);
     }
 
-}
+    public void interactuar(Asistente asistente){
+        asistente.getNave().choca(this); //tira error porque choca es un metodo de las hijas de nave dale java lpm
+    }
 }

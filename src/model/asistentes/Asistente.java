@@ -69,7 +69,7 @@ public class Asistente {
         assert mision != null : "La misión no puede ser nula";
         try {
             mision.setAsistente(this);
-            mision.ejecutarMision(this.nave);
+            mision.ejecutarMision(this);
             this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " ejecutada con exito", "INFO");
         } catch (NaveSinRecursosException e) {
             this.bitacora.agregarEntrada("Error al ejecutar mision " + mision.getNombreMision() + ": " + e.getMessage(),

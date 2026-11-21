@@ -191,7 +191,7 @@ public class Tablero extends Observable {
      * @param posicion casilla por consultar
      * @return {@code true} si no hay elemento y no coincide con el objetivo
      */
-    private boolean estaLibre(Posicion posicion) {
+    public boolean estaLibre(Posicion posicion) {
         return !ocupacion.containsKey(posicion) && !posicion.equals(objetivo);
     }
 

@@ -2,6 +2,9 @@ package model.misiones;
 
 import java.util.Random;
 
+import model.asistentes.Asistente;
+import model.destinoytablero.Destino;
+import model.destinoytablero.Tablero;
 import model.naves.Nave;
 
 /**
@@ -14,8 +17,8 @@ public class Mision01 extends Mision {
     private int combustibleTrans = rand.nextInt(100);
     private int energiaTrans = rand.nextInt(100);
 
-    public Mision01(){
-        super();
+    public Mision01(Tablero t, Destino d){
+        super(t,d);
         this.nombre = "Intercepcion-Asistencia";
 
     }
@@ -26,13 +29,13 @@ public class Mision01 extends Mision {
      * @return Agrega a la bitacora el informe de la misión.
      */
     @Override
-    public void evaluar(Nave n) {
-        assert n != null : "La nave no puede ser nula";
+    public void evaluar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
         System.out.println("Evaluando misión 01...");
         String informe = "Mision 01: Intercepcion-Asistencia | combustible gastado: " + this.combustibleNecesario
                 + " desgaste efectuado en la nave: " + this.desgaste;
-        informe += "Estado final nave: Combustible: " + n.getCombustible() + " Energia: " + n.getEnergia()
-                + " Desgaste: " + n.getDesgaste();
+        informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+                + " Desgaste: " + asistente.getNave().getDesgaste();
         this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
     }
 
@@ -43,9 +46,9 @@ public class Mision01 extends Mision {
      * @return Modifica la energia de la nave.
      */
     @Override
-    public void cerrar(Nave n) {
-        assert n != null : "La nave no puede ser nula";
-        n.setEnergia(n.getEnergia() + 5);
+    public void cerrar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
+        asistente.getNave().setEnergia(asistente.getNave().getEnergia() + 5);
     }
 
 }

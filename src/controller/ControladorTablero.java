@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import model.asistentes.Asistente;
 import model.destinoytablero.CantidadDeElementosSuperaCasillaException;
 import model.destinoytablero.Destino;
 import model.destinoytablero.DimensionesDeTableroInconsistentesException;
