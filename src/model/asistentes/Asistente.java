@@ -120,6 +120,6 @@ public class Asistente {
     }
 
     public boolean hayCombustible() {
-        return this.nave.getCombustible() > 0;
+        return this.nave.getCombustible() > 1;
     }
 }

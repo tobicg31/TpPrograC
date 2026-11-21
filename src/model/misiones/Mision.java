@@ -124,7 +124,7 @@ public abstract class Mision {
                 try {
                     if (xRestantes > 0){
                         Posicion siguiente = new Posicion(actualNave.getX()+dirX, actualNave.getY());
-                        if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
+                        if (this.tablero.estaLibre(siguiente)){
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
                             asistente.NaveAumentarEnergiayCombustible(0, -2);
@@ -154,7 +154,7 @@ public abstract class Mision {
                     else if (yRestantes > 0){
                         actualNave = this.tablero.getPosicionNave();
                         Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY()+dirY);
-                        if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
+                        if (this.tablero.estaLibre(siguiente)){
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
                             asistente.NaveAumentarEnergiayCombustible(0, -2);

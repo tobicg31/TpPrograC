@@ -50,6 +50,6 @@ public class Mision02 extends Mision {
         Random rand = new Random(); 
         int cantGemas = rand.nextInt(20,100);
         String mensaje = "Se recolectaron "+ cantGemas +" gemas exitosamente";
-        this.asistente.getBitacora().agregarEntrada(mensaje, tipo: "INFORME");
+        this.asistente.getBitacora().agregarEntrada(mensaje, "INFORME");
     }
 }
