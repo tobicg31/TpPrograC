@@ -174,7 +174,9 @@ public abstract class Mision {
                 }finally{
                 //turno tablero:
                 //hay q llamar a turnoDestino del Destino
+                Thread.sleep(5000);
                 this.destino.turnoDestino();
+                Thread.sleep(5000);
                 }
 
             } catch (NaveInoperativaException e) {
