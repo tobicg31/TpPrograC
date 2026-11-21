@@ -147,7 +147,7 @@ public abstract class Mision {
                             }
                         }
                     }
-                    if (yRestantes > 0){
+                    else if (yRestantes > 0){
                         actualNave = this.tablero.getPosicionNave();
                         Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY()+dirY);
                         if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
