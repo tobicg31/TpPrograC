@@ -34,6 +34,10 @@ public class ControladorCreacion implements ActionListener {
 		this.tripulantes = new ArrayList<Liquidable>();
 	}
 
+	public Nave getNave() {
+		return this.nave;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {

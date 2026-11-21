@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.asistentes.Asistente;
 import model.elementosUniverso.ElementoDelUniverso;
+import model.elementosUniverso.InteraccionNave;
 import model.elementosUniverso.excepciones.NaveInoperativaException;
 import model.naves.state.Disponible;
 import model.naves.state.MotorState;
@@ -57,7 +58,16 @@ public abstract class Nave implements ElementoDelUniverso {
     }
 
     public void interactuar(Asistente asistente) throws NaveInoperativaException {
-        // La nave no realiza ninguna interacción propia con el tablero.
+        Nave navePrincipal = asistente.getNave();
+        if (!(navePrincipal instanceof InteraccionNave) || !(this instanceof InteraccionNave)) {
+            throw new NaveInoperativaException("Las naves no implementan las reglas de colisión");
+        }
+        boolean encuentroExitoso = ((InteraccionNave) navePrincipal).choca((InteraccionNave) this);
+        asistente.getBitacora().agregarEntrada(
+                encuentroExitoso
+                        ? "Encuentro con una nave " + getClass().getSimpleName() + " superado"
+                        : "Encuentro con una nave " + getClass().getSimpleName() + " no superado",
+                "ENCUENTRO");
     }
 
     public void agregarTripulante(Liquidable t) {

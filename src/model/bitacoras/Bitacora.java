@@ -2,6 +2,8 @@ package model.bitacoras;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Esta clase representa la Bitacora que se utiliza para registrar los eventos,
@@ -37,6 +39,10 @@ public class Bitacora {
         assert tipo != null : "El tipo no puede ser nulo";
         EventoBitacora entrada = new EventoBitacora(mensaje, tipo);
         this.bitacora.add(entrada);
+    }
+
+    public List<EventoBitacora> getEntradas() {
+        return Collections.unmodifiableList(new ArrayList<EventoBitacora>(this.bitacora));
     }
 
     /**
