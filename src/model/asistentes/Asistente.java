@@ -119,8 +119,11 @@ public class Asistente {
         nave.sacaEnergia(energia);
     }
 
-    public void NaveAumentarEnergiaYCombultible(int energia, int combustible) {
-        nave.aumentarEnergiayCombustible(energia, combustible);
+    public void NaveModificarEnergia(int energia, int combustible) {
+        nave.modificarEnergia(energia);
+    }
+    public void NaveModificarCombultible(int energia, int combustible) {
+        nave.modificarCombustible(combustible);
     }
 
     public Nave getNave() {
@@ -128,6 +131,6 @@ public class Asistente {
     }
 
     public boolean hayCombustible() {
-        return this.nave.getCombustible() > 0;
+        return this.nave.getCombustible() > 1;
     }
 }

@@ -28,13 +28,20 @@ public class Mision01 extends Mision {
      */
     @Override
     public void evaluar(Asistente asistente) {
-        assert asistente.getNave() != null : "La nave no puede ser nula";
-        System.out.println("Evaluando misión 01...");
-        String informe = "Mision 01: Intercepcion-Asistencia | combustible gastado: " + this.combustibleNecesario
-                + " desgaste efectuado en la nave: " + this.desgaste;
-        informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
-                + " Desgaste: " + asistente.getNave().getDesgaste();
-        this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
+        assert asistente.getNave() != null : "La nave no puede ser nula";        
+        if (misionTerminada){
+            String informe = "Mision 01: Intercepcion-Asistencia | combustible gastado: " + this.combustibleNecesario
+                    + " desgaste efectuado en la nave: " + this.desgaste;
+            informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+                    + " Desgaste: " + asistente.getNave().getDesgaste();
+            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
+        } else {
+            String informe = "Mision 01: Intercepcion-Asistencia | Mision fallida, la quedaste";
+            informe += " Motivo del fallo:" + this.error;
+            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");   
+        }
+
+
     }
 
     /**
@@ -46,7 +53,7 @@ public class Mision01 extends Mision {
     @Override
     public void cerrar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        asistente.NaveAumentarEnergiaYCombultible(-energiaTrans,-combustibleTrans);
+        asistente.NaveModificarEnergiaYCombultible(-energiaTrans,-combustibleTrans);
     }
 
 }

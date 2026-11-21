@@ -28,6 +28,7 @@ public abstract class Mision {
     protected int xRestantes, yRestantes;
     protected int dirX, dirY;
     protected Posicion posObjetivo;
+    protected String error;
 
     private boolean invariante() {
         return combustibleNecesario == 4 && desgaste == 4;
@@ -97,14 +98,15 @@ public abstract class Mision {
      */
     public void ejecutar(Asistente asistente) {
         ElementoDelUniverso posActual;
-        Posicion actualNave = this.tablero.getPosicionNave();
+        Posicion actualNave;
         assert asistente.getNave() != null : "La nave no puede ser nula";
         //gasto recursos de la mision:
-
-        asistente.NaveAumentarEnergiaYCombultible(-this.energiaNecesaria,-this.combustibleNecesario);
+        
+        asistente.NaveModificarEnergiaYCombultible(-this.energiaNecesaria,-this.combustibleNecesario);
         asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
         
         while (naveViva && !misionTerminada){
+            actualNave = this.tablero.getPosicionNave();
             //turno nave:
             //inspeccion posicion actual, hay que usar inspeccionarPosicion del Tablero
             posActual = this.tablero.inspeccionarPosicion();
@@ -122,49 +124,79 @@ public abstract class Mision {
                 try {
                     if (xRestantes > 0){
                         Posicion siguiente = new Posicion(actualNave.getX()+dirX, actualNave.getY());
-                        if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
+                        if (this.tablero.estaLibre(siguiente)){
+                            asistente.saltar();
                             this.tablero.moverNave(siguiente);
-                            asistente.getNave().aumentarEnergiayCombustible(0, -2);
+                            asistente.NaveModificarEnergia(0);
+                            asistente.NaveModificarCombultible(-2);
                             this.xRestantes -=1;
                         } else {
                             try {
                                 asistente.saltarWarp();
-                                this.xRestantes -=2;
+                                if (this.xRestantes > 1){
+                                    this.xRestantes -=2;
+                                    siguiente = new Posicion(actualNave.getX()+ 2*dirX, actualNave.getY());
+                                }
+                                else {
+                                    this.xRestantes -=1;
+                                    siguiente = new Posicion(actualNave.getX()+ dirX, actualNave.getY()+disY);
+                                    this.yRestantes -=1;
+                                }
+                                 this.tablero.moverNave(siguiente);
+                                asistente.NaveModificarEnergia(0);
+                                asistente.NaveModificarCombultible(-2);
                             } catch (NaveInoperativaException e) {
-                                naveViva = false;
-                                asistente.getBitacora().agregarEntrada(e.getMessage(), "ERROR");
-                            }
+                                this.error = e.getMessage();
+                                asistente.saltar();
+                                this.tablero.moverNave(siguiente);
+                                asistente.NaveModificarEnergia(0);
+                                asistente.NaveModificarCombultible(-2);
+                                this.xRestantes -=1;
                         }
                     }
-                    if (yRestantes > 0){
+                    else if (yRestantes > 0){
                         actualNave = this.tablero.getPosicionNave();
                         Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY()+dirY);
-                        if (this.tablero.estaLibre(siguiente) && asistente.hayCombustible()){
+                        if (this.tablero.estaLibre(siguiente)){
+                            asistente.saltar();
                             this.tablero.moverNave(siguiente);
-                            asistente.getNave().aumentarEnergiayCombustible(0, -2);
-                            this.xRestantes -=1;
+                            asistente.NaveModificarEnergia(0);
+                            asistente.NaveModificarCombultible(-2);
+                            this.yRestantes -=1;
                         } else {
                             try {
-                                asistente.saltarWarp();
-                                this.xRestantes -=2;
+                                if (yRestantes > 1){
+                                    asistente.saltarWarp();
+                                    this.yRestantes -=2;  
+                                    siguiente = new Posicion(actualNave.getX(), actualNave.getY()+ 2*dirY);
+                                    this.tablero.moverNave(siguiente);
+                                asistente.NaveModificarEnergia(0);
+                                asistente.NaveModificarCombultible(-2);
+                                }
                             } catch (NaveInoperativaException e) {
-                                naveViva = false;
-                                asistente.getBitacora().agregarEntrada(e.getMessage(), "ERROR");
-                            }
+                                this.error = e.getMessage();
+                                asistente.saltar();
+                                this.tablero.moverNave(siguiente);
+                                asistente.NaveModificarEnergia(0);
+                                asistente.NaveModificarCombultible(-2);
+                                this.yRestantes -=1;
+                            }  
                         }
                     }
                 }finally{
-                //turno tablero:
-                //hay q llamar a turnoDestino del Destino
-                this.destino.turnoDestino();
+                    //turno tablero:
+                    //hay q llamar a turnoDestino del Destino
+                    Thread.sleep(5000);
+                    this.destino.turnoDestino();
+                    Thread.sleep(5000);
                 }
-
-            } catch (NaveInoperativaException e) {
-                naveViva = false;
+                } catch (NaveInoperativaException e) {
+                    this.error = e.getMessage();
+                    naveViva = false;
+                }
+                if (posObjetivo.equals(actualNave))
+                    misionTerminada = true;
             }
-            if (posObjetivo.equals(actualNave))
-                misionTerminada = true;
-        }
         //se llego a destino
         //habria q hacer un metodo abstracto para q cada mision decida que hacer en destino
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";

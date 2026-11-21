@@ -231,19 +231,19 @@ public abstract class Nave implements ElementoDelUniverso {
      * -energia final mayor a energia inicial.
      * -combustible inicial mayor a combustible inicial.
      */
-    public void aumentarEnergiayCombustible(int energia, int combustible) {
-
-        if (this.energia + energia >= maxEnergia) {
-            this.energia = maxEnergia;
+    public void modificarEnergia(int energia) {
+        if (getEnergia() + energia = getMaxEnergia()){
+            setEnergia(getMaxEnergia());
         } else {
-            this.energia += energia;
-
+            setEnergia(getEnergia() + energia);
         }
-        if (this.combustible + combustible >= maxComb) {
-            this.combustible = maxComb;
-        } else {
-            this.combustible += combustible;
+    }
 
+    public void modificarCombustible(int combustible){
+        if (getCombustible() + combustible = getMaxComb()){
+            setCombustible(getMaxComb());
+        } else {
+            setCombustible(getCombustible() + combustible);
         }
     }
 
