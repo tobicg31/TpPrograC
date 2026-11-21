@@ -70,7 +70,23 @@ public abstract class Nave implements ElementoDelUniverso {
                 "ENCUENTRO");
     }
 
+    /**
+     * Agrega un tripulante a la nave.
+     * <b>PRE:</b>
+     * - t != null
+     * <b>POST:</b>
+     * - se agrega a tripulantes al tripulante t.
+     * @param t Este parámetro representa el tripulante que se desea agregar a la nave.
+     */
     public void agregarTripulante(Liquidable t) {
+        assert t != null : "El tripulante no puede ser null";
+        int i = 0;
+        while (i < tripulantes.size() && !(tripulantes.get(i).equals(t))) {
+            i++;
+        }
+        if(i < tripulantes.size()) {
+            return;
+        }
         this.tripulantes.add(t);
     }
 
@@ -92,7 +108,12 @@ public abstract class Nave implements ElementoDelUniverso {
      */
     public void setCombustible(int combustible) {
         assert combustible >= 0 : "El combustible no puede ser negativo";
-        this.combustible = combustible;
+        if(combustible <= this.maxComb) {
+            this.combustible = combustible;
+        }
+        else{
+            this.combustible = this.maxComb;
+        }
         assert invariante()
                 : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
@@ -110,7 +131,12 @@ public abstract class Nave implements ElementoDelUniverso {
      */
     public void setEnergia(int energia) {
         assert energia >= 0 : "La energía no puede ser negativa";
-        this.energia = energia;
+        if(energia <= this.maxEnergia) {
+            this.energia = energia;
+        }
+        else{
+            this.energia = this.maxEnergia;
+        }
         assert invariante()
                 : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }
@@ -146,7 +172,12 @@ public abstract class Nave implements ElementoDelUniverso {
      */
     public void setDesgaste(int desgaste) {
         assert desgaste >= 0 : "El desgaste no puede ser negativo";
-        this.desgaste = desgaste;
+        if(desgaste <= this.maxDesgaste) {
+            this.desgaste = desgaste;
+        }
+        else{
+            this.desgaste = this.maxDesgaste;
+        }
         assert invariante()
                 : "Invariante de clase violada: combustible, energia y desgaste deben ser mayores o iguales a 0";
     }

@@ -35,8 +35,8 @@ public class Bitacora {
      */
     public void agregarEntrada(String mensaje, String tipo) {
         assert this.bitacora != null : "La bitácora no puede ser nulla";
-        assert mensaje != null : "El mensaje no puede ser nulo";
-        assert tipo != null : "El tipo no puede ser nulo";
+        assert mensaje != null && !mensaje.isEmpty() : "El mensaje no puede ser nulo o vacío";
+        assert tipo != null && !tipo.isEmpty() : "El tipo no puede ser nulo o vacío";
         EventoBitacora entrada = new EventoBitacora(mensaje, tipo);
         this.bitacora.add(entrada);
     }
