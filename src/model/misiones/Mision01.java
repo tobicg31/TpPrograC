@@ -2,6 +2,9 @@ package model.misiones;
 
 import java.util.Random;
 
+import model.asistentes.Asistente;
+import model.destinoytablero.Destino;
+import model.destinoytablero.Tablero;
 import model.naves.Nave;
 
 /**
@@ -9,13 +12,12 @@ import model.naves.Nave;
  */
 
 public class Mision01 extends Mision {
-    private int energiaRequerida;
     Random rand = new Random();
-    private int combustibleTrans = rand.nextInt(100);
-    private int energiaTrans = rand.nextInt(100);
+    private int combustibleTrans = rand.nextInt(50);
+    private int energiaTrans = rand.nextInt(50);
 
-    public Mision01(){
-        super();
+    public Mision01(Tablero t, Destino d){
+        super(t,d,5);
         this.nombre = "Intercepcion-Asistencia";
 
     }
@@ -26,13 +28,13 @@ public class Mision01 extends Mision {
      * @return Agrega a la bitacora el informe de la misión.
      */
     @Override
-    public void evaluar(Nave n) {
-        assert n != null : "La nave no puede ser nula";
+    public void evaluar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
         System.out.println("Evaluando misión 01...");
         String informe = "Mision 01: Intercepcion-Asistencia | combustible gastado: " + this.combustibleNecesario
                 + " desgaste efectuado en la nave: " + this.desgaste;
-        informe += "Estado final nave: Combustible: " + n.getCombustible() + " Energia: " + n.getEnergia()
-                + " Desgaste: " + n.getDesgaste();
+        informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+                + " Desgaste: " + asistente.getNave().getDesgaste();
         this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
     }
 
@@ -40,12 +42,12 @@ public class Mision01 extends Mision {
      * (non-Javadoc)
      * 
      * @see misiones.Mision#cerrar(naves.Nave)
-     * @return Modifica la energia de la nave.
+     * @return Modifica la energia y combustible de la nave.
      */
     @Override
-    public void cerrar(Nave n) {
-        assert n != null : "La nave no puede ser nula";
-        n.setEnergia(n.getEnergia() + 5);
+    public void cerrar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
+        asistente.NaveAumentarEnergiaYCombultible(-energiaTrans,-combustibleTrans);
     }
 
 }

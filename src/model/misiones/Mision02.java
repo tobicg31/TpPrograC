@@ -1,5 +1,8 @@
 package model.misiones;
 
+import model.asistentes.Asistente;
+import model.destinoytablero.Destino;
+import model.destinoytablero.Tablero;
 import model.naves.Nave;
 
 /**
@@ -7,8 +10,8 @@ import model.naves.Nave;
  */
 public class Mision02 extends Mision {
 
-    public Mision02(){
-        super();
+    public Mision02(Tablero t, Destino d){
+        super(t,d,10);
         this.nombre = "Recoleccion";
     }
     /**
@@ -18,13 +21,13 @@ public class Mision02 extends Mision {
      * @return Agrega a la bitacora el informe de la misión.
      */
     @Override
-    public void evaluar(Nave n) {
-        assert n != null : "La nave no puede ser nula";
+    public void evaluar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
         System.out.println("Evaluando misión 02...");
         String informe = "Mision 02: Recoleccion | combustible gastado: " + this.combustibleNecesario
                 + " desgaste efectuado en la nave: " + this.desgaste;
-        informe += "Estado final nave: Combustible: " + n.getCombustible() + " Energia: " + n.getEnergia()
-                + " Desgaste: " + n.getDesgaste();
+        informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+                + " Desgaste: " + asistente.getNave().getDesgaste();
         this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
     }
 
@@ -32,11 +35,11 @@ public class Mision02 extends Mision {
      * (non-Javadoc)
      * 
      * @see misiones.Mision#cerrar(naves.Nave)
-     * @return Modifica la energia de la nave.
+     * @return La nave recoge entre 20 y 100 gemas.
      */
     @Override
-    public void cerrar(Nave n) {
-        assert n != null : "La nave no puede ser nula";
-        n.setEnergia(n.getEnergia() + 5);
+    public void cerrar(Asistente asistente) {
+        assert asistente.getNave() != null : "La nave no puede ser nula";
+
     }
 }
