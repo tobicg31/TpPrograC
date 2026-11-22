@@ -77,7 +77,11 @@ public class Asistente {
         try {
             mision.setAsistente(this);
             mision.ejecutarMision(this);
-            this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " ejecutada con exito", "INFO");
+            if (mision.isExitosa()) {
+                this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " ejecutada con exito", "INFO");
+            } else {
+                this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " finalizada con fallo", "ALERTA");
+            }
         } catch (NaveSinRecursosException e) {
             this.bitacora.agregarEntrada("Error al ejecutar mision " + mision.getNombreMision() + ": " + e.getMessage(),
                     "ERROR");

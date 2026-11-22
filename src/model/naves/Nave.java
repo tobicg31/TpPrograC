@@ -232,19 +232,23 @@ public abstract class Nave implements ElementoDelUniverso {
      * -combustible inicial mayor a combustible inicial.
      */
     public void modificarEnergia(int energia) {
-        if (getEnergia() + energia == getMaxEnergia()){
-            setEnergia(getMaxEnergia());
-        } else {
-            setEnergia(getEnergia() + energia);
+        int nuevaEnergia = this.energia + energia;
+        if (nuevaEnergia < 0) {
+            nuevaEnergia = 0;
+        } else if (nuevaEnergia > this.maxEnergia) {
+            nuevaEnergia = this.maxEnergia;
         }
+        this.energia = nuevaEnergia;
     }
 
     public void modificarCombustible(int combustible){
-        if (getCombustible() + combustible == getMaxComb()){
-            setCombustible(getMaxComb());
-        } else {
-            setCombustible(getCombustible() + combustible);
+        int nuevoCombustible = this.combustible + combustible;
+        if (nuevoCombustible < 0) {
+            nuevoCombustible = 0;
+        } else if (nuevoCombustible > this.maxComb) {
+            nuevoCombustible = this.maxComb;
         }
+        this.combustible = nuevoCombustible;
     }
 
     /**

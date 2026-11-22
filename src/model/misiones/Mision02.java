@@ -26,8 +26,7 @@ public class Mision02 extends Mision {
     @Override
     public void evaluar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        // System.out.println("Evaluando misión 02...")
-        if (misionTerminada) {
+        if (isExitosa()) {
             String informe = "Mision 02: Recoleccion | combustible gastado: " + this.combustibleNecesario
                     + " desgaste efectuado en la nave: " + this.desgaste;
             informe += " Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: "
@@ -35,8 +34,8 @@ public class Mision02 extends Mision {
                     + " Desgaste: " + asistente.getNave().getDesgaste();
             this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
         } else {
-            String informe = "Mision 02: Recollecion | Mision fallida, la quedaste";
-            informe += " Motivo del fallo: " + this.error;
+            String informe = "Mision 02: Recoleccion | Mision fallida";
+            informe += " | Motivo del fallo: " + (this.error != null ? this.error : "Nave inoperativa");
             this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
         }
     }

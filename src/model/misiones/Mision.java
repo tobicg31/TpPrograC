@@ -91,6 +91,39 @@ public abstract class Mision {
         this.yRestantes = Math.abs(diffFila);
     }
 
+    public boolean isExitosa() {
+        return this.naveViva && this.misionTerminada;
+    }
+
+    private boolean verificarSupervivenciaNave(Asistente asistente) {
+        if (asistente == null || asistente.getNave() == null) {
+            return false;
+        }
+        model.naves.Nave nave = asistente.getNave();
+        if (nave.getCombustible() <= 0) {
+            nave.setCombustible(0);
+            this.naveViva = false;
+            this.error = "La nave se ha quedado sin combustible";
+            asistente.getBitacora().agregarEntrada("ALERTA: Nave sin combustible. Nave inoperativa / destruida.", "ERROR");
+            return false;
+        }
+        if (nave.getEnergia() <= 0) {
+            nave.setEnergia(0);
+            this.naveViva = false;
+            this.error = "La nave se ha quedado sin energía";
+            asistente.getBitacora().agregarEntrada("ALERTA: Nave sin energía. Nave inoperativa / destruida.", "ERROR");
+            return false;
+        }
+        if (nave.getDesgaste() >= 100) {
+            nave.setDesgaste(100);
+            this.naveViva = false;
+            this.error = "El desgaste de la nave alcanzó el 100%";
+            asistente.getBitacora().agregarEntrada("ALERTA: Desgaste al 100%. Nave destruida.", "ERROR");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Este método permite ejecutar la misión utilizando la nave proporcionada.
      * <b>PRE:</b>
@@ -111,6 +144,10 @@ public abstract class Mision {
         asistente.NaveModificarCombultible(-this.combustibleNecesario);
         asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
 
+        if (!verificarSupervivenciaNave(asistente)) {
+            return;
+        }
+
         while (naveViva && !misionTerminada) {
             actualNave = this.tablero.getPosicionNave();
 
@@ -125,19 +162,34 @@ public abstract class Mision {
             try {
                 if (posActual != null) {
                     posActual.interactuar(this.asistente);
+                    if (!verificarSupervivenciaNave(asistente)) {
+                        break;
+                    }
                 }
                 // planificacion: decide si moverse uno o 2 lugares, por el motor
                 try {
                     if (xRestantes > 0) {
+                        // Verificar que haya combustible para moverse
+                        if (asistente.getNave().getCombustible() < 2) {
+                            asistente.NaveModificarCombultible(-asistente.getNave().getCombustible());
+                            this.naveViva = false;
+                            this.error = "Combustible insuficiente para continuar la navegación ("
+                                    + asistente.getNave().getCombustible() + " disponible, requiere 2)";
+                            asistente.getBitacora().agregarEntrada(
+                                    "La nave se quedó sin combustible para avanzar. Misión abortada.", "ERROR");
+                            break;
+                        }
+
                         // Movimiento horizontal (columnas). dirX = dirección en Y visual (columnas).
                         Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY() + dirX);
-                        // Bug fix: si la siguiente casilla ES el objetivo, moverse directamente.
-                        // estaLibre() considera el objetivo "ocupado" para elementos, no para la nave.
                         if (siguiente.equals(posObjetivo) || this.tablero.estaLibre(siguiente)) {
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
                             asistente.NaveModificarCombultible(-2);
                             this.xRestantes -= 1;
+                            if (!verificarSupervivenciaNave(asistente)) {
+                                break;
+                            }
                         } else {
                             // Obstáculo real: intentar Warp para saltarlo
                             try {
@@ -152,24 +204,43 @@ public abstract class Mision {
                                 }
                                 this.tablero.moverNave(siguiente);
                                 asistente.NaveModificarCombultible(-2);
+                                if (!verificarSupervivenciaNave(asistente)) {
+                                    break;
+                                }
                             } catch (NaveInoperativaException e) {
                                 this.error = e.getMessage();
                                 asistente.saltar();
                                 this.tablero.moverNave(siguiente);
                                 asistente.NaveModificarCombultible(-2);
                                 this.xRestantes -= 1;
+                                if (!verificarSupervivenciaNave(asistente)) {
+                                    break;
+                                }
                             }
                         }
                     } else if (yRestantes > 0) {
+                        // Verificar que haya combustible para moverse
+                        if (asistente.getNave().getCombustible() < 2) {
+                            asistente.NaveModificarCombultible(-asistente.getNave().getCombustible());
+                            this.naveViva = false;
+                            this.error = "Combustible insuficiente para continuar la navegación ("
+                                    + asistente.getNave().getCombustible() + " disponible, requiere 2)";
+                            asistente.getBitacora().agregarEntrada(
+                                    "La nave se quedó sin combustible para avanzar. Misión abortada.", "ERROR");
+                            break;
+                        }
+
                         // Movimiento vertical (filas). dirY = dirección en X visual (filas).
                         actualNave = this.tablero.getPosicionNave();
                         Posicion siguiente = new Posicion(actualNave.getX() + dirY, actualNave.getY());
-                        // Bug fix: misma lógica de objetivo para eje vertical
                         if (siguiente.equals(posObjetivo) || this.tablero.estaLibre(siguiente)) {
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
                             asistente.NaveModificarCombultible(-2);
                             this.yRestantes -= 1;
+                            if (!verificarSupervivenciaNave(asistente)) {
+                                break;
+                            }
                         } else {
                             try {
                                 if (yRestantes > 1) {
@@ -178,31 +249,39 @@ public abstract class Mision {
                                     siguiente = new Posicion(actualNave.getX() + 2 * dirY, actualNave.getY());
                                     this.tablero.moverNave(siguiente);
                                     asistente.NaveModificarCombultible(-2);
+                                    if (!verificarSupervivenciaNave(asistente)) {
+                                        break;
+                                    }
                                 }
-                                // Si yRestantes == 1 y hay un obstáculo real (no objetivo),
-                                // esperar el próximo turno (el elemento puede moverse solo).
                             } catch (NaveInoperativaException e) {
                                 this.error = e.getMessage();
                                 asistente.saltar();
                                 this.tablero.moverNave(siguiente);
                                 asistente.NaveModificarCombultible(-2);
                                 this.yRestantes -= 1;
+                                if (!verificarSupervivenciaNave(asistente)) {
+                                    break;
+                                }
                             }
                         }
                     }
                 } finally {
-                    // Turno del tablero: mover elementos del universo
-                    try {
-                        Thread.sleep(1000);
-                        this.destino.turnoDestino();
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                        System.out.println("Error en el turno del destino: " + e.getMessage());
+                    // Si la nave ya no está viva, no esperamos ni hacemos turno de destino
+                    if (this.naveViva) {
+                        try {
+                            Thread.sleep(1000);
+                            this.destino.turnoDestino();
+                            Thread.sleep(1000);
+                        } catch (Exception e) {
+                            System.out.println("Error en el turno del destino: " + e.getMessage());
+                        }
                     }
                 }
             } catch (NaveInoperativaException e) {
                 this.error = e.getMessage();
-                naveViva = false;
+                this.naveViva = false;
+                asistente.getBitacora().agregarEntrada("Nave inoperativa: " + e.getMessage(), "ERROR");
+                break;
             }
         }
         // se llego a destino (o la nave fue destruida)
@@ -249,7 +328,9 @@ public abstract class Mision {
         preparar(a);
         ejecutar(a);
         evaluar(a);
-        cerrar(a);
+        if (isExitosa()) {
+            cerrar(a);
+        }
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 
