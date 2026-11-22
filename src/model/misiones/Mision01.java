@@ -53,7 +53,8 @@ public class Mision01 extends Mision {
     @Override
     public void cerrar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        asistente.NaveModificarEnergiaYCombultible(-energiaTrans,-combustibleTrans);
+        asistente.NaveModificarCombultible(combustibleNecesario);
+        asistente.NaveModificarEnergia(energiaNecesaria);
     }
 
 }

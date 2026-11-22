@@ -102,7 +102,8 @@ public abstract class Mision {
         assert asistente.getNave() != null : "La nave no puede ser nula";
         //gasto recursos de la mision:
         
-        asistente.NaveModificarEnergiaYCombultible(-this.energiaNecesaria,-this.combustibleNecesario);
+        asistente.NaveModificarEnergia(-this.energiaNecesaria);
+        asistente.NaveModificarCombultible(-this.combustibleNecesario);
         asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
         
         while (naveViva && !misionTerminada){
@@ -117,8 +118,7 @@ public abstract class Mision {
                     posActual.interactuar(this.asistente);
                 }
                 //escaneo:
-                //radar corto alcanze, hay que usar observarAlrededores del Tablero
-                ElementoDelUniverso[][] alrededores = this.tablero.observarAlrededores();                
+                //radar corto alcanze, hay que usar observarAlrededores del Tablero              
                 //planificacion:
                 //decide si moverse uno o 2 lugares, por el motor
                 try {
@@ -139,7 +139,7 @@ public abstract class Mision {
                                 }
                                 else {
                                     this.xRestantes -=1;
-                                    siguiente = new Posicion(actualNave.getX()+ dirX, actualNave.getY()+disY);
+                                    siguiente = new Posicion(actualNave.getX()+ dirX, actualNave.getY()+dirY);
                                     this.yRestantes -=1;
                                 }
                                  this.tablero.moverNave(siguiente);
@@ -153,7 +153,7 @@ public abstract class Mision {
                                 asistente.NaveModificarCombultible(-2);
                                 this.xRestantes -=1;
                         }
-                    }
+                    }}
                     else if (yRestantes > 0){
                         actualNave = this.tablero.getPosicionNave();
                         Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY()+dirY);
@@ -186,9 +186,14 @@ public abstract class Mision {
                 }finally{
                     //turno tablero:
                     //hay q llamar a turnoDestino del Destino
-                    Thread.sleep(5000);
-                    this.destino.turnoDestino();
-                    Thread.sleep(5000);
+                    
+                    try{
+                        Thread.sleep(1000);
+                        this.destino.turnoDestino();
+                        Thread.sleep(1000);
+                    } catch(Exception e){
+                        System.out.println("Error en el turno del destino: " + e.getMessage());
+                    }
                 }
                 } catch (NaveInoperativaException e) {
                     this.error = e.getMessage();
