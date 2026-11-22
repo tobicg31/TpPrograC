@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import javax.swing.SwingWorker;
+
 import model.asistentes.Asistente;
-import model.bitacoras.EventoBitacora;
 import model.destinoytablero.CantidadDeElementosSuperaCasillaException;
 import model.destinoytablero.Destino;
 import model.destinoytablero.DimensionesDeTableroInconsistentesException;
@@ -100,9 +101,10 @@ public class ControladorTablero implements ActionListener {
                 nave = NaveFactory.getNave("Exploradora");
             }
             this.asistente = new Asistente(nave, this.tablero);
+            this.vista.observarAsistente(this.asistente);
             this.asistente.getBitacora().agregarEntrada(
                     "Tablero creado: " + ancho + " x " + alto + " (ancho x alto)", "INFO");
-            actualizarVista();
+            this.vista.actualizar();
             this.vistaConfiguracion.cierra();
             this.vista.arranca();
         } catch (DimensionesDeTableroInconsistentesException | CantidadDeElementosSuperaCasillaException e) {
@@ -125,28 +127,24 @@ public class ControladorTablero implements ActionListener {
         this.vista.limpiarError();
         this.asistente.getBitacora().agregarEntrada("Inicio de misión " + mision.getNombreMision(), "INFO");
         this.vista.setMisionActiva(true);
-        try {
-            this.asistente.ejecutarMision(mision);
-        } finally {
-            this.vista.setMisionActiva(false);
-            actualizarVista();
-        }
-    }
 
-    private void actualizarVista() {
-        Nave nave = this.asistente.getNave();
-        this.vista.mostrarRecursos(nave.getClass().getSimpleName(), nave.getCombustible(), nave.getEnergia(),
-                nave.getDesgaste(), this.asistente.getEstadoMotor());
-        ArrayList<EventoBitacora> eventos = new ArrayList<EventoBitacora>(
-                this.asistente.getBitacora().getEntradas());
-        this.vista.mostrarEventos(eventos);
-        ArrayList<EventoBitacora> informes = new ArrayList<EventoBitacora>();
-        for (EventoBitacora evento : eventos) {
-            if ("INFORME".equals(evento.getTipo())) {
-                informes.add(evento);
+        // La misión se ejecuta en un hilo de fondo para no bloquear el EDT de Swing.
+        // De esta forma la ventana sigue respondiendo y el tablero se actualiza en
+        // tiempo real via el Observer que ya está registrado en VentanaControlNave.
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() {
+                asistente.ejecutarMision(mision);
+                return null;
             }
-        }
-        this.vista.mostrarInformes(informes);
+
+            @Override
+            protected void done() {
+                // done() siempre se ejecuta en el EDT, es seguro tocar Swing aquí.
+                vista.setMisionActiva(false);
+                vista.actualizar();
+            }
+        }.execute();
     }
 
     private void cerrarControl() {

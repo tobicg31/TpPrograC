@@ -34,7 +34,7 @@ public abstract class Mision {
         return combustibleNecesario == 4 && desgaste == 4;
     }
 
-    public Mision(Tablero tablero, Destino destino, int e) { //no sabemos si pasar aca el destino
+    public Mision(Tablero tablero, Destino destino, int e) { // no sabemos si pasar aca el destino
         this.combustibleNecesario = 4;
         this.desgaste = 4;
         this.asistente = null;
@@ -63,7 +63,8 @@ public abstract class Mision {
     public void preparar(Asistente asistente) throws NaveSinRecursosException, NaveMantenimientoException {
         assert asistente.getNave() != null : "La nave no puede ser nula";
         System.out.println("preparo la nave...");
-        if (!((asistente.getNave().getCombustible() - this.combustibleNecesario >= 0) && (asistente.getNave().getDesgaste() + this.desgaste <= 100))) {
+        if (!((asistente.getNave().getCombustible() - this.combustibleNecesario >= 0)
+                && (asistente.getNave().getDesgaste() + this.desgaste <= 100))) {
             throw new NaveSinRecursosException("Fallo de recursos");
         } else if ((asistente.getNave().requiereMantenimiento())) {
             throw new NaveMantenimientoException("La nave requiere mantenimiento");
@@ -71,20 +72,24 @@ public abstract class Mision {
             System.out.println("Nave preparada!");
         }
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
-        //CALCULO RUTA OBJETIVO
-        //hay que llamar a obtenerObjetivo() del Tablero.
+        // CALCULO RUTA OBJETIVO
+        // hay que llamar a obtenerObjetivo() del Tablero.
         Posicion posObjetivo = this.tablero.obtenerObjetivo();
         this.posObjetivo = posObjetivo;
         Posicion posNaveInicial = this.tablero.getPosicionNave();
 
-        this.xRestantes = posObjetivo.getX()-posNaveInicial.getX();
-        this.dirX = this.xRestantes / Math.abs(this.xRestantes);
-        this.xRestantes = Math.abs(this.xRestantes);
-        this.yRestantes = posObjetivo.getY()-posNaveInicial.getY();
-        this.dirY = this.yRestantes / Math.abs(this.yRestantes);
-        this.yRestantes = Math.abs(this.yRestantes);
-    }
+        // X visual = columnas = getY(). Y visual = filas = getX().
+        // Movemos primero horizontal (columnas) luego vertical (filas), que es lo
+        // que el usuario observa como "primero X luego Y".
+        // Bug fix: proteger contra división por cero cuando ya estamos alineados en ese eje.
+        int diffColumna = posObjetivo.getY() - posNaveInicial.getY();
+        this.dirX = diffColumna == 0 ? 0 : diffColumna / Math.abs(diffColumna);
+        this.xRestantes = Math.abs(diffColumna);
 
+        int diffFila = posObjetivo.getX() - posNaveInicial.getX();
+        this.dirY = diffFila == 0 ? 0 : diffFila / Math.abs(diffFila);
+        this.yRestantes = Math.abs(diffFila);
+    }
 
     /**
      * Este método permite ejecutar la misión utilizando la nave proporcionada.
@@ -100,110 +105,107 @@ public abstract class Mision {
         ElementoDelUniverso posActual;
         Posicion actualNave;
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        //gasto recursos de la mision:
-        
+        // gasto recursos de la mision:
+
         asistente.NaveModificarEnergia(-this.energiaNecesaria);
         asistente.NaveModificarCombultible(-this.combustibleNecesario);
         asistente.getNave().setDesgaste(asistente.getNave().getDesgaste() + this.desgaste);
-        
-        while (naveViva && !misionTerminada){
+
+        while (naveViva && !misionTerminada) {
             actualNave = this.tablero.getPosicionNave();
-            //turno nave:
-            //inspeccion posicion actual, hay que usar inspeccionarPosicion del Tablero
+
+            // --- Verificar llegada al INICIO del turno (posición ya actualizada) ---
+            if (posObjetivo.equals(actualNave)) {
+                misionTerminada = true;
+                break;
+            }
+
+            // turno nave: inspeccionar e interactuar con el elemento en la casilla actual
             posActual = this.tablero.inspeccionarPosicion();
-            //si devuelve null, no hay nada
-            //si devuelve un elemento, hay que llamar a interactua del elemento
             try {
-                if (posActual != null){
+                if (posActual != null) {
                     posActual.interactuar(this.asistente);
                 }
-                //escaneo:
-                //radar corto alcanze, hay que usar observarAlrededores del Tablero              
-                //planificacion:
-                //decide si moverse uno o 2 lugares, por el motor
+                // planificacion: decide si moverse uno o 2 lugares, por el motor
                 try {
-                    if (xRestantes > 0){
-                        Posicion siguiente = new Posicion(actualNave.getX()+dirX, actualNave.getY());
-                        if (this.tablero.estaLibre(siguiente)){
+                    if (xRestantes > 0) {
+                        // Movimiento horizontal (columnas). dirX = dirección en Y visual (columnas).
+                        Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY() + dirX);
+                        // Bug fix: si la siguiente casilla ES el objetivo, moverse directamente.
+                        // estaLibre() considera el objetivo "ocupado" para elementos, no para la nave.
+                        if (siguiente.equals(posObjetivo) || this.tablero.estaLibre(siguiente)) {
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
-                            asistente.NaveModificarEnergia(0);
                             asistente.NaveModificarCombultible(-2);
-                            this.xRestantes -=1;
+                            this.xRestantes -= 1;
                         } else {
+                            // Obstáculo real: intentar Warp para saltarlo
                             try {
                                 asistente.saltarWarp();
-                                if (this.xRestantes > 1){
-                                    this.xRestantes -=2;
-                                    siguiente = new Posicion(actualNave.getX()+ 2*dirX, actualNave.getY());
+                                if (this.xRestantes > 1) {
+                                    this.xRestantes -= 2;
+                                    siguiente = new Posicion(actualNave.getX(), actualNave.getY() + 2 * dirX);
+                                } else {
+                                    this.xRestantes -= 1;
+                                    siguiente = new Posicion(actualNave.getX() + dirY, actualNave.getY() + dirX);
+                                    this.yRestantes -= 1;
                                 }
-                                else {
-                                    this.xRestantes -=1;
-                                    siguiente = new Posicion(actualNave.getX()+ dirX, actualNave.getY()+dirY);
-                                    this.yRestantes -=1;
-                                }
-                                 this.tablero.moverNave(siguiente);
-                                asistente.NaveModificarEnergia(0);
+                                this.tablero.moverNave(siguiente);
                                 asistente.NaveModificarCombultible(-2);
                             } catch (NaveInoperativaException e) {
                                 this.error = e.getMessage();
                                 asistente.saltar();
                                 this.tablero.moverNave(siguiente);
-                                asistente.NaveModificarEnergia(0);
                                 asistente.NaveModificarCombultible(-2);
-                                this.xRestantes -=1;
+                                this.xRestantes -= 1;
+                            }
                         }
-                    }}
-                    else if (yRestantes > 0){
+                    } else if (yRestantes > 0) {
+                        // Movimiento vertical (filas). dirY = dirección en X visual (filas).
                         actualNave = this.tablero.getPosicionNave();
-                        Posicion siguiente = new Posicion(actualNave.getX(), actualNave.getY()+dirY);
-                        if (this.tablero.estaLibre(siguiente)){
+                        Posicion siguiente = new Posicion(actualNave.getX() + dirY, actualNave.getY());
+                        // Bug fix: misma lógica de objetivo para eje vertical
+                        if (siguiente.equals(posObjetivo) || this.tablero.estaLibre(siguiente)) {
                             asistente.saltar();
                             this.tablero.moverNave(siguiente);
-                            asistente.NaveModificarEnergia(0);
                             asistente.NaveModificarCombultible(-2);
-                            this.yRestantes -=1;
+                            this.yRestantes -= 1;
                         } else {
                             try {
-                                if (yRestantes > 1){
+                                if (yRestantes > 1) {
                                     asistente.saltarWarp();
-                                    this.yRestantes -=2;  
-                                    siguiente = new Posicion(actualNave.getX(), actualNave.getY()+ 2*dirY);
+                                    this.yRestantes -= 2;
+                                    siguiente = new Posicion(actualNave.getX() + 2 * dirY, actualNave.getY());
                                     this.tablero.moverNave(siguiente);
-                                asistente.NaveModificarEnergia(0);
-                                asistente.NaveModificarCombultible(-2);
+                                    asistente.NaveModificarCombultible(-2);
                                 }
+                                // Si yRestantes == 1 y hay un obstáculo real (no objetivo),
+                                // esperar el próximo turno (el elemento puede moverse solo).
                             } catch (NaveInoperativaException e) {
                                 this.error = e.getMessage();
                                 asistente.saltar();
                                 this.tablero.moverNave(siguiente);
-                                asistente.NaveModificarEnergia(0);
                                 asistente.NaveModificarCombultible(-2);
-                                this.yRestantes -=1;
-                            }  
+                                this.yRestantes -= 1;
+                            }
                         }
                     }
-                }finally{
-                    //turno tablero:
-                    //hay q llamar a turnoDestino del Destino
-                    
-                    try{
+                } finally {
+                    // Turno del tablero: mover elementos del universo
+                    try {
                         Thread.sleep(1000);
                         this.destino.turnoDestino();
                         Thread.sleep(1000);
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         System.out.println("Error en el turno del destino: " + e.getMessage());
                     }
                 }
-                } catch (NaveInoperativaException e) {
-                    this.error = e.getMessage();
-                    naveViva = false;
-                }
-                if (posObjetivo.equals(actualNave))
-                    misionTerminada = true;
+            } catch (NaveInoperativaException e) {
+                this.error = e.getMessage();
+                naveViva = false;
             }
-        //se llego a destino
-        //habria q hacer un metodo abstracto para q cada mision decida que hacer en destino
+        }
+        // se llego a destino (o la nave fue destruida)
         assert invariante() : "El combustible debe ser 4 y el desgaste debe ser 4";
     }
 

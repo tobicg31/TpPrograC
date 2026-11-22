@@ -37,7 +37,7 @@ public class Enfriamento implements MotorState {
     public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         if (this.nave.getCombustible() < 2) {
-            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+            throw new NaveInoperativaException("No hay suficiente combustible para saltar. Nave inoperativa");
         } else {
             this.nave.setCombustible(this.nave.getCombustible() - 2);
         }
@@ -47,6 +47,6 @@ public class Enfriamento implements MotorState {
     @Override
     public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new NaveInoperativaException("ERROR: el motor esta enfriando.");
+        throw new NaveInoperativaException("El motor esta enfriando.");
     }
 }

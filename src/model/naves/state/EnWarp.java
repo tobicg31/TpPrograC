@@ -42,7 +42,7 @@ public class EnWarp implements MotorState {
 
             if (this.nave.getCombustible() < 2) {
                 throw new NaveInoperativaException(
-                        "ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+                        "No hay suficiente combustible para saltar. Nave inoperativa");
             } else {
                 this.nave.setCombustible(this.nave.getCombustible() - 2);
             }
@@ -54,7 +54,7 @@ public class EnWarp implements MotorState {
         assert this.nave != null : "La nave no puede ser nula";
         if (this.nave.getCombustible() < 5) {
             this.nave.setEstado(new PreparandoSalto(this.nave));
-            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar en warp.");
+            throw new NaveInoperativaException("No hay suficiente combustible para saltar en warp.");
         } else {
             this.nave.setCombustible(this.nave.getCombustible() - 5);
             this.nave.setEstado(new Enfriamento(this.nave));

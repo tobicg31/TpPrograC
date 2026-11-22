@@ -19,6 +19,7 @@ public interface IVentanaTablero extends Observador {
     int getColumnasTablero();
     String getMision();
     void observarTablero(Tablero tablero);
+    void observarAsistente(model.asistentes.Asistente asistente);
     void mostrarRecursos(String tipoNave, int combustible, int energia, int desgaste, String estadoMotor);
     void mostrarEventos(List<EventoBitacora> eventos);
     void mostrarInformes(List<EventoBitacora> informes);

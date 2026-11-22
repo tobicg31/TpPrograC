@@ -7,14 +7,16 @@ import model.destinoytablero.Destino;
 import model.destinoytablero.Tablero;
 
 /**
- * Esta clase representa una misión concreta que puede ser ejecutada por una nave.
+ * Esta clase representa una misión concreta que puede ser ejecutada por una
+ * nave.
  */
 public class Mision02 extends Mision {
 
-    public Mision02(Tablero t, Destino d){
-        super(t,d,10);
+    public Mision02(Tablero t, Destino d) {
+        super(t, d, 10);
         this.nombre = "Recoleccion";
     }
+
     /**
      * (non-Javadoc)
      * 
@@ -24,17 +26,18 @@ public class Mision02 extends Mision {
     @Override
     public void evaluar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        //System.out.println("Evaluando misión 02...")
-        if (misionTerminada){
+        // System.out.println("Evaluando misión 02...")
+        if (misionTerminada) {
             String informe = "Mision 02: Recoleccion | combustible gastado: " + this.combustibleNecesario
                     + " desgaste efectuado en la nave: " + this.desgaste;
-            informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+            informe += " Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: "
+                    + asistente.getNave().getEnergia()
                     + " Desgaste: " + asistente.getNave().getDesgaste();
             this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
         } else {
             String informe = "Mision 02: Recollecion | Mision fallida, la quedaste";
-            informe += " Motivo del fallo:" + this.error;
-            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");   
+            informe += " Motivo del fallo: " + this.error;
+            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
         }
     }
 
@@ -47,9 +50,9 @@ public class Mision02 extends Mision {
     @Override
     public void cerrar(Asistente asistente) {
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        Random rand = new Random(); 
-        int cantGemas = rand.nextInt(20,100);
-        String mensaje = "Se recolectaron "+ cantGemas +" gemas exitosamente";
+        Random rand = new Random();
+        int cantGemas = rand.nextInt(20, 100);
+        String mensaje = "Se recolectaron " + cantGemas + " gemas exitosamente";
         this.asistente.getBitacora().agregarEntrada(mensaje, "INFORME");
     }
 }

@@ -97,7 +97,7 @@ public class Asistente {
 
     public void saltar() {
         try {
-            String mensaje = "Cambio de estado: " + getEstadoMotor();
+            String mensaje = getEstadoMotor();
             nave.saltar();
             this.bitacora.agregarEntrada(mensaje + " a: " + getEstadoMotor(), "CAMBIO ESTADO");
         } catch (NaveInoperativaException e) {
@@ -106,7 +106,7 @@ public class Asistente {
     }
 
     public void saltarWarp() throws NaveInoperativaException {
-        String mensaje = "Cambio de estado: " + getEstadoMotor();
+        String mensaje = getEstadoMotor();
         nave.saltarWarp();
         this.bitacora.agregarEntrada(mensaje + " a: " + getEstadoMotor(), "CAMBIO ESTADO");
     }
@@ -122,6 +122,7 @@ public class Asistente {
     public void NaveModificarEnergia(int energia) {
         nave.modificarEnergia(energia);
     }
+
     public void NaveModificarCombultible(int combustible) {
         nave.modificarCombustible(combustible);
     }

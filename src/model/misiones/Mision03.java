@@ -5,14 +5,16 @@ import model.destinoytablero.Destino;
 import model.destinoytablero.Tablero;
 
 /**
- * Esta clase representa una misión concreta que puede ser ejecutada por una nave.
+ * Esta clase representa una misión concreta que puede ser ejecutada por una
+ * nave.
  */
 public class Mision03 extends Mision {
 
-    public Mision03(Tablero t, Destino d){
-        super(t,d,0);
+    public Mision03(Tablero t, Destino d) {
+        super(t, d, 0);
         this.nombre = "Retorno Seguro";
     }
+
     /**
      * (non-Javadoc)
      * 
@@ -23,16 +25,17 @@ public class Mision03 extends Mision {
     public void evaluar(Asistente asistente) {
         String informe;
         assert asistente.getNave() != null : "La nave no puede ser nula";
-        if (misionTerminada){
+        if (misionTerminada) {
             informe = "Mision 03: Retorno seguro | combustible gastado: " + this.combustibleNecesario
-                + " desgaste efectuado en la nave: " + this.desgaste;
-            informe += "Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: " + asistente.getNave().getEnergia()
+                    + " desgaste efectuado en la nave: " + this.desgaste;
+            informe += " Estado final nave: Combustible: " + asistente.getNave().getCombustible() + " Energia: "
+                    + asistente.getNave().getEnergia()
                     + " Desgaste: " + asistente.getNave().getDesgaste();
             this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
         } else {
             informe = "Mision 03: Retorno seguro | Mision fallida, la quedaste";
-            informe += " Motivo del fallo:" + this.error;
-            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");   
+            informe += " Motivo del fallo: " + this.error;
+            this.asistente.getBitacora().agregarEntrada(informe, "INFORME");
         }
     }
 

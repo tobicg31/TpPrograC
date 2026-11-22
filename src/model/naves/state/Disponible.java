@@ -37,7 +37,7 @@ public class Disponible implements MotorState {
     public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         if (this.nave.getCombustible() < 2) {
-            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
+            throw new NaveInoperativaException("No hay suficiente combustible para saltar. Nave inoperativa");
         } else {
             this.nave.setCombustible(this.nave.getCombustible() - 2);
             this.nave.setEstado(new PreparandoSalto(this.nave));
@@ -47,6 +47,6 @@ public class Disponible implements MotorState {
     @Override
     public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
-        throw new NaveInoperativaException("ERROR: la nave no está en estado de warp.");
+        throw new NaveInoperativaException("La nave no está en estado de warp.");
     }
 }

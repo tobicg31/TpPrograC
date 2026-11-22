@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.border.EmptyBorder;
 
+import model.asistentes.Asistente;
 import model.bitacoras.EventoBitacora;
 import model.destinoytablero.Posicion;
 import model.destinoytablero.Tablero;
@@ -50,6 +51,7 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     private final JTextArea txtBitacora;
     private final JSplitPane distribucionSuperior;
     private Tablero tableroObservado;
+    private Asistente asistenteObservado;
     private int filasTablero = -1;
     private int columnasTablero = -1;
 
@@ -240,18 +242,39 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     }
 
     @Override
+    public void observarAsistente(Asistente asistente) {
+        this.asistenteObservado = asistente;
+        actualizar();
+    }
+
+    @Override
     public void actualizar() {
-        Runnable actualizarGrilla = () -> {
+        Runnable actualizarVistaCompleta = () -> {
             if (this.tableroObservado != null) {
                 mostrarTablero(this.tableroObservado.verTablero(),
                         this.tableroObservado.getPosicionNave(),
                         this.tableroObservado.getObjetivo());
             }
+            if (this.asistenteObservado != null) {
+                Nave nave = this.asistenteObservado.getNave();
+                mostrarRecursos(nave.getClass().getSimpleName(), nave.getCombustible(), nave.getEnergia(),
+                        nave.getDesgaste(), this.asistenteObservado.getEstadoMotor());
+                List<EventoBitacora> eventos = new java.util.ArrayList<>(
+                        this.asistenteObservado.getBitacora().getEntradas());
+                mostrarEventos(eventos);
+                List<EventoBitacora> informes = new java.util.ArrayList<>();
+                for (EventoBitacora evento : eventos) {
+                    if ("INFORME".equals(evento.getTipo())) {
+                        informes.add(evento);
+                    }
+                }
+                mostrarInformes(informes);
+            }
         };
         if (SwingUtilities.isEventDispatchThread()) {
-            actualizarGrilla.run();
+            actualizarVistaCompleta.run();
         } else {
-            SwingUtilities.invokeLater(actualizarGrilla);
+            SwingUtilities.invokeLater(actualizarVistaCompleta);
         }
     }
 
@@ -329,6 +352,7 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     @Override
     public void cierra() {
         observarTablero(null);
+        this.asistenteObservado = null;
         dispose();
     }
 
