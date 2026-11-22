@@ -13,6 +13,7 @@ import model.tripulantes.Teniente;
 import model.tripulantes.Tripulante;
 import model.tripulantes.decorator.Liquidable;
 import model.tripulantes.decorator.Marciano;
+import model.tripulantes.decorator.Terricola;
 import model.tripulantes.decorator.Vulcano;
 import view.IVentanaCreacion;
 import view.IVentanaMenu;
@@ -36,6 +37,12 @@ public class ControladorCreacion implements ActionListener {
 
 	public Nave getNave() {
 		return this.nave;
+	}
+
+	public void resetear() {
+		this.nave = null;
+		this.tripulantes.clear();
+		this.vista.resetear();
 	}
 
 	@Override
@@ -68,7 +75,7 @@ public class ControladorCreacion implements ActionListener {
 		Liquidable liquidable = null;
 		switch (vista.getPlaneta()) {
 			case "Tierra":
-				liquidable = new Vulcano(tripulante);
+				liquidable = new Terricola(tripulante);
 				break;
 			case "Marte":
 				liquidable = new Marciano(tripulante);
@@ -81,6 +88,7 @@ public class ControladorCreacion implements ActionListener {
 				return;
 		}
 		this.tripulantes.add(liquidable);
+		this.nave.agregarTripulante(liquidable);
 		salario = liquidable.liquidacionDeHaberes();
 		vista.agregarFilaTripulante(tripulante.getIdentidad(), tripulante.getCargo(), tripulante.getAntiguedad(),
 				tripulante.getPorcentajeAdicional(), tripulante.getPlaneta(), salario);

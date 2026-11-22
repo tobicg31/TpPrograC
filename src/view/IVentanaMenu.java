@@ -15,4 +15,6 @@ public interface IVentanaMenu {
   void arranca(Usuario usuario);
 
   void cierra();
+
+  void mostrarAdvertencia(String mensaje);
 }
