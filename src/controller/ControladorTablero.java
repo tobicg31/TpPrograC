@@ -57,6 +57,9 @@ public class ControladorTablero implements ActionListener {
             case IVentanaTablero.INICIAR_MISION:
                 iniciarMision();
                 break;
+            case IVentanaTablero.REINICIAR:
+                reiniciarPartida();
+                break;
             case IVentanaTablero.VOLVER:
                 cerrarControl();
                 break;
@@ -151,6 +154,24 @@ public class ControladorTablero implements ActionListener {
     private void cerrarControl() {
         this.vista.cierra();
         this.vistaMenu.arranca(null);
+    }
+
+    private void reiniciarPartida() {
+        if (this.tablero == null) {
+            this.vista.mostrarError("Primero debe crear un tablero.");
+            return;
+        }
+        Nave naveClonada = this.controladorCreacion != null ? this.controladorCreacion.clonarNaveInicial() : null;
+        if (naveClonada == null) {
+            this.vista.mostrarError("No se pudo obtener la nave inicial para clonar.");
+            return;
+        }
+        this.tablero.moverNave(new model.destinoytablero.Posicion(this.tablero.getX() / 2, this.tablero.getY() / 2));
+        this.asistente = new Asistente(naveClonada, this.tablero);
+        this.vista.observarAsistente(this.asistente);
+        this.asistente.getBitacora().agregarEntrada("Partida reiniciada con nave clonada en estado inicial", "INFO");
+        this.vista.limpiarPartida();
+        this.vista.actualizar();
     }
 
     public void resetear() {

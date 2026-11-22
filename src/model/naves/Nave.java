@@ -19,7 +19,7 @@ import model.tripulantes.decorator.Liquidable;
  * - desgaste >= 0
  * 
  */
-public abstract class Nave implements ElementoDelUniverso {
+public abstract class Nave implements ElementoDelUniverso, Cloneable {
     protected int combustible, maxComb, energia, maxEnergia, desgaste, maxDesgaste;
     protected boolean mantenimiento;
     protected ArrayList<Liquidable> tripulantes;
@@ -88,6 +88,18 @@ public abstract class Nave implements ElementoDelUniverso {
             return;
         }
         this.tripulantes.add(t);
+    }
+
+    @Override
+    public Nave clone() {
+        try {
+            Nave clon = (Nave) super.clone();
+            clon.tripulantes = new ArrayList<Liquidable>(this.tripulantes);
+            clon.motorWarp = new Disponible(clon);
+            return clon;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("La nave debe ser clonable", e);
+        }
     }
 
     public MotorState getMotor() {

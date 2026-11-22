@@ -54,6 +54,7 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     private final JComboBox<String> cmbMision;
     private final JButton btnIniciar;
     private final JButton btnVolver;
+    private final JButton btnVolverAJugar;
     private final JTable tablaTablero;
     private final JTextArea txtInformes;
     private final JTextArea txtBitacora;
@@ -142,10 +143,13 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
         scrollBitacora.setPreferredSize(new java.awt.Dimension(300, 180));
         scrollBitacora.setMinimumSize(new java.awt.Dimension(200, 100));
         bitacora.add(scrollBitacora, BorderLayout.CENTER);
-        JPanel acciones = new JPanel(new BorderLayout());
+        JPanel acciones = new JPanel(new BorderLayout(8, 0));
         this.btnVolver = new JButton("Volver al menú");
         this.btnVolver.setActionCommand(VOLVER);
+        this.btnVolverAJugar = new JButton("Volver a jugar");
+        this.btnVolverAJugar.setActionCommand(REINICIAR);
         acciones.add(this.btnVolver, BorderLayout.WEST);
+        acciones.add(this.btnVolverAJugar, BorderLayout.EAST);
         bitacora.add(acciones, BorderLayout.SOUTH);
         bitacora.setMinimumSize(new java.awt.Dimension(400, 140));
 
@@ -172,6 +176,7 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     public void setActionListener(ActionListener listener) {
         this.btnIniciar.addActionListener(listener);
         this.btnVolver.addActionListener(listener);
+        this.btnVolverAJugar.addActionListener(listener);
     }
 
     @Override
@@ -334,8 +339,18 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     @Override
     public void setMisionActiva(boolean activa) {
         this.btnIniciar.setEnabled(!activa);
+        this.btnVolverAJugar.setEnabled(!activa);
         this.cmbMision.setEnabled(!activa);
         this.lblEstadoMision.setText(activa ? "Misión en curso..." : "Sin misión en curso");
+    }
+
+    @Override
+    public void limpiarPartida() {
+        this.txtBitacora.setText("");
+        this.txtInformes.setText("");
+        this.lblEstadoMision.setText("Sin misión en curso");
+        this.btnIniciar.setEnabled(true);
+        this.btnVolverAJugar.setEnabled(true);
     }
 
     public void setEstadoMision(String estado) {

@@ -22,6 +22,7 @@ public class ControladorCreacion implements ActionListener {
 	private final IVentanaCreacion vista;
 	private final IVentanaMenu vistaMenu;
 	private Nave nave = null;
+	private Nave naveInicial = null;
 	private ArrayList<Liquidable> tripulantes;
 
 	public ControladorCreacion(IVentanaCreacion vista) {
@@ -39,8 +40,16 @@ public class ControladorCreacion implements ActionListener {
 		return this.nave;
 	}
 
+	public Nave clonarNaveInicial() {
+		if (this.naveInicial == null && this.nave != null) {
+			this.naveInicial = this.nave.clone();
+		}
+		return this.naveInicial != null ? this.naveInicial.clone() : null;
+	}
+
 	public void resetear() {
 		this.nave = null;
+		this.naveInicial = null;
 		this.tripulantes.clear();
 		this.vista.resetear();
 	}
@@ -89,6 +98,7 @@ public class ControladorCreacion implements ActionListener {
 		}
 		this.tripulantes.add(liquidable);
 		this.nave.agregarTripulante(liquidable);
+		this.naveInicial = this.nave.clone();
 		salario = liquidable.liquidacionDeHaberes();
 		vista.agregarFilaTripulante(tripulante.getIdentidad(), tripulante.getCargo(), tripulante.getAntiguedad(),
 				tripulante.getPorcentajeAdicional(), tripulante.getPlaneta(), salario);
@@ -111,6 +121,7 @@ public class ControladorCreacion implements ActionListener {
 			vista.mostrarError("El tipo de nave no es válido");
 			return;
 		}
+		this.naveInicial = this.nave.clone();
 		vista.actualizarNave(tipoNave);
 		vista.actualizarCosto(0);
 	}
