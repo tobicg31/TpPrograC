@@ -13,6 +13,7 @@ public interface IVentanaTablero extends Observador {
     String Mision03 = "03";
     String INICIAR_MISION = "INICIAR MISION";
     String VOLVER = "VOLVER CONTROL";
+    String REINICIAR = "REINICIAR TABLERO";
 
     void setActionListener(ActionListener listener);
     int getFilasTablero();
@@ -28,4 +29,5 @@ public interface IVentanaTablero extends Observador {
     void limpiarError();
     void arranca();
     void cierra();
+    void limpiarPartida();
 }
