@@ -1,31 +1,40 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.SwingUtilities;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JSplitPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
+import model.asistentes.Asistente;
 import model.bitacoras.EventoBitacora;
 import model.destinoytablero.Posicion;
 import model.destinoytablero.Tablero;
@@ -49,7 +58,9 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     private final JTextArea txtInformes;
     private final JTextArea txtBitacora;
     private final JSplitPane distribucionSuperior;
+    private final JSplitPane distribucionVertical;
     private Tablero tableroObservado;
+    private Asistente asistenteObservado;
     private int filasTablero = -1;
     private int columnasTablero = -1;
 
@@ -59,7 +70,7 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
         setSize(1200, 850);
         setMinimumSize(new java.awt.Dimension(900, 650));
 
-        JPanel principal = new JPanel(new GridBagLayout());
+        JPanel principal = new JPanel(new BorderLayout());
         principal.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(principal);
 
@@ -96,19 +107,22 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
         recursos.add(this.lblEstadoMision, recurso);
         JPanel informes = new JPanel(new BorderLayout(0, 6));
         informes.setBorder(BorderFactory.createTitledBorder("Historial de informes finales"));
-        this.txtInformes = crearAreaTexto();
-        informes.add(new JScrollPane(this.txtInformes), BorderLayout.CENTER);
+        this.txtInformes = crearAreaTexto(6);
+        JScrollPane scrollInformes = new JScrollPane(this.txtInformes);
+        scrollInformes.setPreferredSize(new java.awt.Dimension(200, 150));
+        scrollInformes.setMinimumSize(new java.awt.Dimension(150, 80));
+        informes.add(scrollInformes, BorderLayout.CENTER);
 
         JPanel mapa = new JPanel(new BorderLayout(0, 6));
         mapa.setBorder(BorderFactory.createTitledBorder("Tablero en tiempo real"));
-        JLabel leyenda = new JLabel("N: nave   O: obstáculo   E: enemiga   A: ayuda   X: destino",
-                SwingConstants.CENTER);
-        mapa.add(leyenda, BorderLayout.NORTH);
         this.tablaTablero = new JTable(new DefaultTableModel());
         this.tablaTablero.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        this.tablaTablero.setRowHeight(26);
+        this.tablaTablero.setRowHeight(32);
         this.tablaTablero.setCellSelectionEnabled(false);
         this.tablaTablero.setRowSelectionAllowed(false);
+        this.tablaTablero.setShowGrid(true);
+        this.tablaTablero.setGridColor(new Color(45, 50, 56));
+        this.tablaTablero.setDefaultRenderer(Object.class, new TableroCeldaRenderer());
         mapa.add(new JScrollPane(this.tablaTablero), BorderLayout.CENTER);
 
         JPanel panelIzquierdo = new JPanel(new GridLayout(2, 1, 0, 8));
@@ -119,36 +133,34 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
         this.distribucionSuperior.setResizeWeight(0.35);
         this.distribucionSuperior.setContinuousLayout(true);
         superior.add(this.distribucionSuperior, BorderLayout.CENTER);
-
-        GridBagConstraints seccion = new GridBagConstraints();
-        seccion.gridx = 0;
-        seccion.gridy = 0;
-        seccion.gridwidth = 1;
-        seccion.fill = GridBagConstraints.BOTH;
-        seccion.weightx = 1;
-        seccion.weighty = 2;
-        seccion.insets = new Insets(0, 0, 4, 0);
-        principal.add(superior, seccion);
+        superior.setMinimumSize(new java.awt.Dimension(400, 320));
 
         JPanel bitacora = new JPanel(new BorderLayout(0, 6));
         bitacora.setBorder(BorderFactory.createTitledBorder("Bitácora de eventos"));
-        this.txtBitacora = crearAreaTexto();
-        bitacora.add(new JScrollPane(this.txtBitacora), BorderLayout.CENTER);
+        this.txtBitacora = crearAreaTexto(8);
+        JScrollPane scrollBitacora = new JScrollPane(this.txtBitacora);
+        scrollBitacora.setPreferredSize(new java.awt.Dimension(300, 180));
+        scrollBitacora.setMinimumSize(new java.awt.Dimension(200, 100));
+        bitacora.add(scrollBitacora, BorderLayout.CENTER);
         JPanel acciones = new JPanel(new BorderLayout());
         this.btnVolver = new JButton("Volver al menú");
         this.btnVolver.setActionCommand(VOLVER);
         acciones.add(this.btnVolver, BorderLayout.WEST);
         bitacora.add(acciones, BorderLayout.SOUTH);
-        seccion.gridy = 1;
-        seccion.weighty = 1;
-        seccion.insets = new Insets(4, 0, 0, 0);
-        principal.add(bitacora, seccion);
+        bitacora.setMinimumSize(new java.awt.Dimension(400, 140));
+
+        this.distribucionVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT, superior, bitacora);
+        this.distribucionVertical.setBorder(null);
+        this.distribucionVertical.setResizeWeight(0.65);
+        this.distribucionVertical.setContinuousLayout(true);
+        principal.add(this.distribucionVertical, BorderLayout.CENTER);
 
         TemaOscuro.aplicar(this);
     }
 
-    private JTextArea crearAreaTexto() {
-        JTextArea area = new JTextArea();
+
+    private JTextArea crearAreaTexto(int filas) {
+        JTextArea area = new JTextArea(filas, 20);
         area.setEditable(false);
         area.setLineWrap(true);
         area.setWrapStyleWord(true);
@@ -204,10 +216,10 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
             this.filasTablero = filas;
             this.columnasTablero = columnas;
             for (int columna = 0; columna < columnas; columna++) {
-                this.tablaTablero.getColumnModel().getColumn(columna).setMinWidth(42);
-                this.tablaTablero.getColumnModel().getColumn(columna).setMaxWidth(42);
-                this.tablaTablero.getColumnModel().getColumn(columna).setPreferredWidth(42);
-                this.tablaTablero.getColumnModel().getColumn(columna).setWidth(42);
+                this.tablaTablero.getColumnModel().getColumn(columna).setMinWidth(32);
+                this.tablaTablero.getColumnModel().getColumn(columna).setMaxWidth(32);
+                this.tablaTablero.getColumnModel().getColumn(columna).setPreferredWidth(32);
+                this.tablaTablero.getColumnModel().getColumn(columna).setWidth(32);
             }
         }
 
@@ -240,18 +252,39 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     }
 
     @Override
+    public void observarAsistente(Asistente asistente) {
+        this.asistenteObservado = asistente;
+        actualizar();
+    }
+
+    @Override
     public void actualizar() {
-        Runnable actualizarGrilla = () -> {
+        Runnable actualizarVistaCompleta = () -> {
             if (this.tableroObservado != null) {
                 mostrarTablero(this.tableroObservado.verTablero(),
                         this.tableroObservado.getPosicionNave(),
                         this.tableroObservado.getObjetivo());
             }
+            if (this.asistenteObservado != null) {
+                Nave nave = this.asistenteObservado.getNave();
+                mostrarRecursos(nave.getClass().getSimpleName(), nave.getCombustible(), nave.getEnergia(),
+                        nave.getDesgaste(), this.asistenteObservado.getEstadoMotor());
+                List<EventoBitacora> eventos = new java.util.ArrayList<>(
+                        this.asistenteObservado.getBitacora().getEntradas());
+                mostrarEventos(eventos);
+                List<EventoBitacora> informes = new java.util.ArrayList<>();
+                for (EventoBitacora evento : eventos) {
+                    if ("INFORME".equals(evento.getTipo())) {
+                        informes.add(evento);
+                    }
+                }
+                mostrarInformes(informes);
+            }
         };
         if (SwingUtilities.isEventDispatchThread()) {
-            actualizarGrilla.run();
+            actualizarVistaCompleta.run();
         } else {
-            SwingUtilities.invokeLater(actualizarGrilla);
+            SwingUtilities.invokeLater(actualizarVistaCompleta);
         }
     }
 
@@ -324,15 +357,138 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
         setLocationRelativeTo(null);
         setVisible(true);
         this.distribucionSuperior.setDividerLocation(0.35);
+        this.distribucionVertical.setDividerLocation(0.65);
     }
 
     @Override
     public void cierra() {
         observarTablero(null);
+        this.asistenteObservado = null;
         dispose();
     }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> new VentanaControlNave().arranca());
+    }
+
+    private static class TableroCeldaRenderer extends DefaultTableCellRenderer {
+        private static final long serialVersionUID = 1L;
+        private final Map<String, Icon> iconos = new HashMap<>();
+
+        // Colores temáticos espaciales provisorios
+        private static final Color COLOR_ESPACIO = new Color(24, 27, 31);
+        private static final Color COLOR_NAVE = new Color(28, 120, 205); // Azul cian brillante
+        private static final Color COLOR_OBSTACULO = new Color(105, 95, 90); // Gris roca
+        private static final Color COLOR_ENEMIGA = new Color(190, 45, 45); // Rojo combate
+        private static final Color COLOR_AYUDA = new Color(42, 155, 85); // Verde recarga
+        private static final Color COLOR_DESTINO = new Color(195, 135, 25); // Dorado objetivo
+        private static final Color COLOR_BORDE_CELDA = new Color(45, 50, 56);
+
+        public TableroCeldaRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setVerticalAlignment(SwingConstants.CENTER);
+            setFont(new Font("Dialog", Font.BOLD, 12));
+            cargarIconos();
+        }
+
+        private void cargarIconos() {
+            cargarIcono("N", "/imagenes/nave.png", "/nave.png");
+            cargarIcono("O", "/imagenes/obstaculo.png", "/imagenes/asteroide.png", "/obstaculo.png", "/asteroide.png");
+            cargarIcono("E", "/imagenes/enemigo.png", "/imagenes/nave_enemiga.png", "/enemigo.png",
+                    "/nave_enemiga.png");
+            cargarIcono("A", "/imagenes/ayuda.png", "/imagenes/estacion.png", "/ayuda.png", "/estacion.png");
+            cargarIcono("X", "/imagenes/destino.png", "/imagenes/base.png", "/destino.png", "/base.png");
+        }
+
+        private void cargarIcono(String clave, String... rutas) {
+            for (String ruta : rutas) {
+                java.net.URL url = getClass().getResource(ruta);
+                if (url != null) {
+                    ImageIcon original = new ImageIcon(url);
+                    Image escalada = original.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+                    this.iconos.put(clave, new ImageIcon(escalada));
+                    return;
+                }
+            }
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            setOpaque(true);
+            setBorder(BorderFactory.createLineBorder(COLOR_BORDE_CELDA, 1));
+
+            String texto = value != null ? value.toString() : "";
+            Icon icono = this.iconos.get(texto);
+
+            if (icono != null) {
+                setIcon(icono);
+                setText("");
+                setBackground(COLOR_ESPACIO);
+                setForeground(Color.WHITE);
+                switch (texto) {
+                    case "N":
+                        setToolTipText("Nave propia");
+                        break;
+                    case "O":
+                        setToolTipText("Obstáculo / Asteroide");
+                        break;
+                    case "E":
+                        setToolTipText("Nave enemiga");
+                        break;
+                    case "A":
+                        setToolTipText("Estación de recarga / Ayuda");
+                        break;
+                    case "X":
+                        setToolTipText("Destino de la misión");
+                        break;
+                    default:
+                        setToolTipText(null);
+                        break;
+                }
+            } else {
+                setIcon(null);
+                switch (texto) {
+                    case "N":
+                        setBackground(COLOR_NAVE);
+                        setForeground(Color.WHITE);
+                        setText("N");
+                        setToolTipText("Nave propia");
+                        break;
+                    case "O":
+                        setBackground(COLOR_OBSTACULO);
+                        setForeground(Color.WHITE);
+                        setText("O");
+                        setToolTipText("Obstáculo / Asteroide");
+                        break;
+                    case "E":
+                        setBackground(COLOR_ENEMIGA);
+                        setForeground(Color.WHITE);
+                        setText("E");
+                        setToolTipText("Nave enemiga");
+                        break;
+                    case "A":
+                        setBackground(COLOR_AYUDA);
+                        setForeground(Color.WHITE);
+                        setText("A");
+                        setToolTipText("Estación de recarga / Ayuda");
+                        break;
+                    case "X":
+                        setBackground(COLOR_DESTINO);
+                        setForeground(Color.WHITE);
+                        setText("X");
+                        setToolTipText("Destino de la misión");
+                        break;
+                    default:
+                        setBackground(COLOR_ESPACIO);
+                        setForeground(Color.GRAY);
+                        setText("");
+                        setToolTipText(null);
+                        break;
+                }
+            }
+            return this;
+        }
     }
 }

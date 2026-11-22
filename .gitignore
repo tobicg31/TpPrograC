@@ -22,6 +22,7 @@ replay_pid*
 .vscode/
 *.code-workspace
 .history/
+.agents/
 
 # ==============================================================================
 # ECLIPSE

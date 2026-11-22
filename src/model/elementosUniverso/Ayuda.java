@@ -11,7 +11,8 @@ public class Ayuda implements ElementoDelUniverso{
 
     @Override
     public void interactuar(Asistente asistente) {
-        asistente.NaveModificarEnergiaYCombultible(this.energia, this.combustible);
+        asistente.NaveModificarEnergia(this.energia);
+        asistente.NaveModificarCombultible(this.combustible);
     }
     
 }

@@ -32,16 +32,14 @@ public class PreparandoSalto implements MotorState {
         return this.descripcion;
     }
 
-
     @Override
     public void saltar() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         if (this.nave.getCombustible() < 2) {
-            throw new NaveInoperativaException("ERROR: no hay suficiente combustible para saltar. Nave inoperativa");
-        }
-        else{
+            throw new NaveInoperativaException("No hay suficiente combustible para saltar. Nave inoperativa");
+        } else {
             this.nave.setCombustible(this.nave.getCombustible() - 2);
-            if (this.nave.getCombustible()>=5) {
+            if (this.nave.getCombustible() >= 5) {
                 this.nave.setEstado(new EnWarp(this.nave));
             }
         }
@@ -51,8 +49,7 @@ public class PreparandoSalto implements MotorState {
     public void saltarWarp() throws NaveInoperativaException {
         assert this.nave != null : "La nave no puede ser nula";
         if (this.nave.getCombustible() >= 5) {
-        throw new NaveInoperativaException("ERROR: Aun no se ha terminado de preparar salto en warp.");
+            throw new NaveInoperativaException("Aun no se ha terminado de preparar salto en warp.");
         }
     }
 }
-

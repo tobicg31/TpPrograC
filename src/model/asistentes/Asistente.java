@@ -77,7 +77,11 @@ public class Asistente {
         try {
             mision.setAsistente(this);
             mision.ejecutarMision(this);
-            this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " ejecutada con exito", "INFO");
+            if (mision.isExitosa()) {
+                this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " ejecutada con exito", "INFO");
+            } else {
+                this.bitacora.agregarEntrada("Mision " + mision.getNombreMision() + " finalizada con fallo", "ALERTA");
+            }
         } catch (NaveSinRecursosException e) {
             this.bitacora.agregarEntrada("Error al ejecutar mision " + mision.getNombreMision() + ": " + e.getMessage(),
                     "ERROR");
@@ -97,7 +101,7 @@ public class Asistente {
 
     public void saltar() {
         try {
-            String mensaje = "Cambio de estado: " + getEstadoMotor();
+            String mensaje = getEstadoMotor();
             nave.saltar();
             this.bitacora.agregarEntrada(mensaje + " a: " + getEstadoMotor(), "CAMBIO ESTADO");
         } catch (NaveInoperativaException e) {
@@ -106,7 +110,7 @@ public class Asistente {
     }
 
     public void saltarWarp() throws NaveInoperativaException {
-        String mensaje = "Cambio de estado: " + getEstadoMotor();
+        String mensaje = getEstadoMotor();
         nave.saltarWarp();
         this.bitacora.agregarEntrada(mensaje + " a: " + getEstadoMotor(), "CAMBIO ESTADO");
     }
@@ -119,10 +123,11 @@ public class Asistente {
         nave.sacaEnergia(energia);
     }
 
-    public void NaveModificarEnergia(int energia, int combustible) {
+    public void NaveModificarEnergia(int energia) {
         nave.modificarEnergia(energia);
     }
-    public void NaveModificarCombultible(int energia, int combustible) {
+
+    public void NaveModificarCombultible(int combustible) {
         nave.modificarCombustible(combustible);
     }
 
