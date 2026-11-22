@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -174,5 +175,10 @@ public class VentanaMenu extends JFrame implements IVentanaMenu {
 	@Override
 	public void cierra() {
 		dispose();
+	}
+
+	@Override
+	public void mostrarAdvertencia(String mensaje) {
+		JOptionPane.showMessageDialog(this, mensaje, "Atención", JOptionPane.WARNING_MESSAGE);
 	}
 }

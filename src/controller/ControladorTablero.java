@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Supplier;
 
 import javax.swing.SwingWorker;
 
@@ -29,18 +28,18 @@ public class ControladorTablero implements ActionListener {
     private final IVentanaConfiguracionTablero vistaConfiguracion;
     private final IVentanaTablero vista;
     private final IVentanaMenu vistaMenu;
-    private final Supplier<Nave> proveedorNave;
+    private final ControladorCreacion controladorCreacion;
     private final Random azar = new Random();
     private Tablero tablero;
     private Destino destino;
     private Asistente asistente;
 
     public ControladorTablero(IVentanaConfiguracionTablero vistaConfiguracion,
-            IVentanaTablero vista, IVentanaMenu vistaMenu, Supplier<Nave> proveedorNave) {
+            IVentanaTablero vista, IVentanaMenu vistaMenu, ControladorCreacion controladorCreacion) {
         this.vistaConfiguracion = vistaConfiguracion;
         this.vista = vista;
         this.vistaMenu = vistaMenu;
-        this.proveedorNave = proveedorNave;
+        this.controladorCreacion = controladorCreacion;
         this.vistaConfiguracion.setActionListener(this);
         this.vista.setActionListener(this);
     }
@@ -96,9 +95,11 @@ public class ControladorTablero implements ActionListener {
             this.tablero = new Tablero(alto, ancho, elementos);
             this.destino = new Destino(this.tablero);
             this.vista.observarTablero(this.tablero);
-            Nave nave = this.proveedorNave.get();
+            Nave nave = this.controladorCreacion != null ? this.controladorCreacion.getNave() : null;
             if (nave == null) {
-                nave = NaveFactory.getNave("Exploradora");
+                this.vistaConfiguracion.mostrarError(
+                        "Debe instanciar una nave en la vista de Creación antes de crear el tablero.");
+                return;
             }
             this.asistente = new Asistente(nave, this.tablero);
             this.vista.observarAsistente(this.asistente);
@@ -150,5 +151,13 @@ public class ControladorTablero implements ActionListener {
     private void cerrarControl() {
         this.vista.cierra();
         this.vistaMenu.arranca(null);
+    }
+
+    public void resetear() {
+        this.tablero = null;
+        this.destino = null;
+        this.asistente = null;
+        this.vista.cierra();
+        this.vistaConfiguracion.cierra();
     }
 }

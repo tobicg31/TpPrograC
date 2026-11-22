@@ -31,10 +31,10 @@ public class Main {
 
             ControladorCreacion controladorCreacion = new ControladorCreacion(ventanaCreacion, ventanaMenu);
             new ControladorConcurrencia(ventanaConcurrencia, ventanaMenu, new PlataformaDeCarga(3));
-            new ControladorTablero(ventanaConfiguracionTablero, ventanaControlNave, ventanaMenu,
-                    controladorCreacion::getNave);
+            ControladorTablero controladorTablero = new ControladorTablero(ventanaConfiguracionTablero,
+                    ventanaControlNave, ventanaMenu, controladorCreacion);
             new ControladorMenu(ventanaMenu, ventanaCreacion, ventanaLogin, ventanaConcurrencia,
-                    ventanaConfiguracionTablero);
+                    ventanaConfiguracionTablero, controladorCreacion, controladorTablero);
             new ControladorAcceso(ventanaLogin, ventanaMenu, new UsuarioDAOSql(Path.of("usuarios.db")));
 
             ventanaLogin.arranca();
