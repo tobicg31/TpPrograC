@@ -19,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,6 +56,7 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     private final JButton btnIniciar;
     private final JButton btnVolver;
     private final JButton btnVolverAJugar;
+    private final JCheckBox chkSonido;
     private final JTable tablaTablero;
     private final JTextArea txtInformes;
     private final JTextArea txtBitacora;
@@ -64,6 +66,8 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     private Asistente asistenteObservado;
     private int filasTablero = -1;
     private int columnasTablero = -1;
+    private int eventosProcesadosSonido = 0;
+    private Posicion ultimaPosicionNave = null;
 
     public VentanaControlNave() {
         setTitle("Control de la Nave");
@@ -148,7 +152,17 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
         this.btnVolver.setActionCommand(VOLVER);
         this.btnVolverAJugar = new JButton("Volver a jugar");
         this.btnVolverAJugar.setActionCommand(REINICIAR);
+        this.chkSonido = new JCheckBox("Sonido espacial", true);
+        this.chkSonido.setOpaque(false);
+        this.chkSonido.setForeground(Color.WHITE);
+        this.chkSonido.setFont(new Font("Dialog", Font.BOLD, 13));
+        this.chkSonido.setFocusPainted(false);
+        this.chkSonido.addActionListener(e -> ReproductorSonido.setHabilitado(this.chkSonido.isSelected()));
+        JPanel panelCentroSonido = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
+        panelCentroSonido.setOpaque(false);
+        panelCentroSonido.add(this.chkSonido);
         acciones.add(this.btnVolver, BorderLayout.WEST);
+        acciones.add(panelCentroSonido, BorderLayout.CENTER);
         acciones.add(this.btnVolverAJugar, BorderLayout.EAST);
         bitacora.add(acciones, BorderLayout.SOUTH);
         bitacora.setMinimumSize(new java.awt.Dimension(400, 140));
@@ -266,8 +280,17 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
     public void actualizar() {
         Runnable actualizarVistaCompleta = () -> {
             if (this.tableroObservado != null) {
+                Posicion posicionActual = this.tableroObservado.getPosicionNave();
+                if (this.ultimaPosicionNave != null && posicionActual != null && !posicionActual.equals(this.ultimaPosicionNave)) {
+                    int distancia = Math.abs(posicionActual.getX() - this.ultimaPosicionNave.getX())
+                            + Math.abs(posicionActual.getY() - this.ultimaPosicionNave.getY());
+                    if (distancia == 1) {
+                        ReproductorSonido.saltoComun();
+                    }
+                }
+                this.ultimaPosicionNave = posicionActual;
                 mostrarTablero(this.tableroObservado.verTablero(),
-                        this.tableroObservado.getPosicionNave(),
+                        posicionActual,
                         this.tableroObservado.getObjetivo());
             }
             if (this.asistenteObservado != null) {
@@ -276,6 +299,19 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
                         nave.getDesgaste(), this.asistenteObservado.getEstadoMotor());
                 List<EventoBitacora> eventos = new java.util.ArrayList<>(
                         this.asistenteObservado.getBitacora().getEntradas());
+                if (eventos.size() > this.eventosProcesadosSonido) {
+                    for (int i = this.eventosProcesadosSonido; i < eventos.size(); i++) {
+                        EventoBitacora ev = eventos.get(i);
+                        String tipo = ev.getTipo();
+                        String msj = ev.getMensaje().toLowerCase();
+                        if ("ENCUENTRO".equalsIgnoreCase(tipo) || msj.contains("choca") || msj.contains("obstáculo") || msj.contains("inoperativa")) {
+                            ReproductorSonido.colision();
+                        } else if (msj.contains("en warp a: enfriamento") || (msj.contains("warp") && msj.contains("enfriam"))) {
+                            ReproductorSonido.warp();
+                        }
+                    }
+                    this.eventosProcesadosSonido = eventos.size();
+                }
                 mostrarEventos(eventos);
                 List<EventoBitacora> informes = new java.util.ArrayList<>();
                 for (EventoBitacora evento : eventos) {
@@ -346,6 +382,8 @@ public class VentanaControlNave extends JFrame implements IVentanaTablero {
 
     @Override
     public void limpiarPartida() {
+        this.eventosProcesadosSonido = 0;
+        this.ultimaPosicionNave = null;
         this.txtBitacora.setText("");
         this.txtInformes.setText("");
         this.lblEstadoMision.setText("Sin misión en curso");

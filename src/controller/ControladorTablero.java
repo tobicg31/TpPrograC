@@ -22,6 +22,7 @@ import model.naves.factory.NaveFactory;
 import view.IVentanaConfiguracionTablero;
 import view.IVentanaMenu;
 import view.IVentanaTablero;
+import view.ReproductorSonido;
 
 public class ControladorTablero implements ActionListener {
     private static final String[] TIPOS_NAVE_ENEMIGA = { "Carguero", "Combate", "Exploradora" };
@@ -48,19 +49,24 @@ public class ControladorTablero implements ActionListener {
     public void actionPerformed(ActionEvent evento) {
         switch (evento.getActionCommand()) {
             case IVentanaConfiguracionTablero.CREAR_TABLERO:
+                ReproductorSonido.click();
                 crearTablero();
                 break;
             case IVentanaConfiguracionTablero.VOLVER:
+                ReproductorSonido.click();
                 this.vistaConfiguracion.cierra();
                 this.vistaMenu.arranca(null);
                 break;
             case IVentanaTablero.INICIAR_MISION:
+                ReproductorSonido.click();
                 iniciarMision();
                 break;
             case IVentanaTablero.REINICIAR:
+                ReproductorSonido.click();
                 reiniciarPartida();
                 break;
             case IVentanaTablero.VOLVER:
+                ReproductorSonido.click();
                 cerrarControl();
                 break;
             default:
@@ -147,6 +153,11 @@ public class ControladorTablero implements ActionListener {
                 // done() siempre se ejecuta en el EDT, es seguro tocar Swing aquí.
                 vista.setMisionActiva(false);
                 vista.actualizar();
+                if (mision.isExitosa()) {
+                    ReproductorSonido.victoria();
+                } else {
+                    ReproductorSonido.derrota();
+                }
             }
         }.execute();
     }
