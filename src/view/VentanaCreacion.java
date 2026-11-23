@@ -372,4 +372,12 @@ public class VentanaCreacion extends JFrame implements IVentanaCreacion {
 	public void cierra() {
 		dispose();
 	}
+
+	@Override
+	public void resetear() {
+		this.lblNaveActual.setText("Nave Actual: -");
+		this.modeloTabla.setRowCount(0);
+		this.actualizarCosto(0);
+		this.limpiarFormularioTripulante();
+	}
 }

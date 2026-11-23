@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Supplier;
 
 import javax.swing.SwingWorker;
 
@@ -23,24 +22,25 @@ import model.naves.factory.NaveFactory;
 import view.IVentanaConfiguracionTablero;
 import view.IVentanaMenu;
 import view.IVentanaTablero;
+import view.ReproductorSonido;
 
 public class ControladorTablero implements ActionListener {
     private static final String[] TIPOS_NAVE_ENEMIGA = { "Carguero", "Combate", "Exploradora" };
     private final IVentanaConfiguracionTablero vistaConfiguracion;
     private final IVentanaTablero vista;
     private final IVentanaMenu vistaMenu;
-    private final Supplier<Nave> proveedorNave;
+    private final ControladorCreacion controladorCreacion;
     private final Random azar = new Random();
     private Tablero tablero;
     private Destino destino;
     private Asistente asistente;
 
     public ControladorTablero(IVentanaConfiguracionTablero vistaConfiguracion,
-            IVentanaTablero vista, IVentanaMenu vistaMenu, Supplier<Nave> proveedorNave) {
+            IVentanaTablero vista, IVentanaMenu vistaMenu, ControladorCreacion controladorCreacion) {
         this.vistaConfiguracion = vistaConfiguracion;
         this.vista = vista;
         this.vistaMenu = vistaMenu;
-        this.proveedorNave = proveedorNave;
+        this.controladorCreacion = controladorCreacion;
         this.vistaConfiguracion.setActionListener(this);
         this.vista.setActionListener(this);
     }
@@ -49,16 +49,24 @@ public class ControladorTablero implements ActionListener {
     public void actionPerformed(ActionEvent evento) {
         switch (evento.getActionCommand()) {
             case IVentanaConfiguracionTablero.CREAR_TABLERO:
+                ReproductorSonido.click();
                 crearTablero();
                 break;
             case IVentanaConfiguracionTablero.VOLVER:
+                ReproductorSonido.click();
                 this.vistaConfiguracion.cierra();
                 this.vistaMenu.arranca(null);
                 break;
             case IVentanaTablero.INICIAR_MISION:
+                ReproductorSonido.click();
                 iniciarMision();
                 break;
+            case IVentanaTablero.REINICIAR:
+                ReproductorSonido.click();
+                reiniciarPartida();
+                break;
             case IVentanaTablero.VOLVER:
+                ReproductorSonido.click();
                 cerrarControl();
                 break;
             default:
@@ -96,9 +104,11 @@ public class ControladorTablero implements ActionListener {
             this.tablero = new Tablero(alto, ancho, elementos);
             this.destino = new Destino(this.tablero);
             this.vista.observarTablero(this.tablero);
-            Nave nave = this.proveedorNave.get();
+            Nave nave = this.controladorCreacion != null ? this.controladorCreacion.getNave() : null;
             if (nave == null) {
-                nave = NaveFactory.getNave("Exploradora");
+                this.vistaConfiguracion.mostrarError(
+                        "Debe instanciar una nave en la vista de Creación antes de crear el tablero.");
+                return;
             }
             this.asistente = new Asistente(nave, this.tablero);
             this.vista.observarAsistente(this.asistente);
@@ -143,6 +153,11 @@ public class ControladorTablero implements ActionListener {
                 // done() siempre se ejecuta en el EDT, es seguro tocar Swing aquí.
                 vista.setMisionActiva(false);
                 vista.actualizar();
+                if (mision.isExitosa()) {
+                    ReproductorSonido.victoria();
+                } else {
+                    ReproductorSonido.derrota();
+                }
             }
         }.execute();
     }
@@ -150,5 +165,31 @@ public class ControladorTablero implements ActionListener {
     private void cerrarControl() {
         this.vista.cierra();
         this.vistaMenu.arranca(null);
+    }
+
+    private void reiniciarPartida() {
+        if (this.tablero == null) {
+            this.vista.mostrarError("Primero debe crear un tablero.");
+            return;
+        }
+        Nave naveClonada = this.controladorCreacion != null ? this.controladorCreacion.clonarNaveInicial() : null;
+        if (naveClonada == null) {
+            this.vista.mostrarError("No se pudo obtener la nave inicial para clonar.");
+            return;
+        }
+        this.tablero.moverNave(new model.destinoytablero.Posicion(this.tablero.getX() / 2, this.tablero.getY() / 2));
+        this.asistente = new Asistente(naveClonada, this.tablero);
+        this.vista.observarAsistente(this.asistente);
+        this.asistente.getBitacora().agregarEntrada("Partida reiniciada con nave clonada en estado inicial", "INFO");
+        this.vista.limpiarPartida();
+        this.vista.actualizar();
+    }
+
+    public void resetear() {
+        this.tablero = null;
+        this.destino = null;
+        this.asistente = null;
+        this.vista.cierra();
+        this.vistaConfiguracion.cierra();
     }
 }

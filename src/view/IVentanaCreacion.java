@@ -37,4 +37,6 @@ public interface IVentanaCreacion {
 	void arranca();
 
 	void cierra();
+
+	void resetear();
 }
