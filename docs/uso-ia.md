@@ -14,3 +14,4 @@ Para lograr un mejor entendimiento de la consigna, se interactuó con Gemini par
 
  - Algunos no utilizaron para nada la IA.
  - Y algunos otros usaron en ciertas ocasiones la herramienta que Copilot que autocompleta el código a medida que se va escribiendo para agilizar mas que nada lo que es la documentación de las clases, contratos e invariantes. También se utilizó para generar más rápidamente los métodos getters y setters. Todo se terminó verificando principalemte en la clase main, donde se probaron los métodos y todo salió bien.
+ - La IA agrego un par de verificaciónes en el while de ejecutar preguntando si la nave seguía viva debido a problema con el hilo
